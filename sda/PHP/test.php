@@ -1,8 +1,21 @@
 <?php
-$data_nasc = date('Y-m-d', strtotime(12/02/2007));
-$data_atual = date('Y-m-d');
 
-$idade = date_diff(date_create($data_nasc), date_create($data_atual))->y;
-if($idade < 18) {
-    echo "idade menor que 18 anos";
+function isLessThan18(string $birthdate): bool
+{
+    $today = new DateTime();
+    $birthDateObj = DateTime::createFromFormat('Y-m-d', $birthdate);
+
+    if (!$birthDateObj) {
+        return false; // Data inválida
+    }
+
+    $age = $birthDateObj->diff($today)->y;
+
+    return $age < 18;
+}
+$dataNascimento = "2006-06-20"; // Exemplo de data de nascimento
+if (isLessThan18($dataNascimento)) {
+    echo "A pessoa é menor de 18 anos.";
+} else {
+    echo "A pessoa não é menor de 18 anos.";
 }

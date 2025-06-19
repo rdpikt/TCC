@@ -10,9 +10,9 @@ if (isset($_SESSION['user_id'])) {
     
     // Redireciona para a página de login
     echo "<script>
-        window.location.href = '../html/logout.html';
+        window.location.href = '../Layout/load.html?message=Logout realizado com sucesso!&action=logout';
     </script>";
 } else {
     // Se não houver sessão ativa, redireciona para a página de login
-    header("Location: ../html/login.html");
+    header("Location: ../Layout/login.html");
 }

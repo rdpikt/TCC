@@ -1,50 +1,53 @@
 <?php
-    require 'conexao.php';
+require_once 'conexao.php';// Protege a página para usuários autenticados
 
-    $erros = [];
+session_start(); // Inicia a sessão
 
-    if (isset($_POST['email']) && isset($_POST['senha'])) {
-        $login = $_POST['email'];
-        $senha = $_POST['senha'];
+$erros = [];
 
-        if (empty($login) || empty($senha)) {
-            $erros[] = "Preencha todos os campos!";
-        } else {
-            // Usando prepared statements para evitar SQL Injection
-            $login = $conn->real_escape_string($login);
-            $senha = $conn->real_escape_string($senha);
-            $stmt = $conn->prepare("SELECT * FROM clientes WHERE email = ? AND senha = ?");
-            $stmt->bind_param("ss", $login, $senha);
-            $stmt->execute();
-            $result = $stmt->get_result();
+if (isset($_POST['login']) && isset($_POST['senha'])) {
+    $login = $_POST['login']; // Pode ser email ou nome_user
+    $senha = $_POST['senha'];
 
-            if ($result->num_rows > 0) {   
-                $user = $result->fetch_assoc();
-                // Iniciar sessão e armazenar informações do usuário
-                if(!isset($_SESSION)) {
-                    session_start();
-                }
+    if (empty($login) || empty($senha)) {
+        $erros[] = "Preencha todos os campos!";
+    } else {
+        // Usando prepared statements para evitar SQL Injection
+        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR nome_user = ?");
+        $stmt->bind_param("ss", $login, $login);
+        $stmt->execute();
+        $result = $stmt->get_result();
 
-                
+        if ($result->num_rows > 0) {
+            $user = $result->fetch_assoc();
+
+            // Verifica a senha usando password_verify
+            if (password_verify($senha, $user['senha'])) {
+                // Configura as variáveis de sessão
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['nome'];
+                $_SESSION['user_name'] = $user['nome_user'];
                 $_SESSION['user_email'] = $user['email'];
 
-                // Redirecionar para UserPerfil.html
-                echo "<script>
-                    window.location.href = '../html/load.html';
-                </script>";
+                // Redireciona para a página de carregamento
+                header("Location: ../Layout/load.html?message=Login realizado com sucesso!&action=login");
                 exit();
             } else {
-                $erros[] = "Login ou senha incorretos!";
+                $erros[] = "Senha incorreta!";
             }
+        } else {
+            $erros[] = "Email ou nome de usuário não encontrado!";
+            
+            
         }
     }
-
-    // Exibe os erros, se houver
-    if (!empty($erros)) {
-        foreach ($erros as $erro) {
-            echo "<script>alert('Erro: " . $erro . "');</script>";
-        }
+}
+// Exibe os erros, se houver
+if (!empty($erros)) {
+    foreach ($erros as $erro) {
+        echo "<script>alert('Erro: " . $erro . "');
+        location.href = '../Layout/login.html';
+        </script>";
+        
     }
+}
 ?>
