@@ -1,5 +1,5 @@
 <?php
-require 'protect.php';
+require "protect.php"; // Protege a página para usuários autenticados
 ?>
 
 <!DOCTYPE html>
