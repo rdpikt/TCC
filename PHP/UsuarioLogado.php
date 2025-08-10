@@ -1,0 +1,49 @@
+<?php
+require "protect.php"; // Protege a página para usuários autenticados
+?>
+
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HarpHub</title>
+    <link rel="stylesheet" href="../Styles/index.css">
+</head>
+
+<body>
+    <nav class="navigation">
+        <div class="left"><B>Harp</B>Hub</div>
+        <div class="mid">
+            <ul>
+            <li>Sobre Nós</li>
+            <li>Recursos</li>
+            <li>FAQs</li>
+        </ul>
+        </div>
+        <div class="right">
+          <button onclick="cadastroMV()">Entrar
+            <button><a href="../PHP/logout.php">SAir</a></button>
+        </button>
+         
+        </div>
+    </nav>
+    <main class="princ">
+            <h1 class="Tito">Registre sua Arte</h1>
+            <p class="subtito">Garanta sua autoria com segurança em uma plataforma feita por criadores, para criadores.</p>
+            
+            <div class="b-entrar">
+                <div class="rectangle-138"></div>
+                <div class="come-ar">Começar</div>
+              </div>
+              
+            <div class="carrocel">
+                <div class="item1">Item 1</div>
+                <div class="item2">Item 2</div>
+                <div class="item3">Item 3</div>
+            </div>
+    </main>
+</body>
+<script src="../Scripts/index.js"></script>
+</html>
