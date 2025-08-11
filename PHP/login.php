@@ -27,6 +27,8 @@ if (isset($_POST['login']) && isset($_POST['senha'])) {
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['nome_user'];
                 $_SESSION['user_email'] = $user['email'];
+                $_SESSION['avatar'] = $user['user_avatar'];
+                
 
                 // Redireciona para a página de carregamento
                 header("Location: ../Layout/load.html?message=Login realizado com sucesso!&action=login");
