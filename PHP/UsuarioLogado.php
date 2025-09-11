@@ -2,6 +2,12 @@
 require "protect.php"; // Protege a página para usuários autenticados
 require "conexao.php";
 
+$options = [
+  PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+  PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+];
+
+
 $tipo_feed = $_GET['feed'] ?? 'foryou';
 
 $userId = $_SESSION['user_id'];
@@ -126,9 +132,9 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
            <h1 class="titulo">Titulo: <?php echo htmlspecialchars($post['titulo']); ?></h1>
             <p>descricao: <br><?php echo htmlspecialchars($post['descricao']); ?></p>
           </div>
-          <?php if (!empty($post['arquivo_url'])) { ?>
+          <?php if (!empty($post['arquivo'])) { ?>
             <div class="img-post">
-              <img src="../uploads/<?php echo htmlspecialchars($post['arquivo_url']); ?>" alt="">
+              <img src="../uploads/<?php echo htmlspecialchars($post['arquivo']); ?>"   lt="">
             </div>
           <?php } ?>
           <div class="footer-post">
