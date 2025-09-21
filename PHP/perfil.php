@@ -3,10 +3,8 @@ require "protect.php";
 require "conexao.php";
 
 $userId = $_SESSION['user_id'];
-
 $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
 ?>
-
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -16,15 +14,49 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
   <title>Perfil de Usuário</title>
   <link rel="stylesheet" href="../Styles/telainicial.css">
   <link rel="stylesheet" href="../Styles/perfil.css">
+  <style>
+    /* Fade-in */
+    .fade-in {
+      animation: fadeIn 0.7s;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: scale(0.95);
+      }
+
+      to {
+        opacity: 1;
+        transform: scale(1);
+      }
+    }
+
+    /* Seções escondidas */
+    .hidden {
+      display: none;
+    }
+
+    .perfil-categorias ul li.active {
+      font-weight: bold;
+      color: #0077ff;
+    }
+
+    .post-item .overlay .autor {
+      font-size: 0.8em;
+      color: #ddd;
+      margin-bottom: 5px;
+    }
+  </style>
 </head>
 
 <body>
   <header>
     <div class="logotipo">LOGO</div>
-    <input type="search" name="search-bar" id="search-bar" placeholder="Barra de pesquisa">
+    <input type="search" id="search-bar" placeholder="Barra de pesquisa">
     <div class="nav-user">
       <ul>
-        <li><span><a href="notificacoes.php">notificações</a></span></li>
+        <li><a href="notificacoes.php">Notificações</a></li>
         <li><span><?php echo $_SESSION['user_name']; ?></span></li>
       </ul>
     </div>
@@ -32,7 +64,6 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
       <ul>
         <li><a href="perfil.php">Perfil</a></li>
         <li>Trocar de conta</li>
-
         <li>
           <form action="logout.php">
             <input type="submit" value="Sair da conta">
@@ -46,18 +77,19 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
     <nav class="nav-side" id="menu">
       <div class="user-avatar">
         <div class="user-avatar-img">
-          <img src="<?php echo "../images/avatares/Users/".htmlspecialchars($user_avatar); ?>" alt="Avatar do usuário">
+          <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>"
+            alt="Avatar do usuário">
         </div>
         <span><?php echo $_SESSION['user_name']; ?></span>
       </div>
       <ul>
-      <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
-      <li><a href="?feed=seguindo">Seguindo</a></li>
-      <li><a href="Galeria.php">Galeria</a></li>
-      <li><a href="EnviarArquivos.php">Criar Post</a></li>
-      <li><a href="comunidades.php">Comunidades</a></li>
-      <li><a href="perfil.php">Perfil</a></li>
-    </ul>
+        <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
+        <li><a href="UsuarioLogado?feed=seguindo">Seguindo</a></li>
+        <li><a href="Galeria.php">Galeria</a></li>
+        <li><a href="EnviarArquivos.php">Criar Post</a></li>
+        <li><a href="comunidades.php">Comunidades</a></li>
+        <li><a href="perfil.php">Perfil</a></li>
+      </ul>
       <div class="tools">
         <ul>
           <li><a href="config.php">Configurações</a></li>
@@ -66,90 +98,209 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
       </div>
     </nav>
 
-  <section class="profile-section">
-    <div class="profile-header">
-      <div class="profile-avatar">
-        <img src="<?php echo "../images/avatares/Users/".htmlspecialchars($user_avatar); ?>" alt="Avatar do usuário">
-      </div>
-      <div class="profile-info">
-        <h2><?php echo $_SESSION['user_name_completo']; ?></h2>
-        <h2><?php echo $_SESSION['tipo_criador'];?></h2>
-        <p>@<?php echo $_SESSION['user_name']; ?></p>
-        <p><?php echo $_SESSION['user_bio'] ?? 'Esta pessoa não adicionou uma bio ainda.'; ?></p>
-      </div>
-      <div class="seguidores-info">
-        <div class="seguidores">
-          <strong>Seguidores:</strong> <?php
-          $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM seguidores WHERE seguido_id = ?");
-          $stmt->bind_param("i", $userId);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          $row = $result->fetch_assoc();
-          echo $row['total'];
-          $stmt->close();
-          ?>
+    <section class="profile-section">
+      <!-- Cabeçalho do Perfil -->
+      <div class="profile-header">
+        <div class="profile-avatar">
+          <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>"
+            alt="Avatar do usuário">
         </div>
-        <div class="seguindo">
-          <strong>Seguindo:</strong> <?php
-          $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM seguidores WHERE seguidor_id = ?");
-          $stmt->bind_param("i", $userId);
-          $stmt->execute();
-          $result = $stmt->get_result();
-          $row = $result->fetch_assoc();
-          echo $row['total'];
-          $stmt->close();
-          ?>
+        <div class="profile-info">
+          <h2><?php echo $_SESSION['user_name_completo']; ?></h2>
+          <h3><?php echo $_SESSION['tipo_criador']; ?></h3>
+          <p>@<?php echo $_SESSION['user_name']; ?></p>
+          <p><?php echo $_SESSION['user_bio'] ?? 'Esta pessoa não adicionou uma bio ainda.'; ?></p>
         </div>
-      </div>
-    </div>
-    <div class="perfil-categorias">
-      <ul>
-        <li class="active">Portfolio</li>
-        <li>posts</li>
-        <li>repost</li>
-        <li>Salvos</li>
-        <li>Curtidas</li>
-      </ul>
-    </div>
-    <div class="profile-posts">
-      <h3>Meus Posts</h3>
-      <div class="profile-posts-grid">
-      <?php
-      $stmt = $conn->prepare("SELECT * FROM obras WHERE portfolio_id = ? ORDER BY data_publicacao DESC");
-      $stmt->bind_param("i", $userId);
-      $stmt->execute();
-      $result = $stmt->get_result();
-
-      if ($result->num_rows > 0):
-        while ($post = $result->fetch_assoc()):
-          ?>
-          <div class="post-item">
-            <?php if (!empty($post['arquivo'])): ?>
-              <img src="<?php echo "../images/uploads/". $post['arquivo']?>" alt="Imagem do post">
-            <?php endif; ?>
-            <div class="overlay">
-              <div class="titulo"><?php echo htmlspecialchars($post['titulo']); ?></div>
-              <div class="descricao"><?php echo nl2br(htmlspecialchars($post['descricao'])); ?></div>
-              <span class="post-date"><?php echo date('d/m/Y H:i', strtotime($post['data_publicacao'])); ?></span>
-            </div>
+        <div class="seguidores-info">
+          <div class="seguidores">
+            <strong>Seguidores:</strong>
+            <?php
+            $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM seguidores WHERE seguido_id = ?");
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            echo $result->fetch_assoc()['total'];
+            $stmt->close();
+            ?>
           </div>
-        <?php endwhile; ?>
-      <?php else: ?>
-        <p>Você ainda não fez nenhum post.</p>
-      <?php endif;
-      $stmt->close();
-      $conn->close();
-      ?>
+          <div class="seguindo">
+            <strong>Seguindo:</strong>
+            <?php
+            $stmt = $conn->prepare("SELECT COUNT(*) AS total FROM seguidores WHERE seguidor_id = ?");
+            $stmt->bind_param("i", $userId);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            echo $result->fetch_assoc()['total'];
+            $stmt->close();
+            ?>
+          </div>
+        </div>
       </div>
-    </div>
-  </section>
 
-  <section class="Posts_curtidas">
+      <!-- Categorias -->
+      <div class="perfil-categorias">
+        <ul>
+          <li class="active" data-cat="portfolio">Portfolio</li>
+          <li data-cat="posts">Posts</li>
+          <li data-cat="reposts">Reposts</li>
+          <li data-cat="salvos">Salvos</li>
+          <li data-cat="curtidas">Curtidas</li>
+        </ul>
+      </div>
 
-  </section>
+      <!-- Portfolio -->
+      <div class="profile-section-content" id="portfolio-section">
+        <h3>Meus Posts</h3>
+        <div class="profile-posts-grid">
+          <?php
+          $stmt = $conn->prepare("SELECT * FROM obras WHERE portfolio_id = ? ORDER BY data_publicacao DESC");
+          $stmt->bind_param("i", $userId);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          if ($result->num_rows > 0):
+            while ($post = $result->fetch_assoc()):
+              ?>
+              <div class="post-item fade-in">
+                <?php if (!empty($post['arquivo_url'])): ?>
+                  <img src="<?php echo "../images/uploads/" . htmlspecialchars($post['arquivo_url']); ?>" alt="Imagem do post">
+                <?php endif; ?>
+                <div class="overlay">
+                  <div class="titulo"><?php echo htmlspecialchars($post['titulo']); ?></div>
+                  <div class="descricao"><?php echo nl2br(htmlspecialchars($post['descricao'])); ?></div>
+                  <span class="post-date"><?php echo date('d/m/Y H:i', strtotime($post['data_publicacao'])); ?></span>
+                </div>
+              </div>
+              <?php
+            endwhile;
+          else:
+            echo "<p>Você ainda não fez nenhum post.</p>";
+          endif;
+          $stmt->close();
+          ?>
+        </div>
+      </div>
+
+      <!-- Reposts -->
+      <div class="profile-section-content hidden" id="reposts-section">
+        <h3>Meus republicados</h3>
+        <div class="profile-reposts-grid">
+          <?php
+          $stmt = $conn->prepare("
+            SELECT r.id AS repost_id, r.created_at AS repost_date,
+                   O.id AS post_id, O.titulo, O.descricao, O.arquivo_url, O.data_publicacao
+            FROM reposts r
+            JOIN obras O ON r.original_post_id = O.id
+            WHERE r.user_id = ?
+            ORDER BY r.created_at DESC
+          ");
+          $stmt->bind_param('i', $userId);
+          $stmt->execute();
+          $result = $stmt->get_result();
+
+          if ($result->num_rows > 0):
+            while ($post = $result->fetch_assoc()):
+              ?>
+              <div class="post-item fade-in">
+                <?php if (!empty($post['arquivo_url'])): ?>
+                  <img src="<?php echo "../images/uploads/" . htmlspecialchars($post['arquivo_url']); ?>" alt="Imagem do post">
+                <?php endif; ?>
+                <div class="overlay">
+                  <div class="titulo"><?php echo htmlspecialchars($post['titulo']); ?></div>
+                  <div class="descricao"><?php echo nl2br(htmlspecialchars($post['descricao'])); ?></div>
+                  <span class="post-date">
+                    Publicado em: <?php echo date('d/m/Y H:i', strtotime($post['data_publicacao'])); ?>
+                  </span><br>
+                  <span class="repost-date">
+                    Repostado em: <?php echo date('d/m/Y H:i', strtotime($post['repost_date'])); ?>
+                  </span>
+                </div>
+              </div>
+              <?php
+            endwhile;
+          else:
+            echo "<p>Você ainda não republicou nenhum post.</p>";
+          endif;
+          $stmt->close();
+          ?>
+        </div>
+      </div>
+
+      <!-- Curtidas -->
+      <div class="profile-section-content hidden" id="curtidas-section">
+        <h3>Meus Posts Curtidos</h3>
+        <div class="profile-posts-grid">
+          <?php
+          $stmt_curtidas = $conn->prepare("
+            SELECT 
+              c.data_curtida,
+              O.id AS post_id, O.titulo, O.descricao, O.arquivo_url, O.data_publicacao,
+              u.nome_user AS autor_nome
+            FROM curtidas c
+            JOIN obras O ON c.obra_id = O.id
+            JOIN users u ON O.portfolio_id = u.id
+            WHERE c.usuario_id = ?
+            ORDER BY c.data_curtida DESC
+          ");
+          $stmt_curtidas->bind_param('i', $userId);
+          $stmt_curtidas->execute();
+          $result_curtidas = $stmt_curtidas->get_result();
+
+          if ($result_curtidas->num_rows > 0):
+            while ($post = $result_curtidas->fetch_assoc()):
+              ?>
+              <div class="post-item fade-in">
+                <?php if (!empty($post['arquivo_url'])): ?>
+                  <img src="<?php echo "../images/uploads/" . htmlspecialchars($post['arquivo_url']); ?>" alt="Imagem do post">
+                <?php endif; ?>
+                <div class="overlay">
+                  <div class="titulo"><?php echo htmlspecialchars($post['titulo']); ?></div>
+                  <div class="autor">por <?php echo htmlspecialchars($post['autor_nome']); ?></div>
+                  <div class="descricao"><?php echo nl2br(htmlspecialchars($post['descricao'])); ?></div>
+                  <span class="repost-date">
+                    Curtido em: <?php echo date('d/m/Y H:i', strtotime($post['data_curtida'])); ?>
+                  </span>
+                </div>
+              </div>
+              <?php
+            endwhile;
+          else:
+            echo "<p>Você ainda não curtiu nenhum post.</p>";
+          endif;
+          $stmt_curtidas->close();
+          $conn->close();
+          ?>
+        </div>
+      </div>
     </section>
+  </section>
+
+  <script src="../Scripts/modals.js"></script>
+  <script>
+    const btnsCategoria = document.querySelectorAll('.perfil-categorias ul li');
+    const sections = {
+      portfolio: document.getElementById('portfolio-section'),
+      reposts: document.getElementById('reposts-section'),
+      curtidas: document.getElementById('curtidas-section')
+    };
+
+    btnsCategoria.forEach(btn => {
+      btn.addEventListener('click', () => {
+        btnsCategoria.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+
+        const cat = btn.getAttribute('data-cat');
+
+        // Esconde todas as seções
+        Object.values(sections).forEach(sec => sec.classList.add('hidden'));
+
+        // Mostra apenas a seção escolhida
+        if (sections[cat]) {
+          sections[cat].classList.remove('hidden');
+        }
+      });
+    });
+  </script>
 </body>
-<script src="../Scripts/modals.js"></script>
-<script src="../Scripts/PerfilOpcoes.js"></script>
 
 </html>

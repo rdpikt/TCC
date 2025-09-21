@@ -26,7 +26,6 @@ body{
 }
 .main{
   display: flex;
-  /* Removido height: 100vh para permitir altura dinâmica */
   min-height: 100vh;
 }
 header{
@@ -119,7 +118,6 @@ input[type="search"]{
   display: flex;
   align-items: center;
   flex-direction: column;
-  /* Removido overflow: hidden para permitir scroll do conteúdo */
   z-index: 1;
 }
 .initial-options{
@@ -148,7 +146,6 @@ input[type="search"]{
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  /* Removido overflow-y: auto para permitir scroll global */
   padding-bottom: 2rem;
 }
 .posts{
@@ -286,4 +283,70 @@ input[type="search"]{
   cursor: pointer;
 }
 
+/* --- ESTILOS PARA AJAX --- */
 
+/* Estilo do botão quando o post está curtido */
+.curtida.curtido {
+    background-color: #007bff; /* Um azul, por exemplo */
+    color: white;
+    border-color: #007bff;
+}
+
+/* Estilo do botão quando o post está repostado */
+.repostar-btn.repostado {
+    background-color: #17a2b8; /* Um azul ciano, por exemplo */
+    color: white;
+    border-color: #17a2b8;
+}
+
+/* Estilo para a notificação */
+.notification {
+    position: fixed; /* Fica fixo na tela */
+    bottom: 20px;
+    right: 20px;
+    background-color: #28a745; /* Verde sucesso */
+    color: white;
+    padding: 15px;
+    border-radius: 5px;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+}
+
+.notification.show {
+    opacity: 1;
+}/* Estilos para notificações */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s;
+    z-index: 1000;
+    font-weight: bold;
+}
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Cor para sucesso (verde) */
+.notification.success {
+    background-color: #28a745;
+}
+
+/* Cor para erro (vermelho) */
+.notification.error {
+    background-color: #dc3545;
+}
+
+/* Cor para informação (azul) */
+.notification.info {
+    background-color: #17a2b8;
+}

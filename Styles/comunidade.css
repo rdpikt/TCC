@@ -34,6 +34,21 @@ body{
   background-color: #111;
   color: #f0f0f0;
 }
+.titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-criar-comunidade {
+  padding: 0.6rem 1.2rem;
+  background: var(--roxo);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.3s;
+}
 
 .comunidades-lista{
   display: flex;
@@ -89,6 +104,12 @@ body{
   cursor: pointer;
   transition: background 0.3s;
 }
+.comunidade-card .top .Sair-Comunidade {
+  background-color: #555;
+}
+.comunidade-card .top .Sair-Comunidade:hover {
+  background-color: #777;
+}
 .comunidade-card .top button:hover {
   background: #8C19CD;
 }
@@ -120,5 +141,3 @@ body{
   color: #f0f0f0;
   text-align: center;
 }
-
-

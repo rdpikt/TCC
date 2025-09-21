@@ -16,6 +16,8 @@ while ($obra = $result->fetch_assoc()) {
   $obras[] = $obra;
 }
 
+$user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/profile.png';
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -51,30 +53,29 @@ while ($obra = $result->fetch_assoc()) {
       </ul>
     </div>
   </header>
-  <nav class="nav-side">
-    <div class="user-avatar">
-      <div class="user-avatar-img">
-        <img
-          src="<?php echo htmlspecialchars(!empty($user['user_avatar']) ? $user['user_avatar'] : '../images/avatares/Users/profile.png'); ?>"
-          alt="Avatar">
+  <nav class="nav-side" id="menu">
+      <div class="user-avatar">
+        <div class="user-avatar-img">
+          <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>"
+            alt="Avatar do usuário">
+        </div>
+        <span><?php echo $_SESSION['user_name']; ?></span>
       </div>
-      <span><?php echo $_SESSION['user_name']; ?></span>
-    </div>
-    <ul>
-      <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
-      <li><a href="?feed=seguindo">Seguindo</a></li>
-      <li><a href="Galeria.php">Galeria</a></li>
-      <li><a href="EnviarArquivos.php">Criar Post</a></li>
-      <li><a href="comunidades.php">Comunidades</a></li>
-      <li><a href="perfil.php">Perfil</a></li>
-    </ul>
+      <ul>
+        <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
+        <li><a href="UsuarioLogado?feed=seguindo">Seguindo</a></li>
+        <li><a href="Galeria.php">Galeria</a></li>
+        <li><a href="EnviarArquivos.php">Criar Post</a></li>
+        <li><a href="comunidades.php">Comunidades</a></li>
+        <li><a href="perfil.php">Perfil</a></li>
+      </ul>
       <div class="tools">
         <ul>
-          <li><a href="Config.php">Configurações</a></li>
+          <li><a href="config.php">Configurações</a></li>
           <li><a href="ajuda.php">Ajuda</a></li>
         </ul>
-    </div>
-  </nav>
+      </div>
+    </nav>
   <main class="galeria-main">
     <h1 >Galeria</h1>
     <div class="galeria-categorias" id="galeria-categorias">
@@ -87,7 +88,7 @@ while ($obra = $result->fetch_assoc()) {
     <div class="galeria-grid" id="galeria-grid">
       <?php $col = 0;
       foreach ($obras as $obra): ?>
-        <?php if (!empty($obra['arquivo']) && !empty($obra['tipo_imagem'])): ?>
+        <?php if (!empty($obra['arquivo_url']) && !empty($obra['tipo_imagem'])): ?>
           <?php
           // Alterna classes para cada coluna
           $colClass = '';
@@ -107,7 +108,7 @@ while ($obra = $result->fetch_assoc()) {
           }
           ?>
           <div class="galeria-item <?php echo $colClass; ?>" data-cat="<?php echo htmlspecialchars($obra['tipo_obra']); ?>">
-            <img src="../images/uploads/<?php echo htmlspecialchars($obra['arquivo']); ?>" alt="Obra">
+            <img src="../images/uploads/<?php echo htmlspecialchars($obra['arquivo_url']); ?>" alt="Obra">
             <div class="overlay">
               <div class="titulo"><?php echo htmlspecialchars($obra['titulo']); ?></div>
               <div class="autor">por <?php echo htmlspecialchars($obra['nome_user']); ?></div>

@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
   }
 
-  $sql = "INSERT INTO obras (portfolio_id,tipo_obra,titulo, descricao, arquivo, tipo_imagem) VALUES (?,?,?,?,?,?)";
+  $sql = "INSERT INTO obras (portfolio_id,tipo_obra,titulo, descricao, arquivo_url, tipo_imagem) VALUES (?,?,?,?,?,?)";
   $stmt = $conn->prepare($sql);
   $stmt->bind_param('isssss', $UserID, $tipo_obra, $TituloPost, $DescricaoPost, $nome_foto, $extensao);
   $result = $stmt->execute();

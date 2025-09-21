@@ -1,140 +1,145 @@
-.content{
-  border: 2px solid black;
-  position: relative;
-  top: 0;
-  left: 0;
-  transform: translate(30%, 0);
-  width: 60%;
-  min-height: 100vh;
-  height: auto;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  padding-bottom: 2rem;
-  overflow-y: auto;
-  overflow-x: hidden;
-  padding-top: 5rem;
-}
-.titulo{
-  width: 80%;
-  margin: 1rem 0;
-  border-radius: 0.5rem;
-  border: 1px solid #444;
-  font-size: 1.5rem;
-  font-weight: bold;
-  background-color: #222;
-  color: #f0f0f0;
- 
-}
-.notificacoes-list{
-  list-style: none;
-  padding: 0;
-  width: 80%;
-  height: auto;
-}
-.notificacao-item{
-  display: flex;
-  height: auto;
-  width: 100%;
-  align-items: center;
-  background-color: #111  ;
-  border: 1px solid #444;
-  border-radius: 0.5rem;
-  padding: 1rem;
-justify-content: space-between;
-  margin-bottom: 1rem;
-  box-shadow: 0 2px 8px #0006;
-  transition: box-shadow 0.2s;
-}
-.notificacao-item .text{
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-.notificacao-item button{
-  background: var(--roxo);
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+/* Estilos para a página de notificações */
+.content {
+    padding: 20px;
+    position: relative;
+    width: 60%;
+    height: auto;
+    top: 0;
+    left: 60%;
+    transform: translate(-50%,0 );
 }
 
-.notification.unread {
-  background: #333;
-  border-color: var(--roxo);
+.lista-notificacoes {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 20px;
 }
 
-.notification .info {
-  flex: 1;
+.notificacao-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, border-left 0.3s;
+    border-left: 5px solid transparent;
 }
 
-.notification .info p {
-  margin: 0.2rem 0;
+/* Estilo para notificações não lidas */
+.notificacao-item.nao-lida {
+    background-color: #eef5ff; /* Um azul claro para destaque */
+    border-left: 5px solid #4a90e2; /* Borda azul para indicar não lida */
+    font-weight: bold;
 }
 
-.notification .info .timestamp {
-  font-size: 0.8rem;
-  color: #888;
-}
-
-.notification button {
-  background: var(--roxo);
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-}
-
-.notification button:hover {
-  background: #8C19CD;
-}
 .notificacao-item:hover {
-  box-shadow: 0 4px 16px #0008;
+    background-color: #f1f1f1;
 }
-.notificacao-expandida{
-  display: none;
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 50%;
-  background-color: #222;
-  border: 2px solid var(--roxo);
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 16px #0008;
-  z-index: 1000;
-  padding: 1rem;
+
+.notificacao-info {
+    flex-grow: 1;
 }
-.notificacao-expandida .btn-fechar{
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: var(--roxo);
-  color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
+
+.notificacao-resumo {
+    color: #555;
+    font-weight: normal;
 }
-.notificacao-expandida .conteudo-expandido{
-  margin-top: 2rem;
-  text-align: center;
+
+.notificacao-data {
+    font-size: 0.8em;
+    color: #888;
+    font-weight: normal;
 }
-.notificacao-expandida .conteudo-expandido .de{
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 1rem;
+
+.notificacao-acoes {
+    margin-left: 20px;
 }
-.notificacao-expandida .conteudo-expandido .mensagem{
-  font-size: 1.2rem;
-  margin-bottom: 1rem;
+
+.btn-excluir {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2em;
+    color: #c0392b;
+    opacity: 0.6;
+    transition: opacity 0.2s;
 }
-.notificacao-expandida .conteudo-expandido .data-expandida{
-  font-size: 0.9rem;
-  color: #888;
+
+.btn-excluir:hover {
+    opacity: 1;
+    color: #e74c3c;
 }
-.expandido{
-  display: block;
+
+/* Estilos para o modal de notificação expandida */
+.notificacao-expandida {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+    z-index: 1000;
+}
+
+.notificacao-expandida.expandido {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notificacao-expandida-content {
+    background-color: white;
+    padding: 30px;
+    border-radius: 10px;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.btn-fechar {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8em;
+    cursor: pointer;
+    color: #555;
+}
+
+/* Estilos para o conteúdo do modal expandido */
+.notificacao-expandida-content .mensagem-completa {
+    margin-bottom: 15px;
+    line-height: 1.5;
+}
+
+.notificacao-expandida-content .post-preview-container {
+    margin-top: 15px;
+    border-top: 1px solid #eee;
+    padding-top: 15px;
+    text-align: center;
+}
+
+.post-preview-container .post-preview-img {
+    max-width: 100%;
+    max-height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+/* Ajuste no resumo da notificação para aceitar HTML (strong, em) */
+.notificacao-resumo {
+    color: #333;
+    font-weight: normal; /* O bold vem da classe .nao-lida */
 }

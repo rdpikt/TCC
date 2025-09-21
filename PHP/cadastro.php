@@ -72,7 +72,7 @@ try {
         echo '<script>
             alert("Senha inválida! A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas e números e alfanuméricos.");
             window.location.href = "../Layout/cadastro.html";
-        </script>';
+            </script>';
         exit;
     }
 
