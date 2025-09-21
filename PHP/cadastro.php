@@ -127,10 +127,10 @@ try {
         exit;
     }
     if (!empty($erros)) {
-    foreach ($erros as $erro) {
-        echo "<script>alert('Erro: " . $erro . "');</script>";
+        foreach ($erros as $erro) {
+            echo "<script>alert('Erro: " . $erro . "');</script>";
+        }
     }
-}
 
     $stmt->close();
 
@@ -153,9 +153,3 @@ try {
     </script>';
 }
 ?>
-
-
-
-
-
-

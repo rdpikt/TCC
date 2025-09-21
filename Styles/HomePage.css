@@ -6,6 +6,7 @@
     box-sizing: border-box;
     font-family: var(--fontfm);
     font-weight: 300;
+    overflow-x: hidden;
 }
 /* Variaveis do site*/
 :root {
@@ -39,8 +40,9 @@
 
 body {
     color: white;
+    width: 100vw;
     background-color: var(--fundo);
-    height: 200vh;
+    height: 100vh;
 }
 
 nav{
@@ -70,6 +72,7 @@ nav .left {
 
 nav .mid {
     display: flex;
+    width: 100%;
 }
 
 .mid ul{
@@ -78,6 +81,15 @@ nav .mid {
     gap: 50px;
     font-family: var(--fontfm);
     font-size: var(--fontsz);
+}
+.right{
+    width: 100%;
+     display: flex;
+    gap:1.2rem;
+    margin-right: 1cm;
+    font-family: var(--fontfm);
+    font-size: var(--fontsz);
+
 }
 
 .right button{

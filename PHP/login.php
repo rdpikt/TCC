@@ -26,9 +26,13 @@ if (isset($_POST['login']) && isset($_POST['senha'])) {
                 // Configura as variáveis de sessão
                 $_SESSION['user_id'] = $user['id'];
                 $_SESSION['user_name'] = $user['nome_user'];
+                $_SESSION['user_name_completo'] = $user['nome_completo'];
+                $_SESSION['tipo_criador'] = $user['user_tag'];
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['avatar'] = $user['user_avatar'];
-                
+                $_SESSION['user_bio'] = $user['bio'];
+
+
 
                 // Redireciona para a página de carregamento
                 header("Location: ../Layout/load.html?message=Login realizado com sucesso!&action=login");
@@ -38,8 +42,8 @@ if (isset($_POST['login']) && isset($_POST['senha'])) {
             }
         } else {
             $erros[] = "Email ou nome de usuário não encontrado!";
-            
-            
+
+
         }
     }
 }
@@ -49,7 +53,7 @@ if (!empty($erros)) {
         echo "<script>alert('Erro: " . $erro . "');
         location.href = '../Layout/login.html';
         </script>";
-        
+
     }
 }
 ?>
