@@ -40,7 +40,7 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
   KEY `post_id` (`post_id`),
   KEY `user_id` (`user_id`),
   KEY `parent_comment_id` (`parent_comment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS `comunidades` (
   `tipo_comunidade` enum('Design','Crafts','literatura','escrita') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dono_id` (`dono_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `comunidades`
@@ -87,7 +87,7 @@ CREATE TABLE IF NOT EXISTS `comunidade_membros` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_membro` (`comunidade_id`,`usuario_id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -105,7 +105,7 @@ CREATE TABLE IF NOT EXISTS `curtidas` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `unica_curtida` (`usuario_id`,`obra_id`),
   KEY `obra_id` (`obra_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -122,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `galerias` (
   `data_criacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -136,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `galeria_obras` (
   `obra_id` int NOT NULL,
   PRIMARY KEY (`galeria_id`,`obra_id`),
   KEY `obra_id` (`obra_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -154,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `log_atividades` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -175,7 +175,7 @@ CREATE TABLE IF NOT EXISTS `notificacoes` (
   UNIQUE KEY `id` (`id`),
   KEY `user_id` (`user_id`),
   KEY `remetente_id` (`remetente_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -196,7 +196,7 @@ CREATE TABLE IF NOT EXISTS `obras` (
   `tipo_imagem` enum('png','jpg','jpeg','mp4','mp3','wav') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `portfolio_id` (`portfolio_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `obras`
@@ -223,7 +223,7 @@ CREATE TABLE IF NOT EXISTS `portfolios` (
   `visibilidade` enum('publico','privado','restrio') DEFAULT 'publico',
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -241,7 +241,7 @@ CREATE TABLE IF NOT EXISTS `reposts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `original_post_id` (`original_post_id`,`user_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `reposts`
@@ -270,7 +270,7 @@ CREATE TABLE IF NOT EXISTS `seguidores` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `unico_seguimento` (`seguidor_id`,`seguido_id`),
   KEY `seguido_id` (`seguido_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -293,7 +293,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'profile.png',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `users`
