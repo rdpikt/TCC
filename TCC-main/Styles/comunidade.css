@@ -1,0 +1,143 @@
+body{
+  overflow-x: auto;
+  overflow: auto;
+}
+.content{
+  display: flex;
+  position: relative;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1rem;
+  background-color: #222;
+  box-shadow: 0 2px 8px #0006;
+  width: 100%;
+  color: #fff;
+  text-align: start;
+
+}
+.titulo{
+  width: 75%;
+  position: relative;
+  top: 0;
+  left: 10%;
+  margin: 1rem 0;
+  padding: 0  1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #444;
+  font-size: 1.5rem;
+  font-weight: bold;
+  background-color: #111;
+  color: #f0f0f0;
+}
+.titulo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.btn-criar-comunidade {
+  padding: 0.6rem 1.2rem;
+  background: var(--roxo);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  font-weight: 500;
+  transition: background 0.3s;
+}
+
+.comunidades-lista{
+  display: flex;
+  gap: 2.5rem;
+  width: 75%;
+  position: relative;
+  top: 0;
+  left: 10%;
+  margin: 1rem 0;
+}
+.comunidade-card{
+  background: #111;
+  border-radius: 1.2rem;
+  overflow: hidden;
+  box-shadow: 0 2px 8px #0006;
+  display: inline-block;
+  width: 30%;
+  min-width: 250px;
+  max-width: 350;
+  height: 10rem;
+  margin-bottom: 2rem;
+  position: relative;
+  transition: box-shadow 0.2s;
+  padding: 1rem;
+  justify-content: space-between;
+}
+.comunidade-card:hover {
+  box-shadow: 0 4px 16px #0008;
+}
+.comunidade-card .top {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.comunidade-card .top img {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #333;
+}
+.comunidade-card .top h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  flex-grow: 1;
+}
+.comunidade-card .top button {
+  padding: 0.5rem 1rem;
+  background: var(--roxo);
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.comunidade-card .top .Sair-Comunidade {
+  background-color: #555;
+}
+.comunidade-card .top .Sair-Comunidade:hover {
+  background-color: #777;
+}
+.comunidade-card .top button:hover {
+  background: #8C19CD;
+}
+.comunidade-card .bottom {
+  margin-top: 1rem;
+}
+.comunidade-card .bottom h2 {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.comunidade-card .bottom p {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #ccc;
+}
+.titulo-comunidade{
+  width: 75%;
+  position: relative;
+  top: 0;
+  left: 10%;
+  margin: 1rem 0;
+  padding: 0  1.5rem;
+  border-radius: 0.5rem;
+  border: 1px solid #444;
+  font-size: 1.2rem;
+  font-weight: bold;
+  background-color: #111;
+  color: #f0f0f0;
+  text-align: center;
+}

@@ -1,0 +1,334 @@
+:root {
+    --background-main: #0d0d0d;
+    --background-panel: #0f0f0f;
+    --background-card: #1d1d1d;
+    --border-color-light: #535353;
+    --border-color-dark: #2b2b2b;
+    --text-primary: #ffffff;
+    --text-secondary: #7d7d7d;
+    --text-tertiary: #6e6e6e;
+
+    --font-main: 'Inter', sans-serif;
+    --font-logo-1: 'Secular One', sans-serif;
+    --font-logo-2: 'Ubuntu', sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: var(--background-main);
+    color: var(--text-primary);
+    font-family: var(--font-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* CSS from section:app */
+.app-container {
+        display: flex;
+        max-width: 1536px;
+        margin: 0 auto;
+        background-color: var(--background-main);
+    }
+
+    .sidebar {
+        width: 264px;
+        flex-shrink: 0;
+        background-color: var(--background-panel);
+        border-right: 1px solid var(--border-color-dark);
+        min-height: 100vh;
+    }
+    
+    .sidebar-inner {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 72px 38px;
+    }
+
+    .logo {
+        font-size: 20px;
+        text-align: center;
+        margin: 0 0 70px 0;
+    }
+
+    .logo-harp {
+        font-family: var(--font-logo-1);
+        font-weight: 400;
+    }
+
+    .logo-hub {
+        font-family: var(--font-logo-2);
+        font-weight: 400;
+    }
+
+    .sidebar-nav ul {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .sidebar-nav a, .sidebar-footer a {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        font-size: 20px;
+        font-weight: 500;
+    }
+    
+    .sidebar-nav a[href*="Criar"] span {
+        font-weight: 500;
+    }
+    
+    .sidebar-nav a[href*="Comunidades"] {
+        gap: 5px;
+    }
+
+    .icon-stack {
+        position: relative;
+        width: 30px;
+        height: 24px;
+        flex-shrink: 0;
+    }
+
+    .icon-stack .icon-back {
+        color: white;
+        position: absolute;
+        top: 0;
+        left: 0;
+    }
+
+    .icon-stack .icon-front {
+        position: absolute;
+        top: 4px;
+        left: 15px;
+    }
+
+    .sidebar-footer {
+        margin-top: auto;
+    }
+
+    .sidebar-footer ul {
+        display: flex;
+        flex-direction: column;
+        gap: 47px;
+    }
+
+    .main-content {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+    }
+
+    .content-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 11px 20px 11px 48px;
+        background-color: var(--background-panel);
+        border-bottom: 1px solid var(--border-color-dark);
+        position: sticky;
+        top: 0;
+        z-index: 10;
+    }
+
+    .search-bar {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        background-color: var(--background-card);
+        border: 1px solid var(--border-color-light);
+        border-radius: 400px;
+        padding: 13px 28px;
+        color: var(--text-tertiary);
+        font-size: 16px;
+        font-weight: 500;
+        flex-grow: 1;
+        margin-right: 20px;
+        max-width: 635px;
+    }
+
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+    }
+
+    .notification-button {
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        color:#7d7d7d;
+        font-size: 15px;
+    }
+
+    .user-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: white;
+    }
+
+    .feed-container {
+        padding: 22px;
+        display: flex;
+        flex-direction: column;
+        gap: 19px;
+        max-width: 679px;
+        margin: 0 auto;
+    }
+
+    .post-card {
+        background-color: var(--background-card);
+        border: 1px solid var(--border-color-light);
+        border-radius: 10px;
+        padding: 13px 22px 16px;
+    }
+
+    .post-header {
+        display: flex;
+        align-items: center;
+        gap: 13px;
+        margin-bottom: 15px;
+    }
+
+    .post-avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: white;
+    }
+
+    .post-author-info {
+        display: flex;
+        align-items: center;
+        gap: 11px;
+        flex-wrap: wrap;
+    }
+
+    .post-author-name {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--text-primary);
+    }
+
+    .post-author-handle, .post-timestamp, .dot {
+        font-size: 16px;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+    
+    .post-timestamp {
+        font-size: 14px;
+    }
+
+    .more-options {
+        margin-left: auto;
+    }
+
+    .more-options i{
+        color:#6e6e6e;
+    }
+
+    .post-body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .post-image {
+        border-radius: 10px;
+        width: 100%;
+        object-fit: cover;
+    }
+
+    .post-actions {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 17px;
+        padding: 0 5px;
+    }
+
+    .action-item {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 14px;
+        font-weight: 500;
+        color: var(--text-secondary);
+    }
+    
+    .post-text {
+        font-size: 18px;
+        font-weight: 500;
+        line-height: 1.2;
+        margin: 0;
+    }
+    
+    .post-title {
+        font-size: 20px;
+        font-weight: 500;
+        margin: 0 0 8px 0;
+    }
+    
+    .post-text-secondary {
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 1.2;
+        margin: 0 0 19px 0;
+    }
+
+    @media (max-width: 1024px) {
+        .sidebar {
+            display: none;
+        }
+        .content-header {
+            padding-left: 20px;
+        }
+    }
+    
+    @media (max-width: 768px) {
+        .app-container {
+            flex-direction: column;
+        }
+        .feed-container {
+            padding: 16px;
+        }
+        .search-bar {
+            display: none; /* Hide search bar on mobile for more space */
+        }
+        .content-header {
+            justify-content: flex-end;
+        }
+        .post-actions {
+            padding: 0;
+            flex-wrap: wrap;
+            justify-content: flex-start;
+            gap: 20px;
+        }
+    }
