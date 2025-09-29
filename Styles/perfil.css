@@ -3,7 +3,7 @@ body {
 }
 .profile-section {
   position: relative;
-  top: 0;
+  top: -10rem;
   left: 50%;
   transform: translateX(-50%);
   width: 60%;
@@ -16,7 +16,7 @@ body {
     align-items: center;
     margin-top: 2rem;
 }
-.profile-avatar {
+.profile-avatar{
     width: 150px;
     height: 150px;
     border-radius: 50%;
@@ -25,6 +25,18 @@ body {
     object-position: center;
     border: 4px solid var(--roxo);
     box-shadow: 0 2px 8px #0006;
+}
+
+.avatar-user{
+    height: 140px;
+    border-radius: 10rem;
+}
+
+.profile-section-content{
+    position: fixed;
+    top: 40rem;
+    text-align: center;
+
 }
 .profile-info {
     margin-top: 1rem;
@@ -55,18 +67,20 @@ body {
 }
 .profile-posts {
     margin-top: 2rem;
-    width: 80%;
+    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-.profile-posts-grid {
+.profile-posts-grid{
     column-count: 3;
-    column-gap: 2rem;
+    column-gap: 1.5rem;
     width: 100%;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 2rem;
 }
+
 @media (max-width: 900px) {
     .profile-posts-grid {
         column-count: 2;

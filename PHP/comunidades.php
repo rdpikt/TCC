@@ -45,6 +45,11 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
   <title>Perfil de Usuário</title>
   <link rel="stylesheet" href="../Styles/telainicial.css">
   <link rel="stylesheet" href="../Styles/comunidade.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
 </head>
 
 <body>
@@ -72,25 +77,26 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
   </header>
 
   <section class="main">
-    <nav class="nav-side" id="menu">
+  <nav class="nav-side" id="menu">
       <div class="user-avatar">
         <div class="user-avatar-img">
-          <img src="<?php echo "../images/avatares/Users/".htmlspecialchars($user_avatar); ?>" alt="Avatar do usuário">
+          <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>"
+            alt="Avatar do usuário">
         </div>
         <span><?php echo $_SESSION['user_name']; ?></span>
       </div>
       <ul>
-        <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
-        <li><a href="UsuarioLogado?feed=seguindo">Seguindo</a></li>
-        <li><a href="Galeria.php">Galeria</a></li>
-        <li><a href="EnviarArquivos.php">Criar Post</a></li>
-        <li><a href="comunidades.php">Comunidades</a></li>
-        <li><a href="perfil.php">Perfil</a></li>
+        <li><a href="UsuarioLogado.php?feed=foryou"><i style="color: white;" class="fi fi-br-home"></i>Página Inicial</a></li>
+        <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
+        <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
+        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a href="comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php">Configurações</a></li>
-          <li><a href="ajuda.php">Ajuda</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
+          <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
     </nav>

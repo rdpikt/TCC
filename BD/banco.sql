@@ -167,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `notificacoes` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL COMMENT 'ID do usuário que recebe a notificação',
   `remetente_id` int DEFAULT NULL COMMENT 'ID do usuário que originou a ação (pode ser nulo para sistema)',
-  `tipo` enum('curtida','seguimento','comentario','repost','sistema') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `tipo` enum('curtida','seguimento','comentario','repost','sistema') CHARACTER SET utf8mb4 NOT NULL,
   `link_id` int DEFAULT NULL COMMENT 'ID do objeto relacionado (ex: post_id, user_id)',
   `lida` tinyint(1) DEFAULT '0',
   `data_envio` timestamp NULL DEFAULT CURRENT_TIMESTAMP,

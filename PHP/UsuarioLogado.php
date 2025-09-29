@@ -175,14 +175,20 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Navegação</title>
 <link rel="stylesheet" href="../Styles/telainicial.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+    <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+    
 </head>
 <body>
 <header>
   <div class="logotipo">LOGO</div>
-  <input type="search" id="search-bar" placeholder="Barra de pesquisa">
+  <input type="search" id="search-bar" class="search-bar" placeholder="🔍 Barra de pesquisa">
   <div class="nav-user">
     <ul>
-      <li><a href="notificacoes.php">Notificações</a></li>
+      <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i>Notificações</a></li>
       <li><span><?= htmlspecialchars($_SESSION['user_name']) ?></span></li>
     </ul>
   </div>
@@ -209,17 +215,17 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
         <span><?php echo $_SESSION['user_name']; ?></span>
       </div>
       <ul>
-        <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
-        <li><a href="UsuarioLogado?feed=seguindo">Seguindo</a></li>
-        <li><a href="Galeria.php">Galeria</a></li>
-        <li><a href="EnviarArquivos.php">Criar Post</a></li>
-        <li><a href="comunidades.php">Comunidades</a></li>
-        <li><a href="perfil.php">Perfil</a></li>
+        <li><a href="UsuarioLogado.php?feed=foryou"><i style="color: white;" class="fi fi-br-home"></i>Página Inicial</a></li>
+        <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
+        <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
+        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a href="comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php">Configurações</a></li>
-          <li><a href="ajuda.php">Ajuda</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
+          <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
     </nav>
@@ -269,14 +275,19 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
           <form action="UsuarioLogado.php?feed=<?= $tipo_feed ?>" method="post">
             <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
             <ul>
-              <li><button type="button">Comentar</button></li>
-              <li><button type="submit" name="repostar_post" class="repostar-btn <?= $repostado ? 'repostado' : '' ?>">Repostar</button></li>
-              <li><button type="submit" name="curtir_post" class="curtida <?= $curtido ? 'curtido' : '' ?>">Curtir</button></li>
-              <li><button type="button">Compartilhar</button></li>
+              <li><button type="button"><i class="fi fi-rr-comment"></i></button></li>
+              <li><button type="submit" name="repostar_post" class="repostar-btn <?= $repostado ? 'repostado' : '' ?>"><i class="fi fi-rr-refresh"></i></button></li>
+              <li><button type="submit" name="curtir_post" class="curtida <?= $curtido ? 'curtido' : '' ?>"><svg width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+<path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+</svg>
+</button></li>
+              <li><button type="button"><i class="fi fi-rs-redo"></i></button></li>
             </ul>
           
           </form>
-            <span>Salvar</span>
+            <button type="submit" name="salvar_post" class="salvar-btn ww<?= $salvo ? 'salvado' : '' ?>"><svg xmlns="http://www.w3.org/2000/svg" height="1.5rem" width="1.5rem" viewBox="0 0 384 512">
+<path d="M0 48C0 21.5 21.5 0 48 0H336c26.5 0 48 21.5 48 48V464L192 352 0 464V48z"/>
+</svg></button>
         </div>
       </article>
       <?php endwhile; ?>

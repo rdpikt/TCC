@@ -110,8 +110,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <span><?php echo $_SESSION['user_name']; ?></span>
       </div>
       <ul>
-        <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
-        <li><a href="UsuarioLogado?feed=seguindo">Seguindo</a></li>
+        <li><a href="UsuarioLogado.php?feed=foryou">Página Inicial</a></li>
+        <li><a href="UsuarioLogado.php?feed=seguindo">Seguindo</a></li>
         <li><a href="Galeria.php">Galeria</a></li>
         <li><a href="EnviarArquivos.php">Criar Post</a></li>
         <li><a href="comunidades.php">Comunidades</a></li>
