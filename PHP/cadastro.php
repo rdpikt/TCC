@@ -12,14 +12,12 @@ if (!empty($erros)) {
 }
 
 $nome_completo = $_POST['nome_completo'];
-$nome_user = $_POST['nome_user'];
+$nome_user = '@'.$_POST['nome_user'];
 $email = $_POST['email'];
 $senha = $_POST['senha'];
 $data_nascimento = $_POST['data_nasc'];
 $senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Cria um hash seguro para a senha
-$tags_user = $_POST['tag'] ?? []; // Corrigido para capturar as tags selecionadas
 
-var_dump($tags_user);
 // Verifica se a data de nascimento é válida antes de continuar
 $data_nascimento_formatada = date('Y-m-d', strtotime($data_nascimento));
 if (!$data_nascimento_formatada || $data_nascimento_formatada === '1970-01-01') {
@@ -38,15 +36,6 @@ try {
     if (empty($nome_user) || empty($email) || empty($senha) || empty($data_nascimento)) {
         echo '<script>
             alert("Preencha todos os campos!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
-    }
-
-    // Verifica se pelo menos 3 tags foram selecionadas
-    if (isset($tags_user) && count($tags_user) < 3) {
-        echo '<script>
-            alert("Selecione pelo menos 3 tags!");
             window.location.href = "../Layout/cadastro.html";
         </script>';
         exit;
@@ -84,9 +73,9 @@ try {
         exit;
     }
 
-    if ($idade < 18) {
+    if ($idade < 16) {
         echo '<script>
-            alert("Você deve ter pelo menos 18 anos para se cadastrar!");
+            alert("Você deve ter pelo menos 16 anos para se cadastrar!");
             window.location.href = "../Layout/cadastro.html";
         </script>';
         exit;
@@ -135,11 +124,25 @@ try {
     $stmt->close();
 
     // Insere os dados no banco de dados
-    $stmt = $conn->prepare("INSERT INTO users (nome_completo, nome_user, email, senha, data_nasc, user_tag) VALUES (?, ?, ?, ?, ?, ?)");
-    $tags_serializadas = implode(',', $tags_user); // Serializa as tags para salvar no banco
-    $stmt->bind_param("ssssss", $nome_completo, $nome_user, $email, $senha_hash, $data_nascimento, $tags_serializadas);
+    $stmt = $conn->prepare("INSERT INTO users (nome_completo, nome_user, email, senha, data_nasc) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $nome_completo, $nome_user, $email, $senha_hash, $data_nascimento);
 
     if ($stmt->execute()) {
+        $user_id = $conn->insert_id;
+        $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
+        $stmt->bind_param("i", $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $user = $result->fetch_assoc();
+
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_name'] = $user['nome_user'];
+        $_SESSION['user_name_completo'] = $user['nome_completo'];
+        $_SESSION['tipo_criador'] = $user['user_tag'];
+        $_SESSION['user_email'] = $user['email'] ;
+        $_SESSION['avatar'] = $user['user_avatar'];
+        $_SESSION['user_bio'] = $user['bio'];
+
         header("Location: ../Layout/load.html?message=Cadastro realizado com sucesso!&action=cadastro");
     } else {
         throw new Exception("Erro ao cadastrar: " . $stmt->error);
