@@ -1,51 +1,74 @@
-const aceitar = document.querySelector("#btnAceitar")
-      const avancar = document.querySelector('#btnAvancar')
-      const checkboxterms = document.querySelector('#terms')
-      const checkboxtag = document.querySelectorAll('.tag')
-      const circlesteps = document.querySelectorAll('.circle')
+document.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById('cadastro-form');
+    const errorContainer = document.getElementById('error-container');
 
-      const circleOption = document.createElement('div')
-      
-      circleOption.classList.add('circle-option')
-      circlesteps[0].appendChild(circleOption);
+    const aceitar = document.querySelector("#btnAceitar");
+    const checkboxterms = document.querySelector('#terms');
 
+    if (aceitar) aceitar.disabled = true;
 
-      
+    if (checkboxterms) {
+        checkboxterms.addEventListener("change", () => {
+            if(aceitar) aceitar.disabled = !checkboxterms.checked;
+        });
+    }
 
-      const btns = [aceitar, avancar]
-      let currentStep = 0
+    if (form) {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault(); // Previne o envio padrão
 
-      aceitar.disabled = true
-      avancar.disabled = true
+            const formData = new FormData(form);
 
-      checkboxterms.addEventListener("change", ()=>{
-           aceitar.disabled = !checkboxterms.checked 
-      })
-      function verificarCheckboxes() {
-            const marcadas = Array.from(checkboxtag).filter(cb => cb.checked).length;
-            avancar.disabled = marcadas < 3
-          }
-          checkboxtag.forEach(cb => {
-            cb.addEventListener('change', verificarCheckboxes );
-          });
-          
+            fetch('../PHP/cadastro.php', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Limpa erros antigos
+                errorContainer.innerHTML = '';
+                errorContainer.classList.remove('show');
 
+                if (data.success) {
+                    // Redireciona para a página de carregamento em caso de sucesso
+                    window.location.href = data.redirect_url;
+                } else {
+                    // Mostra os erros na tela
+                    if (data.errors && data.errors.length > 0) {
+                        const errorList = document.createElement('ul');
+                        data.errors.forEach(errorText => {
+                            const listItem = document.createElement('li');
+                            listItem.textContent = errorText;
+                            errorList.appendChild(listItem);
+                        });
+                        errorContainer.appendChild(errorList);
+                        errorContainer.classList.add('show'); // Inicia o fade-in
 
-      const steps = document.querySelectorAll(".steps");
-     function atualizarStep(){
-      steps.forEach((step, index) =>{
-            step.classList.toggle('active', index === currentStep);
-            circlesteps[currentStep].appendChild(circleOption);
+                        // Inicia o timer para o fade-out
+                        setTimeout(() => {
+                            errorContainer.classList.remove('show');
+                            // Espera a transição terminar para limpar o conteúdo
+                            setTimeout(() => {
+                                errorContainer.innerHTML = '';
+                            }, 500); // Deve ser igual à duração da transição do CSS
+                        }, 3000);
+                    }
+                }
+            })
+            .catch(error => {
+                console.error('Erro na requisição:', error);
+                errorContainer.innerHTML = '<ul><li>Ocorreu um erro de comunicação com o servidor.</li></ul>';
+                errorContainer.classList.add('show'); // Inicia o fade-in
 
-      });
-     }
-     btns.forEach((btn) =>{
-      btn.addEventListener('click', (event)=>{
-            event.preventDefault();
-
-            if(currentStep < steps.length -1 ){
-                  currentStep++;
-                  atualizarStep();
-            }
-      })
-     })
+                // Inicia o timer para o fade-out
+                setTimeout(() => {
+                    errorContainer.classList.remove('show');
+                    // Espera a transição terminar para limpar o conteúdo
+                    setTimeout(() => {
+                        errorContainer.innerHTML = '';
+                    }, 500); // Deve ser igual à duração da transição do CSS
+                }, 3000);
+            });
+        });
+    }
+});

@@ -1,38 +1,14 @@
-<!--<!DOCTYPE html>
-<html lang="pt-br">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro</title>
-    <link rel="stylesheet" href="../Styles/login.css">
-</head>
-
-<body>
-            <div class="form">
-                <form action="../PHP/login.php" method="POST">
-                <label for="Login">Login</label>
-                <input type="text" class="text" name="login" required>
-                <label for="senha">Senha</label>
-                <input type="password" class="text" name="senha" required>
-                <input type="submit" value="Logar">
-                </form>
-            </div>
-        </div>
-</body>
-
-</html>-->
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../Styles/Login2.css">
+    <link rel="stylesheet" href="../Styles/login.css">
     
     <title>Formulário</title>
 </head>
 <body>
+    <div id="error-container"></div>
     <section class="containerPai">
         <div class="card loginActive">
             <div class="esquerda">
@@ -53,8 +29,9 @@
             <div class="direita">
                <div class="formCadastro">
                 <h2>Cadastro</h2>
-                <form method="POST" action="../PHP/cadastro.php">
-                    <input type="text" placeholder="Nome" name="nome_user">
+                <form method="POST" action="../PHP/cadastro.php" id="cadastro-form">
+                    <input type="text" placeholder="Nome de Exibição" name="nome_completo" required>
+                    <input type="text" placeholder="Nome de Usuário" name="nome_user" required>
                     <input type="date" placeholder="Data de Nascimento" name="data_nasc"  required format="dd/mm/yyyy">
                     <input type="email" placeholder="E-mail" name="email" id="email" required autocomplete="email">
                     <input type="password" placeholder="Senha" name="senha" id="senha" required>
@@ -75,4 +52,6 @@
     </section>
 </body>
 <script src="../Scripts/scriptlogin.js" defer></script>
+<script src="../Scripts/ajaxInteractions.js" defer></script>
+<script src="../Scripts/cadastro.js" defer></script>
 </html>
