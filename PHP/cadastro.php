@@ -1,6 +1,7 @@
 <?php
 require_once 'conexao.php';
 
+session_start();
 // Define o cabeçalho da resposta como JSON
 header('Content-Type: application/json');
 

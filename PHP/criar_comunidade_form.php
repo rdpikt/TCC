@@ -10,6 +10,7 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
     <title>Criar Nova Comunidade</title>
     <link rel="stylesheet" href="../Styles/telainicial.css">
     <link rel="stylesheet" href="../Styles/forms.css">
+    <link rel="stylesheet" href="../Styles/global.css">
 </head>
 <body>
     <header>

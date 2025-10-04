@@ -93,6 +93,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <title>Perfil de Usuário</title>
   <link rel="stylesheet" href="../Styles/telainicial.css">
   <link rel="stylesheet" href="../Styles/config.css">
+  <link rel="stylesheet" href="../Styles/global.css">
 </head>
 
 <body>

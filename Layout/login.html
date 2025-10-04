@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../Styles/login.css">
+    <link rel="stylesheet" href="../Styles/global.css">
     
     <title>Formulário</title>
 </head>
@@ -22,7 +23,7 @@
                 </div>
                 <div class="facaLogin">
                     <h2>Já tem <br>uma conta?</h2>
-                    <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, nemo corporis, aspernatur in dolor</p>
+                    <p>Já possui conta? Entre e continue compartilhando sua criatividade.</p>
                     <button class="loginButton">Faça Login</button>
                 </div>
             </div>
@@ -36,15 +37,16 @@
                     <input type="email" placeholder="E-mail" name="email" id="email" required autocomplete="email">
                     <input type="password" placeholder="Senha" name="senha" id="senha" required>
                     <input type="password" placeholder="Confirmar Senha" name="confirmar_senha" id="confirmar_senha" required>
-                    <input type="checkbox" name="terms" id="terms" class="termos" required>
-                    <label for="terms">Li e aceito os termos de uso</label>  
+                    <div class="termos-container">
+                        <input type="checkbox" name="terms" id="terms" class="termos" required>
+                        <label for="terms">Eu li e concordo com os termos de serviços e política de privacidade.</labe>
+                    </div>
                     <input type="submit" value="cadastrar" name="cadastrar">
-                    
                 </form>
                </div> 
                <div class="facaCadastro">
                 <h2>Não tem <br>uma conta?</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, nemo corporis, aspernatur in dolor</p>
+                <p>Junte-se à comunidade de criadores e dê voz às suas ideias em um espaço feito para a inovação.</p>
                 <button class="cadastroButton">Cadastre-se</button>
                </div>
             </div>

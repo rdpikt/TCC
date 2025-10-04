@@ -1,0 +1,24 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap');
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--fontfm);
+    font-weight: 300;
+}
+/* Variaveis do site*/
+:root {
+    --background-card: #1d1d1d;
+    --background-main: #0d0d0d;
+    --fundo: #0f0f0f;
+    --border-color-light: #535353;
+    --border-color-dark: #2b2b2b;
+    --roxo: #8C19CD;
+    --fontfm: "Ubuntu", sans-serif;
+    --fontsz: 18px;
+    --fontTit: 32px;
+    --botao: radial-gradient(
+        closest-side,
+        rgba(160, 131, 247, 1) 0%,
+        rgba(33, 0, 133, 1) 100%);
+}

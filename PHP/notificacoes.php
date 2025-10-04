@@ -32,6 +32,7 @@ $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
     <title>Notificações</title>
     <link rel="stylesheet" href="../Styles/telainicial.css">
     <link rel="stylesheet" href="../Styles/notificacoes.css">
+    <link rel="stylesheet" href="../Styles/global.css">
 </head>
 <body>
 <header>

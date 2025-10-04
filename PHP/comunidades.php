@@ -44,6 +44,7 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil de Usuário</title>
   <link rel="stylesheet" href="../Styles/telainicial.css">
+  <link rel="stylesheet" href="../Styles/global.css">
   <link rel="stylesheet" href="../Styles/comunidade.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
