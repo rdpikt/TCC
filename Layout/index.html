@@ -1,234 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HarpHub</title>
+    <link rel="stylesheet" href="../Styles/HomePage.css" />
+    <link rel="stylesheet" href="../Styles/animation.css" />
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
-  <link rel="stylesheet" href="../Styles/InfStyle.css">
-
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-rounded/css/uicons-solid-rounded.css'>
-</head>
-
-<body>
-
-  <!--------------------------------------------princ-------------------------------------------------------------------->
-  <section id="hero" class="blur-back">
-    <div class="hero-blur-background">
-      <div class="blur-rect"></div>
-      <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/1164_42.svg" alt="blur effect" class="blur-svg1">
-      <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/1164_43.svg" alt="blur effect" class="blur-svg2">
-      <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/1164_44.svg" alt="blur effect" class="blur-svg3">
-    </div>
-
-    <header class="site-header">
-      <div class="container header-container">
-        <a href="#" class="logo">
-          <span class="logo-part1">Harp</span><span class="logo-part2">Hub</span>
-        </a>
-        <nav class="main-nav">
-          <ul>
-            <li><a href="#about">Sobre nós</a></li>
-            <li><a href="#features">Como Funciona</a></li>
-            <li><a href="#why-us">Vantagens</a></li>
-            <li><a href="#testimonials">Depoimentos</a></li>
-            <li><a href="#mission">Missão</a></li>
-          </ul>
-        </nav>
+  <body>
+    <nav class="navigation hidden">
+      <div class="left"><b>Harp</b>Hub</div>
+      <div class="mid">
+        <ul>
+          <li>Sobre Nós</li>
+          <li>Recursos</li>
+          <li>FAQs</li>
+        </ul>
       </div>
-    </header>
-    <div class="light"></div>
-    <div class="luz">
-      <div class="luz1"></div>
-      <div class="luz1-back"></div>
-      <div class="luz2"></div>
-      <div class="luz3"></div>
-    </div>
-
-    <div class="container hero-content">
-      <h1>Registre sua Arte</h1>
-      <p>Publique, compartilhe e conecte-se com quem valoriza a arte. Uma comunidade dedicada a autores, artistas,
-        músicos e outros criativos.</p>
-
-        <div class="log-cad-buttons">
-          <button href="#" class="btn btn-signup" onclick="loginMV()">Começar</button>
-          </div>
-    </div>
-
-    <div class="carrocel">
-      <div class="item1">Item 1</div>
-      <div class="item2">Item 2</div>
-      <div class="item3">Item 3</div>
-    </div>
-  </section>
-
-  <!------------------------------------------Carrocel--------------------------------------------------------------->
-
-  <section id="about" class="section sobre-section">
-    <div class="container">
-      <div class="sobre-content-wrapper">
-        <div class="sobre-text">
-          <h2 class="text-gradient">O que é nossa plataforma</h2>
-          <p>Nossa plataforma é uma rede social dedicada a criadores de conteúdo, como autores, artistas, músicos,
-            poetas e ilustradores. Projetada para ser um ambiente seguro, confiável e acolhedor, ela oferece um espaço
-            onde a criatividade é celebrada, permitindo que artistas publiquem, armazenem e compartilhem suas obras,
-            como textos, poesias, ensaios, ilustrações e músicas.</p>
-          <a href="#" class="learn-more">
-            <span>Saiba Mais</span>
-            <i class="fi fi-sr-arrow-right"></i>
-          </a>
-          
-        </div>
-        <!---->
-        <div class="sobre-image-stack">
-          <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/1164_64.svg" alt="Decorative background shape"
-            class="sobre-img-bg">
-          <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/1164_65.svg" alt="Decorative foreground shape"
-            class="sobre-img-fg">
-        </div>
+      <div class="right">
+        <button onclick="loginMV()">Entrar</button>
       </div>
-    </div>
-  </section>
-  <!--------------------------------------Como Funciona------------------------------------------------------------>
+    </nav>
+    <main class="princ">
+      <h1 class="Tito">Registre sua Arte</h1>
+      <p class="subtito">
+        Garanta sua autoria com segurança em uma plataforma feita por criadores,
+        para criadores.
+      </p>
 
-  <section id="features" class="section features-section">
-    <div class="container">
-      <h2 class="section-title text-gradient">Como a HarpHub funciona?</h2>
-      <div class="features-grid">
-        <div class="feature-card">
-          <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/43cb89c62e54b007fd3fc7e8007de7aa7fdc2cb4.png"
-            alt="Customizable Profile Icon" class="feature-icon">
-          <h3>Perfil Personalizável</h3>
-          <p>Destaque seu portfólio com temas e layouts únicos que representam seu estilo artístico.</p>
-        </div>
-        <div class="feature-card">
-          <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/9e3c380d56fbaf69449feae854931878829d4c4f.png"
-            alt="Security and Control Icon" class="feature-icon">
-          <h3>Segurança e controle</h3>
-          <p>Sem algoritmos invasivos. Você decide quem vê seu conteúdo e como ele é compartilhado.</p>
-        </div>
-        <div class="feature-card">
-          <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/99f924ca4149025682b550476107fd8cdefdc2e8.png"
-            alt="Organized Publication Icon" class="feature-icon">
-          <h3>Publicação Organizada</h3>
-          <p>Poste textos, poesias, artes ou músicas em formatos dedicados, com categorias específicas para cada tipo de
-            conteúdo.</p>
-        </div>
+      <div class="carrocel">
+        <div class="item1">Item 1</div>
+        <div class="item2">Item 2</div>
+        <div class="item3">Item 3</div>
       </div>
-    </div>
-  </section>
-  <div class="light"></div>
-  <!----------------------------------------Por que Usar-nos-------------------------------------------------------------->
-  <section id="why-us" class="section why-us-section">
-    <div class="container">
-      <div class="why-us-box">
-        <div class="why-us-image">
-          <img src="/page/251bc3e4-ac39-4d55-9557-dad481959a2a/images/1164_86.svg" alt="Abstract art piece">
-        </div>
-        <div class="why-us-text">
-          <h2 class="text-gradient">Por que escolher a HarpHub?</h2>
-          <p>Diferente das redes sociais tradicionais, nossa plataforma é focada na valorização da originalidade e na
-            criação de conexões significativas entre criativos. Aqui, você encontra um espaço seguro para expressar sua
-            arte, receber feedback construtivo e colaborar com outros talentos. Nosso ambiente é livre de algoritmos
-            comerciais, priorizando a qualidade e a autenticidade do conteúdo, ajudando você a crescer artisticamente e
-            construir uma comunidade vibrante.</p>
-          <a href="#" class="learn-more">
-            <span>Saiba Mais</span>
-            <i class="fi fi-sr-arrow-right"></i>
-          </a>
-        </div>
-      </div>
-    </div>
-  </section>
+    </main>
 
-  <!--------------------------------------Nossos Usuarios----------------------------------------------------------------->
-  <section id="testimonials" class="section testimonials-section">
-    <div class="container">
-      <h2 class="section-title text-gradient">O que nossos usuários estão dizendo</h2>
-      <div class="testimonials-grid">
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">A plataforma me deu a chance de compartilhar minhas músicas com pessoas que
-            realmente apreciam a arte. As conexões que fiz aqui já deram muitos resultados.</p>
-          <div class="testimonial-author">
-            <p class="author-name">Nome</p>
-            <p class="author-handle">usuario@gmail.com</p>
-          </div>
+    <main2>
+      <div class="infopla">
+        <div class="tit titulo">
+          <h1>O que é nossa plataforma?</h1>
+          <p>
+            Nossa plataforma é uma rede social dedicada a criadores de conteúdo,
+            como autores, artistas, músicos, poetas e ilustradores. Projetada
+            para ser um ambiente seguro, confiável e acolhedor, ela oferece um
+            espaço onde a criatividade é celebrada, permitindo que artistas\\\\\
+            publiquem, armazenem e compartilhem suas obras, como textos,
+            poesias, ensaios, ilustrações e músicas.
+          </p>
         </div>
-        <div class="testimonial-card featured">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">Esta plataforma mudou a forma como compartilho minha poesia. O ambiente é
-            acolhedor, e os comentários da comunidade me ajudaram a melhorar meu trabalho.</p>
-          <div class="testimonial-author">
-            <p class="author-name">Nome</p>
-            <p class="author-handle">usuario@gmail.com</p>
-          </div>
-        </div>
-        <div class="testimonial-card">
-          <div class="testimonial-avatar"></div>
-          <p class="testimonial-quote">Finalmente encontrei um lugar onde minhas ilustrações são valorizadas! A
-            possibilidade de criar portfólios e colaborar em projetos com outros artistas é simplesmente fantástica.</p>
-          <div class="testimonial-author">
-            <p class="author-name">Nome</p>
-            <p class="author-handle">usuario@gmail.com</p>
-          </div>
-        </div>
+        <div class="imgs"></div>
       </div>
-    </div>
-  </section>
-
-  <!-----------------------------------------Missão------------------------------------------------------------------------->
-  <section id="mission" class="section mission-section">
-    <div class="container">
-      <div class="mission-box">
-        <h2 class="text-gradient">Nossa Missão</h2>
-        <p>Nossa missão é proporcionar um ambiente digital seguro e inspirador que empodere criadores de conteúdo,
-          promovendo a criatividade, a colaboração e o crescimento artístico. Queremos construir um ecossistema cultural
-          dinâmico e inovador, onde a originalidade é celebrada e conexões significativas transformam ideias em
-          realidades.</p>
-        <a href="#" class="btn-cta">Começar</a>
-      </div>
-    </div>
-  </section>
-  <!------------------------------------------Footer----------------------------------------------------------------------->
-  <footer id="footer" class="site-footer">
-    <div class="container footer-container">
-      <div class="footer-links">
-        <div class="footer-column">
-          <h4>Explore</h4>
-          <ul>
-            <li><a href="#">Como Funciona</a></li>
-            <li><a href="#">Comunidade</a></li>
-            <li><a href="#">FAQ</a></li>
-            <li><a href="#">Central de Ajuda</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h4>Políticas</h4>
-          <ul>
-            <li><a href="#">Termos de Uso</a></li>
-            <li><a href="#">Politica de Privacidade</a></li>
-            <li><a href="#">Diretrizes</a></li>
-            <li><a href="#">Direitos Autorais</a></li>
-          </ul>
-        </div>
-        <div class="footer-column">
-          <h4>Redes Sociais</h4>
-          <ul>
-            <li><a href="#">Twitter</a></li>
-            <li><a href="#">Tiktok</a></li>
-            <li><a href="#">Instagram</a></li>
-            <li><a href="#">Facebook</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="footer-copyright">
-        <p>© 2025 Nome da Plataforma. Todos os direitos reservados</p>
-      </div>
-    </div>
-  </footer>
-</body>
-<script src="../Scripts/index.js"></script>
-<script src="../Scripts/animation.js"></script>
+    </main2>
+  </body>
+  <script src="../Scripts/index.js"></script>
+  <script src="../Scripts/animation.js"></script>
 </html>

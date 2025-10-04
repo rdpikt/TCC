@@ -25,7 +25,7 @@ if (isset($_POST['login']) && isset($_POST['senha'])) {
             if (password_verify($senha, $user['senha'])) {
                 // Configura as variáveis de sessão
                 $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = '@'.$user['nome_user'];
+                $_SESSION['user_name'] = $user['nome_user'];
                 $_SESSION['user_name_completo'] = $user['nome_completo'];
                 $_SESSION['tipo_criador'] = $user['user_tag'];
                 $_SESSION['user_email'] = $user['email'];

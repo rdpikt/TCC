@@ -1,5 +1,5 @@
 //modal-perfil
-const userSpan = document.querySelector('.nav-user li:nth-child(2) span');
+const userSpan = document.querySelector('.nav-user li:nth-child(2) span img');
 const modalPerfil = document.querySelector('.modal-perfil');
 userSpan.addEventListener('click', () => {
   modalPerfil.classList.toggle('active');
@@ -11,3 +11,4 @@ window.addEventListener('click', (e) => {
   }
 });
 
+console.log(userSpan);

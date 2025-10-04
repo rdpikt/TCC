@@ -188,8 +188,8 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
   <input type="search" id="search-bar" class="search-bar" placeholder="🔍 Barra de pesquisa">
   <div class="nav-user">
     <ul>
-      <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i>Notificações</a></li>
-      <li><span><?= htmlspecialchars($_SESSION['user_name']) ?></span></li>
+      <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
+      <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>" alt="Avatar do usuário"></span></li>
     </ul>
   </div>
   <div class="modal-perfil">
@@ -207,13 +207,6 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
 
 <section class="main">
   <nav class="nav-side" id="menu">
-      <div class="user-avatar">
-        <div class="user-avatar-img">
-          <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>"
-            alt="Avatar do usuário">
-        </div>
-        <span><?php echo $_SESSION['user_name']; ?></span>
-      </div>
       <ul>
         <li><a href="UsuarioLogado.php?feed=foryou"><i style="color: white;" class="fi fi-br-home"></i>Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
@@ -285,7 +278,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
             </ul>
           
           </form>
-            <button type="submit" name="salvar_post" class="salvar-btn ww<?= $salvo ? 'salvado' : '' ?>"><svg xmlns="http://www.w3.org/2000/svg" height="1.5rem" width="1.5rem" viewBox="0 0 384 512">
+            <button type="submit" name="salvar_post" class="salvar-btn ww"><svg xmlns="http://www.w3.org/2000/svg" height="1.5rem" width="1.5rem" viewBox="0 0 384 512">
 <path d="M0 48C0 21.5 21.5 0 48 0H336c26.5 0 48 21.5 48 48V464L192 352 0 464V48z"/>
 </svg></button>
         </div>

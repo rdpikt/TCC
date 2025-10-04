@@ -8,25 +8,7 @@ searchBar.addEventListener('keypress', (e) => {
     const query = searchBar.value.trim();
     if (query) {
       window.location.href = `../PHP/Pesquisa.php?query=${encodeURIComponent(query)}`;
-    }
+    }response
   }
 });
   
-//modal-options
-  btnOptions.forEach((btn, index) => {
-    btn.addEventListener('click', () => {
-      modalOptions.forEach((modal, i) => {
-        if(i === index){
-          modal.classList.toggle('active');
-        }
-      })
-        
-    });
-  });
-  window.addEventListener('click', (e) => {
-    modalOptions.forEach((modal) => {
-        if (!modal.contains(e.target) && !Array.from(btnOptions).some(btn => btn === e.target)) {
-            modal.classList.remove('active');
-        }
-    });
-  });

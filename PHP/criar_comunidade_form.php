@@ -23,14 +23,6 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
       </div>
     </header>
     <section class="main">
-        <nav class="nav-side" id="menu">
-          <div class="user-avatar">
-            <div class="user-avatar-img">
-              <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>"
-                alt="Avatar do usuário">
-            </div>
-            <span><?php echo $_SESSION['user_name']; ?></span>
-          </div>
           <ul>
             <li><a href="UsuarioLogado.php?feed=foryou">Página Inicial</a></li>
             <li><a href="comunidades.php">Comunidades</a></li>

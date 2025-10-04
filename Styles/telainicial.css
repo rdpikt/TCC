@@ -62,13 +62,27 @@ input[type="search"]{
 }
 .nav-user{
   width:15%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
   color: white;
 }
 .nav-user ul{
   display: flex;
   gap: 1.2rem;
+  justify-content: center;
+  align-items: center;
   list-style: none;
   cursor: pointer;
+}
+.nav-user ul li span img{
+  width: 3.2rem;
+  height: 3.2rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--border-color-dark);
+
 }
 .nav-side{
   background-color: var(--fundo);
@@ -85,6 +99,12 @@ input[type="search"]{
   transition: all .5s ease-in;
   z-index: 4;
   align-items: center ;
+}
+.nav-side ul{
+  display: flex;
+  gap: 1.2rem;
+  flex-direction: column;
+  justify-content: center;
 }
 .nav-side li{
   list-style: none;

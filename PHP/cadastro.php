@@ -12,12 +12,13 @@ if (!empty($erros)) {
 }
 
 $nome_completo = $_POST['nome_completo'];
-$nome_user = '@'.$_POST['nome_user'];
+$nome_user = $_POST['nome_user'];
 $email = $_POST['email'];
 $senha = $_POST['senha'];
 $data_nascimento = $_POST['data_nasc'];
 $senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Cria um hash seguro para a senha
 
+var_dump($tags_user);
 // Verifica se a data de nascimento é válida antes de continuar
 $data_nascimento_formatada = date('Y-m-d', strtotime($data_nascimento));
 if (!$data_nascimento_formatada || $data_nascimento_formatada === '1970-01-01') {
@@ -125,24 +126,9 @@ try {
 
     // Insere os dados no banco de dados
     $stmt = $conn->prepare("INSERT INTO users (nome_completo, nome_user, email, senha, data_nasc) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $nome_completo, $nome_user, $email, $senha_hash, $data_nascimento);
+    $stmt->bind_param("ssssss", $nome_completo, $nome_user, $email, $senha_hash, $data_nascimento);
 
     if ($stmt->execute()) {
-        $user_id = $conn->insert_id;
-        $stmt = $conn->prepare("SELECT * FROM users WHERE id = ?");
-        $stmt->bind_param("i", $user_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $user = $result->fetch_assoc();
-
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['user_name'] = $user['nome_user'];
-        $_SESSION['user_name_completo'] = $user['nome_completo'];
-        $_SESSION['tipo_criador'] = $user['user_tag'];
-        $_SESSION['user_email'] = $user['email'] ;
-        $_SESSION['avatar'] = $user['user_avatar'];
-        $_SESSION['user_bio'] = $user['bio'];
-
         header("Location: ../Layout/load.html?message=Cadastro realizado com sucesso!&action=cadastro");
     } else {
         throw new Exception("Erro ao cadastrar: " . $stmt->error);

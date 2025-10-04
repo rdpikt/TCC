@@ -54,13 +54,6 @@ $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
 
 <section class="main">
   <nav class="nav-side" id="menu">
-      <div class="user-avatar">
-        <div class="user-avatar-img">
-          <img src="<?php echo "../images/avatares/Users/". htmlspecialchars($user_avatar); ?>"
-            alt="Avatar do usuário">
-        </div>
-        <span><?php echo $_SESSION['user_name']; ?></span>
-      </div>
       <ul>
         <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
         <li><a href="UsuarioLogado?feed=seguindo">Seguindo</a></li>

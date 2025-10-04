@@ -9,58 +9,77 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
-  $novoNome = ($_POST['alterar_nome']) ?? '';
-  $bio = $_POST['alterar_bio'] ??'';
-  $novaFoto = date('dmYs') . '_' . $_FILES['mudar_avatar']['name'];
+    // Busca o avatar antigo no banco de dados
+    $sql_get_avatar = "SELECT user_avatar FROM users WHERE id = ?";
+    $stmt_get_avatar = $conn->prepare($sql_get_avatar);
+    $stmt_get_avatar->bind_param('i', $userId);
+    $stmt_get_avatar->execute();
+    $result_get_avatar = $stmt_get_avatar->get_result();
+    $user_data = $result_get_avatar->fetch_assoc();
+    $antigoAvatar = $user_data['user_avatar'] ?? 'profile.png';
 
-  if (strlen($novoNome) < 3 || strlen($novoNome) > 20) {
-    echo '<script>
-            alert("Nome de usuário inválido! Deve ter entre 3 e 20 caracteres.");
-            window.location.href = "../PHP/config.php";
-        </script>';
-    exit();
-  }
+    $avatarParaSalvar = $antigoAvatar;
 
-  $erros = [];
+    $novoNome = $_POST['alterar_nome'] ?? '';
+    $bio = $_POST['alterar_bio'] ?? '';
 
-  if (isset($_FILES['mudar_avatar']) && $_FILES['mudar_avatar']['size'] > 0) {
-    $extensaoAceitas = array('png', 'jpg', 'jpg');
-
-    $aux = explode('.', $_FILES['mudar_avatar']['name']);
-    $extensao = end($aux);
-    if (array_search($extensao, $extensaoAceitas) === false) {
-      $erros[] = 'Extensão inválida';
+    if (strlen($novoNome) < 3 || strlen($novoNome) > 20) {
+        echo '<script>
+                alert("Nome de usuário inválido! Deve ter entre 3 e 20 caracteres.");
+                window.location.href = "../PHP/config.php";
+            </script>';
+        exit();
     }
 
-    if (is_uploaded_file($_FILES['mudar_avatar']['tmp_name'])) {
-      if (!file_exists('../images/avatares/Users')) {
-        mkdir('../images/avatares/Users');
-      }
+    $erros = [];
+    $novaFoto = '';
 
-      
+    if (isset($_FILES['mudar_avatar']) && $_FILES['mudar_avatar']['error'] == 0 && $_FILES['mudar_avatar']['size'] > 0) {
+        $extensoesAceitas = ['png', 'jpg', 'jpeg', 'gif'];
+        $extensao = strtolower(pathinfo($_FILES['mudar_avatar']['name'], PATHINFO_EXTENSION));
 
-      if (!move_uploaded_file($_FILES['mudar_avatar']['tmp_name'], '../images/avatares/Users/' . $novaFoto)) {
-        $erros[] = 'Houve um erro ao gravar o arquivo na pasta';
-      }
+        if (!in_array($extensao, $extensoesAceitas)) {
+            $erros[] = 'Extensão de arquivo inválida. Apenas JPG, JPEG, PNG e GIF são permitidos.';
+        }
 
+        if (empty($erros)) {
+            $novaFoto = $_SESSION['user_name'] .'_' . date('dmYs') . '_' . $extensao;
+            $caminhoUpload = '../images/avatares/Users/' . $novaFoto;
+
+            if (!file_exists('../images/avatares/Users')) {
+                mkdir('../images/avatares/Users', 0777, true);
+            }
+
+            if (move_uploaded_file($_FILES['mudar_avatar']['tmp_name'], $caminhoUpload)) {
+                $avatarParaSalvar = $novaFoto;
+                // Deleta a foto antiga se não for a padrão e o arquivo existir
+                if ($antigoAvatar && $antigoAvatar != 'profile.png' && file_exists('../images/avatares/Users/' . $antigoAvatar)) {
+                    unlink('../images/avatares/Users/' . $antigoAvatar);
+                }
+            } else {
+                $erros[] = 'Houve um erro ao mover o arquivo de imagem.';
+            }
+        }
     }
 
-  }
- $sql = 'UPDATE users U SET user_avatar = ?, nome_user = ?, bio = ? WHERE U.id = ?';
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param('sssi', $novaFoto, $novoNome, $bio, $userId);
-  $result = $stmt->execute();
-
-
-  if ($stmt) {
-    $_SESSION['avatar'] = $novaFoto;
-    $user['user_name'] = $novoNome;
-    $user['user_bio'] = $bio;
-    echo "<div class='alert alert-sucess' role='alert'>Conteúdo publicado com sucesso</div>";
-  } else {
-    echo "<div class='alert alert-danger' role='alert'>Erro ao publicar</div>";
-  }
-  echo "<meta http-equiv=refresh content='3;URL=config.php'>";
+    if (empty($erros)) {
+        $sql = 'UPDATE users SET user_avatar = ?, nome_user = ?, bio = ? WHERE id = ?';
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('sssi', $avatarParaSalvar, $novoNome, $bio, $userId);
+        
+        if ($stmt->execute()) {
+            $_SESSION['avatar'] = $avatarParaSalvar;
+            $_SESSION['user_name'] = $novoNome; // Atualiza o nome na sessão também
+            echo "<div class='alert alert-success' role='alert'>Perfil atualizado com sucesso!</div>";
+        } else {
+            echo "<div class='alert alert-danger' role='letras'>Erro ao atualizar o perfil.</div>";
+        }
+    } else {
+        foreach ($erros as $erro) {
+            echo "<div class='alert alert-danger' role='alert'>" . htmlspecialchars($erro) . "</div>";
+        }
+    }
+    echo "<meta http-equiv=refresh content='3;URL=config.php'>";
 }
 
 ?>
@@ -102,13 +121,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <section class="main">
     <nav class="nav-side" id="menu">
-      <div class="user-avatar">
-        <div class="user-avatar-img">
-          <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>"
-            alt="Avatar do usuário">
-        </div>
-        <span><?php echo $_SESSION['user_name']; ?></span>
-      </div>
       <ul>
         <li><a href="UsuarioLogado.php?feed=foryou">Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo">Seguindo</a></li>
