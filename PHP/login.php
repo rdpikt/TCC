@@ -1,59 +1,63 @@
 <?php
-require_once 'conexao.php';// Protege a página para usuários autenticados
+require_once 'conexao.php';
 
-session_start(); // Inicia a sessão
+header('Content-Type: application/json');
+session_start();
 
+$response = [];
 $erros = [];
 
-if (isset($_POST['login']) && isset($_POST['senha'])) {
-    $login = $_POST['login']; // Pode ser email ou nome_user
-    $senha = $_POST['senha'];
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $login = $_POST['login'] ?? '';
+    $senha = $_POST['senha'] ?? '';
 
     if (empty($login) || empty($senha)) {
         $erros[] = "Preencha todos os campos!";
-    } else {
-        // Usando prepared statements para evitar SQL Injection
-        $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR nome_user = ?");
-        $stmt->bind_param("ss", $login, $login);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    } 
+    else {
+        try {
+            $stmt = $conn->prepare("SELECT * FROM users WHERE email = ? OR nome_user = ?");
+            $stmt->bind_param("ss", $login, $login);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-        if ($result->num_rows > 0) {
-            $user = $result->fetch_assoc();
+            if ($result->num_rows === 1) {
+                $user = $result->fetch_assoc();
 
-            // Verifica a senha usando password_verify
-            if (password_verify($senha, $user['senha'])) {
-                // Configura as variáveis de sessão
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user_name'] = $user['nome_user'];
-                $_SESSION['user_name_completo'] = $user['nome_completo'];
-                $_SESSION['tipo_criador'] = $user['user_tag'];
-                $_SESSION['user_email'] = $user['email'];
-                $_SESSION['avatar'] = $user['user_avatar'];
-                $_SESSION['user_bio'] = $user['bio'];
+                if (password_verify($senha, $user['senha'])) {
+                    // Senha correta, login bem-sucedido
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user_name'] = $user['nome_user'];
+                    $_SESSION['user_name_completo'] = $user['nome_completo'];
+                    $_SESSION['tipo_criador'] = $user['user_tag'];
+                    $_SESSION['user_email'] = $user['email'];
+                    $_SESSION['avatar'] = $user['user_avatar'];
+                    $_SESSION['user_bio'] = $user['bio'];
 
-
-
-                // Redireciona para a página de carregamento
-                header("Location: ../Layout/load.html?message=Login realizado com sucesso!&action=login");
-                exit();
+                    $response['success'] = true;
+                    $response['redirect_url'] = '../Layout/load.html?message=Login realizado com sucesso!&action=login'; // Redireciona para a página principal do usuário
+                } else {
+                    $erros[] = "Senha incorreta!";
+                }
             } else {
-                $erros[] = "Senha incorreta!";
+                $erros[] = "Email ou nome de usuário não encontrado!";
             }
-        } else {
-            $erros[] = "Email ou nome de usuário não encontrado!";
-
-
+            $stmt->close();
+        } catch (Exception $e) {
+            $erros[] = "Erro no servidor: " . $e->getMessage();
         }
     }
+} else {
+    $erros[] = "Método de requisição inválido.";
 }
-// Exibe os erros, se houver
-if (!empty($erros)) {
-    foreach ($erros as $erro) {
-        echo "<script>alert('Erro: " . $erro . "');
-        location.href = '../Layout/login.html';
-        </script>";
 
-    }
+// Se houver erros em qualquer ponto, prepara a resposta de erro
+if (!empty($erros)) {
+    $response['success'] = false;
+    $response['errors'] = $erros;
 }
+
+// Envia a resposta final em JSON e termina o script
+echo json_encode($response);
+exit();
 ?>

@@ -80,7 +80,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             if ($stmt->execute()) {
                 $response['success'] = true;
                 $response['message'] = 'Cadastro realizado com sucesso!';
-                $response['redirect_url'] = '../Layout/load.html?action=cadastro';
+                $response['redirect_url'] = '../Layout/load.html?message=Cadastro realizado com sucesso!&ction=cadastro';
             } else {
                 $erros[] = "Erro ao registrar no banco de dados.";
             }
