@@ -1,0 +1,35 @@
+
+body{
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--fundo   );
+  overflow: hidden;
+}
+iframe{
+  width: 4rem;
+  height: 4rem;
+  border: none;
+}
+@media screen and (max-width: 768px){
+  iframe{
+    width: 3rem;
+    height: 3rem;
+  }
+}
+@media screen and (max-width: 480px){
+  iframe{
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  iframe{
+    width: 4rem;
+    height: 4rem;
+  }
+  
+}
