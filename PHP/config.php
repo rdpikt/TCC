@@ -22,14 +22,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $novoNome = $_POST['alterar_nome'] ?? '';
     $bio = $_POST['alterar_bio'] ?? '';
-
+  if(!empty($novoNome)){
     if (strlen($novoNome) < 3 || strlen($novoNome) > 20) {
-        echo '<script>
-                alert("Nome de usuário inválido! Deve ter entre 3 e 20 caracteres.");
-                window.location.href = "../PHP/config.php";
-            </script>';
+        $erros = ['O nome de usuário deve ter entre 3 e 20 caracteres.'];
         exit();
     }
+  }
 
     $erros = [];
     $novaFoto = '';
@@ -63,16 +61,51 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (empty($erros)) {
-        $sql = 'UPDATE users SET user_avatar = ?, nome_user = ?, bio = ? WHERE id = ?';
-        $stmt = $conn->prepare($sql);
-        $stmt->bind_param('sssi', $avatarParaSalvar, $novoNome, $bio, $userId);
-        
-        if ($stmt->execute()) {
-            $_SESSION['avatar'] = $avatarParaSalvar;
-            $_SESSION['user_name'] = $novoNome; // Atualiza o nome na sessão também
-            echo "<div class='alert alert-success' role='alert'>Perfil atualizado com sucesso!</div>";
+      
+        $updates = [];
+        $params = [];
+        $types = '';
+
+        if ($avatarParaSalvar !== $antigoAvatar) {
+            $updates[] = 'user_avatar = ?';
+            $params[] = $avatarParaSalvar;
+            $types .= 's';
+        }
+
+        if (!empty($novoNome)) {
+            $updates[] = 'nome_user = ?';
+            $params[] = $novoNome;
+            $types .= 's';
+        }
+
+        if (!empty($bio)) {
+            $updates[] = 'bio = ?';
+            $params[] = $bio;
+            $types .= 's';
+        }
+
+        if (!empty($updates)) {
+            $sql = 'UPDATE users SET ' . implode(', ', $updates) . ' WHERE id = ?';
+            $params[] = $userId;
+            $types .= 'i';
+
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param($types, ...$params);
+            
+            if ($stmt->execute()) {
+                if ($avatarParaSalvar !== $antigoAvatar) {
+                    $_SESSION['avatar'] = $avatarParaSalvar;
+                }
+                if (!empty($novoNome)) {
+                    $_SESSION['user_name'] = $novoNome; // Atualiza o nome na sessão também
+                }
+                echo "<div class='alert alert-success' role='alert'>Perfil atualizado com sucesso!</div>";
+            } else {
+                echo "<div class='alert alert-danger' role='letras'>Erro ao atualizar o perfil.</div>";
+            }
         } else {
-            echo "<div class='alert alert-danger' role='letras'>Erro ao atualizar o perfil.</div>";
+            // Opcional: informar ao usuário que nada foi alterado
+            echo "<div class='alert alert-info' role='alert'>Nenhuma alteração para salvar.</div>";
         }
     } else {
         foreach ($erros as $erro) {
@@ -99,11 +132,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <body>
   <header>
     <div class="logotipo">LOGO</div>
-    <input type="search" name="search-bar" id="search-bar" placeholder="Barra de pesquisa">
+    <div class="search-container">
+      <div class="search-bar-wrapper">
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+      </div>
+        <div id="suggestions-box">
+        </div>
+  </div>
     <div class="nav-user">
       <ul>
         <li><span><a href="notificacoes.php">notificações</a></span></li>
-        <li><span><?php echo $_SESSION['user_name']; ?></span></li>
+        <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>" alt="Avatar do usuário"></span></li>w
       </ul>
     </div>
     <div class="modal-perfil">
@@ -127,7 +166,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <li><a href="UsuarioLogado.php?feed=seguindo">Seguindo</a></li>
         <li><a href="Galeria.php">Galeria</a></li>
         <li><a href="EnviarArquivos.php">Criar Post</a></li>
-        <li><a href="comunidades.php">Comunidades</a></li>
+        <li><a href="explorar_comunidades.php">Comunidades</a></li>
         <li><a href="perfil.php">Perfil</a></li>
       </ul>
       <div class="tools">
@@ -140,7 +179,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     <section class="content">
       <form action="config.php" method="post" enctype="multipart/form-data">
-        <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>" alt="">
+        <img src="<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>" alt="" id="avatar-preview">
         <input type="file" name="mudar_avatar" id="MudarAvatar" value="Mudar Foto de Perfil"
           accept="image/png, image/jpg, image/jpeg">
         <input type="text" name="alterar_nome" id="AlterarNome" placeholder="Alterar seu Nickname">
@@ -151,5 +190,22 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </section>
 </body>
 <script src="../Scripts/modals.js"></script>
+<script src="../Scripts/TelaInicial.js"></script>
+<script>
+  document.getElementById('MudarAvatar').addEventListener('change', function(event) {
+    const preview = document.getElementById('avatar-preview');
+    const file = event.target.files[0];
+    const reader = new FileReader();
 
+    reader.onloadend = function() {
+      preview.src = reader.result;
+    }
+
+    if (file) {
+      reader.readAsDataURL(file);
+    } else {
+      preview.src = "<?php echo "../images/avatares/Users/" . htmlspecialchars($user_avatar); ?>";
+    }
+  });
+</script>
 </html>

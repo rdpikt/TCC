@@ -1,5 +1,6 @@
 <?php
 require "protect.php";
+require "conexao.php";
 $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png';
 ?>
 <!DOCTYPE html>
@@ -15,7 +16,13 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
 <body>
     <header>
       <div class="logotipo">LOGO</div>
-      <input type="search" id="search-bar" placeholder="Barra de pesquisa">
+      <div class="search-container">
+      <div class="search-bar-wrapper">
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+      </div>
+        <div id="suggestions-box">
+        </div>
+  </div>
       <div class="nav-user">
         <ul>
           <li><a href="notificacoes.php">Notificações</a></li>
@@ -26,7 +33,7 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
     <section class="main">
           <ul>
             <li><a href="UsuarioLogado.php?feed=foryou">Página Inicial</a></li>
-            <li><a href="comunidades.php">Comunidades</a></li>
+            <li><a href="explorar_comunidades.php">Comunidades</a></li>
             <li><a href="perfil.php">Perfil</a></li>
           </ul>
         </nav>
@@ -61,5 +68,6 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
         </section>
     </section>
     <script src="../Scripts/modals.js"></script>
+    <script src="../Scripts/TelaInicial.js"></script>
 </body>
 </html>

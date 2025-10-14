@@ -60,7 +60,7 @@ $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
         <li><a href="UsuarioLogado?feed=seguindo">Seguindo</a></li>
         <li><a href="Galeria.php">Galeria</a></li>
         <li><a href="EnviarArquivos.php">Criar Post</a></li>
-        <li><a href="comunidades.php">Comunidades</a></li>
+        <li><a href="explorar_comunidades.php">Comunidades</a></li>
         <li><a href="perfil.php">Perfil</a></li>
       </ul>
       <div class="tools">
@@ -147,5 +147,6 @@ $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
 
 </body>
 <script src="../Scripts/notificacoes.js"></script>
+<script src="../Scripts/TelaInicial.js"></script>
 <script src="../Scripts/modals.js"></script>
 </html>

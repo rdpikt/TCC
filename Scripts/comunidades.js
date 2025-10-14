@@ -34,6 +34,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         button.textContent = 'Sair';
                         button.classList.remove('Entrar-Comunidade');
                         button.classList.add('Sair-Comunidade');
+                        window.location = `sobre-comunidade.php?id=${comunidadeId}`;
                     } else {
                         button.textContent = 'Entrar';
                         button.classList.remove('Sair-Comunidade');
@@ -50,4 +51,11 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
     });
+    //redireciona caso o usaurio clique no card
+    const cards = document.querySelectorAll('.comunidade-card');
+     cards.forEach(card => {
+        card.addEventListener('click', () => {
+            window.location = `sobre-comunidade.php?id=${card.dataset.id}`;
+        })
+     })
 });

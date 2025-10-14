@@ -77,11 +77,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO users (nome_completo, nome_user, email, senha, data_nasc) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param("sssss", $nome_completo, $nome_user, $email, $senha_hash, $data_nascimento_formatada);
-
             if ($stmt->execute()) {
+                $last_id = $conn->insert_id;
+
+                $stmt_new = $conn->prepare("SELECT * FROM users WHERE id = ?");
+                $stmt_new->bind_param("i", $last_id);
+                $stmt_new->execute();
+                $result = $stmt_new->get_result();
+                $user = $result->fetch_assoc();
+
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['nome_user'];
+                $_SESSION['user_name_completo'] = $user['nome_completo'];
+                $_SESSION['tipo_criador'] = $user['user_tag'];
+                $_SESSION['user_email'] = $user['email'];
+                $_SESSION['avatar'] = $user['user_avatar'];
+                $_SESSION['user_bio'] = $user['bio'];
+
                 $response['success'] = true;
-                $response['message'] = 'Cadastro realizado com sucesso!';
-                $response['redirect_url'] = '../Layout/load.html?message=Cadastro realizado com sucesso!&ction=cadastro';
+                $response['redirect_url'] = '../Layout/load.html?message=Cadastro realizado com sucesso!&action=login';
             } else {
                 $erros[] = "Erro ao registrar no banco de dados.";
             }

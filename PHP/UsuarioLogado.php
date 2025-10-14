@@ -5,6 +5,7 @@ require "conexao.php";
 $tipo_feed = $_GET['feed'] ?? 'foryou';
 $userId = $_SESSION['user_id'];
 $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png';
+$shared_post_id = $_GET['post'] ?? null;
 
 // --- CURTIDAS E REPOSTS (VERSÃO DE DEPURAÇÃO) ---
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['post_id'])) {
@@ -183,10 +184,16 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
     <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
     
 </head>
-<body>
+<body <?= $shared_post_id ? 'data-shared-post-id="' . $shared_post_id . '"' : '' ?>>
 <header>
   <div class="logotipo">LOGO</div>
-  <input type="search" id="search-bar" class="search-bar" placeholder="🔍 Barra de pesquisa">
+  <div class="search-container">
+      <div class="search-bar-wrapper">
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+      </div>
+        <div id="suggestions-box">
+        </div>
+  </div>
   <div class="nav-user">
     <ul>
       <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
@@ -213,7 +220,8 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
         <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
-        <li><a href="comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a href="explorar_comunidades.php"><i class="fi fi-br-search"></i>Explorar Comunidades</a></li>
         <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
       </ul>
       <div class="tools">
@@ -249,7 +257,13 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
         $stmt_repost->execute();
         $repostado = $stmt_repost->get_result()->num_rows > 0;
       ?>
-      <article class="posts">
+      <article class="posts" 
+        data-post-id="<?= $post['id'] ?>"
+        data-user-name="<?= htmlspecialchars($post['nome_user']) ?>"
+        data-titulo="<?= htmlspecialchars($post['titulo']) ?>"
+        data-descricao="<?= htmlspecialchars($post['descricao']) ?>"
+        data-imagem-url="<?= htmlspecialchars($post['arquivo_url']) ?>"
+        data-user-avatar="<?= htmlspecialchars($post['user_avatar']) ?>">
         <div class="descricao-post">
           <ul>
             <li><span class="nome-desc">User: <?= htmlspecialchars($post['nome_user']) ?></span></li>
@@ -275,7 +289,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
 </svg>
 </button></li>
-              <li><button type="button"><i class="fi fi-rs-redo"></i></button></li>
+              <li><button class="btn-share" type="button"><i class="fi fi-rs-redo"></i></button></li>
             </ul>
           
           </form>
@@ -288,10 +302,15 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
     </div>
   </section>
 </section>
-
+<div class="modal-post">
+    <span class="close-button">&times;</span>
+    <div class="modal-post-content">
+    </div>
+</div>
+</body>
 <script src="../Scripts/TelaInicial.js"></script>
 <script src="../Scripts/modals.js"></script>
 <script src="../Scripts/ajaxInteractions.js"></script>
-<script src="../Scripts/carregar_posts.js"></script> 
-</body>
+<script src="../Scripts/carregar_posts.js"></script>
+<script src="../Scripts/WebShare.js"></script>
 </html>

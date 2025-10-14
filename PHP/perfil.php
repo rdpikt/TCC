@@ -59,13 +59,19 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
 <body>
   <header>
     <div class="logotipo">LOGO</div>
-    <input type="search" id="search-bar" placeholder="Barra de pesquisa">
+    <div class="search-container">
+      <div class="search-bar-wrapper">
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+      </div>
+        <div id="suggestions-box">
+        </div>
+  </div>
     <div class="nav-user">
-      <ul>
-        <li><a href="notificacoes.php">Notificações</a></li>
-        <li><span><?php echo $_SESSION['user_name']; ?></span></li>
-      </ul>
-    </div>
+    <ul>
+      <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
+      <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>" alt="Avatar do usuário"></span></li>
+    </ul>
+  </div>
     <div class="modal-perfil">
       <ul>
         <li><a href="perfil.php">Perfil</a></li>
@@ -86,7 +92,7 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
         <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
-        <li><a href="comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
         <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
       </ul>
       <div class="tools">
@@ -301,5 +307,6 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
     });
   </script>
 </body>
+<script src="../Scripts/TelaInicial.js"></script>
 
 </html>

@@ -1,0 +1,52 @@
+body{
+  height: 100%;
+}
+body ul li{
+  list-style: none;
+}
+.comunidade-info img{
+background-color: gray;
+width: 7rem;
+height: 7rem;
+border-radius: 50rem;
+}
+.global-comunidade{
+  position: static;
+  top: 0%;
+  left: 50%;
+  transform: translate(50%, 0);
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  gap: 10rem;
+  align-items: center;
+}
+.options ul{
+  display: flex;
+  gap: 1.2rem;
+  justify-content: end;
+}
+.global-comunidade i{
+position: relative;
+top: -20%;
+}
+.comunidade-options ul{
+  display:  flex;
+  gap: 1.2rem;
+}
+.comunidade-options ul li.active{
+  background-color: var(--roxo);
+  color: #fff;
+  border: none;
+  color: black
+}
+.comunidade-options ul li {
+  cursor: pointer;
+}
+.comunidade-options ul button{
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+
+}
