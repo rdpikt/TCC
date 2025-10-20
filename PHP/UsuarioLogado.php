@@ -266,6 +266,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
             data-user-name="<?= htmlspecialchars($post['nome_user']) ?>"
             data-titulo="<?= htmlspecialchars($post['titulo']) ?>"
             data-descricao="<?= htmlspecialchars($post['descricao']) ?>"
+            data-tags="<?php echo json_encode($post['tags'])?>"
             data-imagem-url="<?= htmlspecialchars($post['arquivo_url']) ?>"
             data-user-avatar="<?= htmlspecialchars($post['user_avatar']) ?>"
             data-user-name-completo="<?= htmlspecialchars($post['nome_completo']) ?>"

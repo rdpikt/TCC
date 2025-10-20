@@ -21,6 +21,7 @@ posts.forEach(post => {
             const userName = post.dataset.userName;
             const nome_completo = post.dataset.userNameCompleto;
             const titulo = post.dataset.titulo;
+            const tags = post.dataset.tags;
             const descricao = post.dataset.descricao;
             const imagemUrl = post.dataset.imagemUrl;
             const userAvatar = post.dataset.userAvatar;
@@ -37,6 +38,9 @@ posts.forEach(post => {
                 <div class="post-text">
                     <h2>${titulo}</h2>
                     <p>${descricao}</p>
+                    <ul>
+                        <li>${tags}</li>
+                    </ul>
                 </div>
                  <div class="footer-post">
               <form action="UsuarioLogado.php?feed=<?= $tipo_feed ?>" method="post">
