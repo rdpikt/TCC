@@ -11,7 +11,7 @@ $userId = $_SESSION['user_id'];
 
 if ($tipo_feed === 'foryou') {
     $sql = "
-    SELECT O.*, u.nome_user, u.user_avatar
+    SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo
     FROM obras O
     JOIN users u ON O.portfolio_id = u.id
     ORDER BY O.data_publicacao DESC
@@ -23,7 +23,7 @@ if ($tipo_feed === 'foryou') {
     $result = $stmt->get_result();
 } elseif ($tipo_feed === 'seguindo') {
     $sql = "
-    SELECT O.*, u.nome_user, u.user_avatar
+    SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo
     FROM obras O
     JOIN users u ON O.portfolio_id = u.id
     JOIN seguidores s ON s.seguido_id = u.id

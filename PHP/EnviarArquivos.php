@@ -6,69 +6,140 @@ $tipo_feed = $_GET['feed'] ?? 'foryou';
 $userId = $_SESSION['user_id'];
 $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png';
 
+if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-
-  //recebe os dados enviados
-  $UserID = $_SESSION['user_id'];
-  $TituloPost = (isset($_POST['titulo'])) ? $_POST['titulo'] : '';
-  $DescricaoPost = (isset($_POST['descricao'])) ? $_POST['titulo'] : '';
-  $ImagemUrl = (isset($_POST['arquivo'])) ? $_POST['arquivo'] : '';
-  $tipo_obra = (isset($_POST['tipo_obra'])) ? $_POST['tipo_obra'] : '';
-  $tipos_validos = ['Imagem', 'Texto', 'Video'];
-  if (!in_array($tipo_obra, $tipos_validos)) {
-    echo "Tipo de obra inválido.";
-    exit;
-  }
-
-
-  //verificações
   $erros = [];
 
-  //
-  if (isset($_FILES['arquivo']) && $_FILES['arquivo']['size'] > 0) {
-    $extensoes_aceitas = array('png', 'jpeg', 'jpg');
+  $UserID = $_SESSION['user_id'];
+  $TituloPost = $_POST['titulo'] ?? '';
+  $DescricaoPost = $_POST['descricao'] ?? '';
+  $tipo_obra = $_POST['tipo_obra'] ?? 'Imagem';
+  $tagsPost = $_POST[''] ??'';
 
-    $aux = explode('.', $_FILES['arquivo']['name']);
-    $extensao = end($aux);
-
-    //validação de extensao aceita
-    if (array_search($extensao, $extensoes_aceitas) === false):
-      echo "<h1>Extensão Inválida</h1>";
-      exit;
-    endif;
-
-
-    if (is_uploaded_file($_FILES['arquivo']['tmp_name'])):
-      if (!file_exists('../images/uploads')) {
-        mkdir('../images/uploads');
-      }
-
-      $nome_foto = date('dmYs') . '_' . $_FILES['arquivo']['name'];
-
-      if (!move_uploaded_file($_FILES['arquivo']['tmp_name'], '../images/uploads/' . $nome_foto)) {
-        echo "houve um erro ao gravar arquivo na pasta";
-      }
-
-    endif;
-
+  $tipos_validos = ['Imagem', 'Texto', 'Video'];
+  if (!in_array($tipo_obra, $tipos_validos)) {
+    $erros[] = 'Tipo de obra inválido';
   }
 
-  $sql = "INSERT INTO obras (portfolio_id,tipo_obra,titulo, descricao, arquivo_url, tipo_imagem) VALUES (?,?,?,?,?,?)";
-  $stmt = $conn->prepare($sql);
-  $stmt->bind_param('isssss', $UserID, $tipo_obra, $TituloPost, $DescricaoPost, $nome_foto, $extensao);
-  $result = $stmt->execute();
+  switch ($tipo_obra):
+    case 'Imagem':
+      if (isset($_FILES['arquivo']) && $_FILES['arquivo']['size'] > 0):
+        $extensoes_aceitas = ['png', 'jpeg', 'jpg'];
+        $aux = explode('.', $_FILES['arquivo']['name']);
+        $extensao = strtolower(end($aux));
 
+        if (!in_array($extensao, $extensoes_aceitas)):
+          $erros[] = "Extensão inválida. Apenas PNG, JPEG e JPG são aceitos.";
+        else:
+          if (!file_exists('../images/uploads')) {
+            mkdir('../images/uploads');
+          }
 
+          $nome_foto = date('dmYs') . '_' . $_FILES['arquivo']['name'];
+          if (!move_uploaded_file($_FILES['arquivo']['tmp_name'], '../images/uploads/' . $nome_foto)) {
+            $erros[] = "Houve um erro ao gravar o arquivo na pasta.";
+          }
+        endif;
+      else:
+        $erros[] = "Nenhum arquivo enviado.";
+      endif;
 
-  if ($result) {
-    echo "<div class='alert alert-sucess' role='alert'>Conteúdo publicado com sucesso</div>";
-  } else {
-    echo "<div class='alert alert-danger' role='alert'>Erro ao publicar</div>";
-  }
-  echo "<meta http-equiv=refresh content='3;URL=UsuarioLogado.php'>";
-}
+      if (empty($DescricaoPost)) $erros[] = "A descrição não pode ser vazia.";
+
+      if (count($erros) == 0):
+        $sql = "INSERT INTO obras (portfolio_id, tipo_obra, titulo, descricao, arquivo_url, tipo_imagem)
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('isssss', $UserID, $tipo_obra, $TituloPost, $DescricaoPost, $nome_foto, $extensao);
+        $result = $stmt->execute();
+
+        if ($result):
+          echo "<div class='alert alert-success' role='alert'>Conteúdo publicado com sucesso</div>";
+          echo "<meta http-equiv='refresh' content='3;URL=UsuarioLogado.php'>";
+        else:
+          echo "<div class='alert alert-danger' role='alert'>Erro ao publicar: {$stmt->error}</div>";
+        endif;
+        $stmt->close();
+      else:
+        foreach ($erros as $erro):
+          echo "<div class='alert alert-danger' role='alert'>$erro</div>";
+        endforeach;
+      endif;
+      break;
+
+    case 'Video':
+      if (isset($_FILES['arquivo']) && $_FILES['arquivo']['size'] > 0):
+        $extensoes_aceitas = ['mov', 'mp4', 'wmv'];
+        $aux = explode('.', $_FILES['arquivo']['name']);
+        $extensao = strtolower(end($aux));
+
+        if (!in_array($extensao, $extensoes_aceitas)):
+          $erros[] = "Extensão inválida. Apenas MOV, MP4 e WMV são aceitos.";
+        else:
+          if (!file_exists('../images/uploads/videos')) {
+            mkdir('../images/uploads/videos');
+          }
+
+          $nome_video = date('dmYs') . '_' . $_FILES['arquivo']['name'];
+          if (!move_uploaded_file($_FILES['arquivo']['tmp_name'], '../images/uploads/videos/' . $nome_video)) {
+            $erros[] = "Houve um erro ao gravar o arquivo na pasta.";
+          }
+        endif;
+      else:
+        $erros[] = "Nenhum arquivo enviado.";
+      endif;
+
+      if (empty($DescricaoPost)) $erros[] = "A descrição não pode ser vazia.";
+
+      if (count($erros) == 0):
+        $sql = "INSERT INTO obras (portfolio_id, tipo_obra, titulo, descricao, arquivo_url, tipo_imagem)
+                VALUES (?, ?, ?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('isssss', $UserID, $tipo_obra, $TituloPost, $DescricaoPost, $nome_video, $extensao);
+        $result = $stmt->execute();
+
+        if ($result):
+          echo "<div class='alert alert-success' role='alert'>Conteúdo publicado com sucesso</div>";
+          echo "<meta http-equiv='refresh' content='3;URL=UsuarioLogado.php'>";
+        else:
+          echo "<div class='alert alert-danger' role='alert'>Erro ao publicar: {$stmt->error}</div>";
+        endif;
+        $stmt->close();
+      else:
+        foreach ($erros as $erro):
+          echo "<div class='alert alert-danger' role='alert'>$erro</div>";
+        endforeach;
+      endif;
+      break;
+
+    case 'Texto':
+      if (empty($DescricaoPost)) $erros[] = "A descrição não pode ser vazia.";
+      if (empty($TituloPost)) $erros[] = "O título não pode ser vazio.";
+
+      if (count($erros) == 0):
+        $sql = "INSERT INTO obras (portfolio_id, tipo_obra, titulo, descricao)
+                VALUES (?, ?, ?, ?)";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param('isss', $UserID, $tipo_obra, $TituloPost, $DescricaoPost);
+        $result = $stmt->execute();
+
+        if ($result):
+          echo "<div class='alert alert-success' role='alert'>Conteúdo publicado com sucesso</div>";
+          echo "<meta http-equiv='refresh' content='3;URL=UsuarioLogado.php'>";
+        else:
+          echo "<div class='alert alert-danger' role='alert'>Erro ao publicar: {$stmt->error}</div>";
+        endif;
+        $stmt->close();
+      else:
+        foreach ($erros as $erro):
+          echo "<div class='alert alert-danger' role='alert'>$erro</div>";
+        endforeach;
+      endif;
+      break;
+  endswitch;
+endif;
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 
@@ -87,20 +158,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </head>
 <body>
 <header>
-  <div class="logotipo">LOGO</div>
   <div class="search-container">
       <div class="search-bar-wrapper">
         <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
       </div>
-        <div id="suggestions-box">
-        </div>
-  </div>
-  <div class="nav-user">
-    <ul>
-      <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
-      <li><span><?= htmlspecialchars($_SESSION['user_name']) ?></span></li>
-    </ul>
-  </div>
+      <div id="suggestions-box">
+      </div>
+    </div>
+    <div class="nav-user">
+      <ul>
+        <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
+        <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>"
+              alt="Avatar do usuário"></span></li>
+      </ul>
+    </div>
   <div class="modal-perfil">
       <ul>
         <li><a href="perfil.php">Perfil</a></li>
@@ -115,20 +186,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 </header>
   <section class="main">
   <nav class="nav-side" id="menu">
-      <ul>
-        <li><a href="UsuarioLogado.php?feed=foryou"><i style="color: white;" class="fi fi-br-home"></i>Página Inicial</a></li>
+      <div class="logotipo"><span>Harp</span>Hub</div>
+      <ul id="pages">
+        <li ><a  href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
-        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a class="selecionado" href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
         <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
         <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
+
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
+
     </nav>
 </section>
   <section class="formulario">
@@ -136,7 +210,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <div class="content generos">
       <h1>Postar</h1>
      <div class="btns generos">
-  <input type="radio" name="tipo_obra" id="Imagem" value="Imagem">
+  <input type="radio" name="tipo_obra" id="Imagem" value="Imagem" checked>
   <label class="button" for="Imagem">Imagem</label>
 
   <input type="radio" name="tipo_obra" id="Texto" value="Texto">
@@ -157,5 +231,4 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
   </form>
   </section>
 </body>
-<script src="../Scripts/TelaInicial.js"></script>
 </html>

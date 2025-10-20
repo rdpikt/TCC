@@ -2,7 +2,11 @@ body {
   background: #222; color: #fff; 
 }
 .galeria-main { 
-  margin-left: 22%; padding: 2rem; 
+position: absolute;
+min-height: 100vh;
+top: 20%;
+left: 20%;
+  flex-direction: column;
 }
 .galeria-categorias {
   display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;
@@ -16,7 +20,7 @@ body {
   }
 .galeria-grid{
   column-count: 4;
-  column-gap: 2rem;
+  column-gap: 1.2rem;
 }
 .cat-btn.active{
   background: var(--roxo); color: #fff; border: none;

@@ -9,7 +9,7 @@ $limit = 10; // Quantos posts por carregamento
 
 // Seleciona posts
 if ($tipo_feed === 'foryou') {
-    $sql = "SELECT O.*, u.nome_user, u.user_avatar
+    $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo
             FROM obras O
             JOIN users u ON O.portfolio_id = u.id
             ORDER BY O.data_publicacao DESC
@@ -17,7 +17,7 @@ if ($tipo_feed === 'foryou') {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $offset, $limit);
 } elseif ($tipo_feed === 'seguindo') {
-    $sql = "SELECT O.*, u.nome_user, u.user_avatar
+    $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo
             FROM obras O
             JOIN users u ON O.portfolio_id = u.id
             JOIN seguidores s ON s.seguido_id = u.id

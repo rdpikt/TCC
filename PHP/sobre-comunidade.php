@@ -63,21 +63,23 @@ $qtdMembros = $comunidade["COUNT(cm.cargo='membros')"];
 
 <section class="main">
   <nav class="nav-side" id="menu">
-      <ul>
-        <li><a href="UsuarioLogado.php?feed=foryou"><i style="color: white;" class="fi fi-br-home"></i>Página Inicial</a></li>
+      <div class="logotipo"><span>Harp</span>Hub</div>
+      <ul id="pages">
+        <li ><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
         <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
         <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
-        <li><a href="explorar_comunidades.php"><i class="fi fi-br-search"></i>Explorar Comunidades</a></li>
         <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
+
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
+
     </nav>
 
     <section class="global-comunidade">
@@ -132,5 +134,4 @@ $qtdMembros = $comunidade["COUNT(cm.cargo='membros')"];
 
 </body>
 <script src="../Scripts/modals.js"></script>
-<script src="../Scripts/TelaInicial.js"></script>
 </html>

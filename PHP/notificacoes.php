@@ -40,7 +40,7 @@ $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
   <input type="search" id="search-bar" placeholder="Barra de pesquisa">
   <div class="nav-user">
     <ul>
-      <li><a href="notificacoes.php">Notificações</a></li>
+      <li><a class="selecionado" href="notificacoes.php">Notificações</a></li>
       <li><span><?= htmlspecialchars($_SESSION['user_name']) ?></span></li>
     </ul>
   </div>
@@ -54,23 +54,26 @@ $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
 </header>
 
 <section class="main">
-  <nav class="nav-side" id="menu">
-      <ul>
-        <li><a href="UsuarioLogado?feed=foryou">Página Inicial</a></li>
-        <li><a href="UsuarioLogado?feed=seguindo">Seguindo</a></li>
-        <li><a href="Galeria.php">Galeria</a></li>
-        <li><a href="EnviarArquivos.php">Criar Post</a></li>
-        <li><a href="explorar_comunidades.php">Comunidades</a></li>
-        <li><a href="perfil.php">Perfil</a></li>
+ <nav class="nav-side" id="menu">
+      <div class="logotipo"><span>Harp</span>Hub</div>
+      <ul id="pages">
+        <li ><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
+        <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
+        <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
+        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a href="explorar_comunidades.php"><i class="fi fi-br-search"></i>Explorar Comunidades</a></li>
+        <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
+
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php">Configurações</a></li>
-          <li><a href="ajuda.php">Ajuda</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
+          <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
-    </nav>
 
+    </nav>
     <section class="content">
         <div class="titulo">
             <h1>Suas Notificações</h1>
@@ -147,6 +150,5 @@ $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
 
 </body>
 <script src="../Scripts/notificacoes.js"></script>
-<script src="../Scripts/TelaInicial.js"></script>
 <script src="../Scripts/modals.js"></script>
 </html>

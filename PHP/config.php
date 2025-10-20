@@ -124,25 +124,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Perfil de Usuário</title>
-  <link rel="stylesheet" href="../Styles/telainicial.css">
   <link rel="stylesheet" href="../Styles/config.css">
   <link rel="stylesheet" href="../Styles/global.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+    integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel='stylesheet' href='https://cdn-uicons.flaticon.com/3.0.0/uicons-bold-rounded/css/uicons-bold-rounded.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-rounded/css/uicons-regular-rounded.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css'>
+  <link rel='stylesheet'
+    href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
 </head>
 
 <body>
   <header>
-    <div class="logotipo">LOGO</div>
     <div class="search-container">
       <div class="search-bar-wrapper">
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+        <i class="fi-rr-search"></i>
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
       </div>
-        <div id="suggestions-box">
-        </div>
-  </div>
-    <div class="nav-user">
+      <div id="suggestions-box">
+      </div>
+    </div>
+     <div class="nav-user">
       <ul>
-        <li><span><a href="notificacoes.php">notificações</a></span></li>
-        <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>" alt="Avatar do usuário"></span></li>w
+        <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
+        <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>"
+              alt="Avatar do usuário"></span></li>
       </ul>
     </div>
     <div class="modal-perfil">
@@ -161,20 +171,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
   <section class="main">
     <nav class="nav-side" id="menu">
-      <ul>
-        <li><a href="UsuarioLogado.php?feed=foryou">Página Inicial</a></li>
-        <li><a href="UsuarioLogado.php?feed=seguindo">Seguindo</a></li>
-        <li><a href="Galeria.php">Galeria</a></li>
-        <li><a href="EnviarArquivos.php">Criar Post</a></li>
-        <li><a href="explorar_comunidades.php">Comunidades</a></li>
-        <li><a href="perfil.php">Perfil</a></li>
+      <div class="logotipo"><span>Harp</span>Hub</div>
+      <ul class="pages">
+        <li ><a class="selecionado" href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
+        <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
+        <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
+        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
+
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php">Configurações</a></li>
-          <li><a href="ajuda.php">Ajuda</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
+          <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
+
     </nav>
 
     <section class="content">
@@ -190,7 +203,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </section>
 </body>
 <script src="../Scripts/modals.js"></script>
-<script src="../Scripts/TelaInicial.js"></script>
 <script>
   document.getElementById('MudarAvatar').addEventListener('change', function(event) {
     const preview = document.getElementById('avatar-preview');

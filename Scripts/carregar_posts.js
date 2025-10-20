@@ -1,5 +1,12 @@
 document.addEventListener('DOMContentLoaded', () => {
     const feedContainer = document.getElementById('feed-conteudo');
+    const seguindolink  = document.querySelector('.pages li:nth-child(2) a');
+    const fylink = document.querySelector('.pages li:nth-child(1) a');
+
+
+
+ 
+
     // Se não houver container de feed, não faz nada.
     if (!feedContainer) return;
 
@@ -8,6 +15,20 @@ document.addEventListener('DOMContentLoaded', () => {
     let offset = feedContainer.querySelectorAll('.posts').length;
     const feedType = new URLSearchParams(window.location.search).get('feed') || 'foryou';
 
+    switch(feedType) {
+        case 'foryou':
+            seguindolink.classList.remove('selecionado');
+            fylink.classList.add('selecionado');
+            break;
+        case 'seguindo':
+            seguindolink.classList.add('selecionado');
+            fylink.classList.remove('selecionado');
+            break;
+            default:
+                seguindolink.classList.remove('selecionado');
+                fylink.classList.remove('selecionado');
+    }
+
     /**
      * Cria o HTML para um único post.
      * @param {object} post - O objeto do post vindo do servidor.
@@ -15,9 +36,14 @@ document.addEventListener('DOMContentLoaded', () => {
      */
     function criarPostHTML(post) {
         const userName = post.nome_user || 'Usuário desconhecido';
-        const titulo = post.titulo || '';
-        const descricao = post.descricao || '';
+        const userAvatar = post.user_avatar || 'profile.png';
+        const nome_completo = post.nome_completo || 'Usuário desconhecido';
         const arquivo = post.arquivo_url || post.arquivo;
+        const titulo = post.titulo || 'Sem título';
+        const descricao = post.descricao || 'Sem descrição';
+
+
+
 
         const imagemHTML = arquivo
             ? `<div class="img-post"><img src="../images/uploads/${arquivo}" alt="Imagem do post"></div>`
@@ -27,10 +53,14 @@ document.addEventListener('DOMContentLoaded', () => {
         <article class="posts">
             <div class="descricao-post">
                 <ul>
-                    <li><span class="nome-desc">User: ${userName}</span></li>
+                    <li><img src="../images/avatares/Users/${userAvatar}" alt="Avatar do usuário"></li>
+                    <li><span class="nome-desc">${nome_completo}</span></li>
+                    <li><span class="nome-desc">${userName}</span></li>
                 </ul>
-                <h1 class="titulo">Titulo: ${titulo}</h1>
-                <p>Descrição: <br>${descricao}</p>
+                <ul>
+                    <li><h1>${titulo}</h1></li>
+                    <li><p>${descricao}</p></li>
+                </ul
             </div>
             ${imagemHTML}
             <div class="footer-post">

@@ -58,20 +58,20 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
 
 <body>
   <header>
-    <div class="logotipo">LOGO</div>
     <div class="search-container">
       <div class="search-bar-wrapper">
         <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
       </div>
-        <div id="suggestions-box">
-        </div>
-  </div>
+      <div id="suggestions-box">
+      </div>
+    </div>
     <div class="nav-user">
-    <ul>
-      <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
-      <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>" alt="Avatar do usuário"></span></li>
-    </ul>
-  </div>
+      <ul>
+        <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
+        <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>"
+              alt="Avatar do usuário"></span></li>
+      </ul>
+    </div>
     <div class="modal-perfil">
       <ul>
         <li><a href="perfil.php">Perfil</a></li>
@@ -87,20 +87,22 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
 
   <section class="main">
   <nav class="nav-side" id="menu">
-      <ul>
-        <li><a href="UsuarioLogado.php?feed=foryou"><i style="color: white;" class="fi fi-br-home"></i>Página Inicial</a></li>
+      <div class="logotipo"><span>Harp</span>Hub</div>
+      <ul id="pages">
+        <li ><a  href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
         <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
         <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
-        <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
+        <li><a class="selecionado" href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
+
     </nav>
 
     <section class="profile-section">
@@ -307,6 +309,4 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
     });
   </script>
 </body>
-<script src="../Scripts/TelaInicial.js"></script>
-
 </html>

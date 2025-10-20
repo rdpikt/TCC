@@ -1,117 +1,88 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const searchBar = document.getElementById('search-bar');
-    const suggestionsBox = document.getElementById('suggestions-box');
+// Modal Post
+const modalPost = document.querySelector('.modal-post');
+const modalPostContent = document.querySelector('.modal-post-content');
+const closeModalButton = document.querySelector('.modal-post .close-button');
+const posts = document.querySelectorAll('.posts');
+const modalOverlay = document.querySelector('.modal-overlay');
 
-    // Crie os botões e a lista de sugestões dinamicamente
-    const optionsContainer = document.createElement('div');
-    optionsContainer.className = 'search-options';
-    optionsContainer.innerHTML = `
-        <button class="btn-option active" data-type="usuarios">Usuários</button>
-        <button class="btn-option" data-type="comunidades">Comunidades</button>
-        <button class="btn-option" data-type="conteudo">Conteúdo</button>
-    `;
 
-    const suggestionsList = document.createElement('div');
-    suggestionsList.id = 'suggestions-list';
+// Percorre todos os posts
+posts.forEach(post => {
+    // Procura a imagem dentro do post atual
+    const imgPost = post.querySelector('.img-post');
 
-    // Adicione os novos elementos à caixa de sugestões
-    suggestionsBox.appendChild(optionsContainer);
-    suggestionsBox.appendChild(suggestionsList);
+    // Se o post tiver imagem, adiciona o evento apenas nela
+    if (imgPost) {
+        imgPost.addEventListener('click', (e) => {
+            // Evita que o clique na imagem propague para outros elementos do card
+            e.stopPropagation();
 
-    const searchOptions = suggestionsBox.querySelectorAll('.btn-option');
-    let currentSearchType = 'usuarios';
+            const postId = post.dataset.postId;
+            const userName = post.dataset.userName;
+            const nome_completo = post.dataset.userNameCompleto;
+            const titulo = post.dataset.titulo;
+            const descricao = post.dataset.descricao;
+            const imagemUrl = post.dataset.imagemUrl;
+            const userAvatar = post.dataset.userAvatar;
+            console.log(post.dataset)
 
-    // --- Lógica para trocar o tipo de busca ---
-    searchOptions.forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.stopPropagation(); // Impede que o clique feche a caixa de sugestões
-            searchOptions.forEach(btn => btn.classList.remove('active'));
-            button.classList.add('active');
-            currentSearchType = button.dataset.type;
-            fetchSuggestions();
+            const postHtml = `
+                ${imagemUrl ? `<img src="../images/uploads/${imagemUrl}" alt="Imagem do post" class="post-image">` : ''}
+                <div class="post-content">
+                <div class="post-header">
+                    <img src="../images/avatares/Users/${userAvatar}" alt="Avatar do usuário" class="user-avatar">
+                    <span class="user-name">${nome_completo}</span>
+                    <span class="user-name">@${userName}</span>
+                </div>
+                <div class="post-text">
+                    <h2>${titulo}</h2>
+                    <p>${descricao}</p>
+                </div>
+                 <div class="footer-post">
+              <form action="UsuarioLogado.php?feed=<?= $tipo_feed ?>" method="post">
+                <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
+                <ul>
+                  <li><button type="button"><i class="fi fi-rr-comment"></i></button></li>
+                  <li><button type="submit" name="repostar_post"
+                      class="repostar-btn <?= $repostado ? 'repostado' : '' ?>"><i class="fi fi-rr-refresh"></i></button>
+                  </li>
+                  <li><button type="submit" name="curtir_post" class="curtida <?= $curtido ? 'curtido' : '' ?>"><svg
+                        width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path
+                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                      </svg>
+                    </button></li>
+                  <li><button class="btn-share" type="button"><i class="fi fi-rs-redo"></i></button></li>
+                </ul>
+
+              </form>
+              <button type="submit" name="salvar_post" class="salvar-btn ww"><svg xmlns="http://www.w3.org/2000/svg"
+                  height="1.5rem" width="1.5rem" viewBox="0 0 384 512">
+                  <path d="M0 48C0 21.5 21.5 0 48 0H336c26.5 0 48 21.5 48 48V464L192 352 0 464V48z" />
+                </svg></button>
+            </div>
+                </div>
+            `;
+
+            modalPostContent.innerHTML = postHtml;
+            modalPost.classList.add('active');
+            modalOverlay.classList.add('active');
+
         });
-    });
-
-    // --- Lógica para busca em tempo real ---
-    searchBar.addEventListener('input', fetchSuggestions);
-    searchBar.addEventListener('focus', fetchSuggestions); // Mostra as opções ao focar
-
-    // --- Lógica para esconder sugestões ao clicar fora ---
-    document.addEventListener('click', (e) => {
-        if (!searchBar.contains(e.target) && !suggestionsBox.contains(e.target)) {
-            suggestionsBox.style.display = 'none';
-        }
-    });
-
-
-    // --- Função principal que busca e mostra as sugestões ---
-    async function fetchSuggestions() {
-        const query = searchBar.value.trim();
-        suggestionsBox.style.display = 'block'; // Sempre exibe a caixa quando a função é chamada
-
-        // Se a busca estiver vazia, limpa apenas a lista de resultados
-        if (query.length === 0) {
-            suggestionsList.innerHTML = '';
-            return;
-        }
-
-        try {
-            const response = await fetch(`../PHP/pesquisa.php?query=${encodeURIComponent(query)}&type=${currentSearchType}`);
-            const suggestions = await response.json();
-
-            suggestionsList.innerHTML = ''; // Limpa apenas a lista
-
-            if (suggestions.error) {
-                suggestionsList.innerHTML = `<div class="suggestion-item">${suggestions.error}</div>`;
-            } else if (suggestions.length === 0) {
-                suggestionsList.innerHTML = '<div class="suggestion-item">Nenhum resultado encontrado.</div>';
-            } else {
-                suggestions.forEach(item => {
-                    const div = document.createElement('div');
-                    div.classList.add('suggestion-item');
-                    
-                    let content = '';
-                    let link = '#';
-
-                    switch(currentSearchType) {
-                        case 'usuarios':
-                            link = `perfil.php?id=${item.id}`; 
-                            content = `
-                                <img src="../images/avatares/Users/${item.user_avatar || 'profile.png'}" alt="Foto de perfil">
-                                <div>
-                                    <strong>${item.nome_completo}</strong>
-                                    <small>@${item.nome_user}</small>
-                                </div>
-                            `;
-                            break;
-                        case 'comunidades':
-                            link = `comunidade.php?id=${item.id}`;
-                            content = `
-                                <img src="../images/avatares/Comunidades/${item.imagem || 'profile.png'}" alt="Ícone da comunidade">
-                                <div>
-                                    <strong>${item.nome}</strong>
-                                </div>
-                            `;
-                            break;
-                        case 'conteudo':
-                             link = `pesquisa.php?categoria=${encodeURIComponent(item.nome_tag)}`;
-                             content = `<strong>#${item.nome_tag}</strong>`;
-                             break;
-                    }
-
-                    div.innerHTML = content;
-                    div.addEventListener('click', () => {
-                        window.location.href = link;
-                    });
-                    
-                    suggestionsList.appendChild(div);
-                });
-            }
-        } catch (error) {
-            console.error('Erro ao buscar sugestões:', error);
-            suggestionsList.innerHTML = '<div class="suggestion-item">Erro ao carregar resultados.</div>';
-        }
     }
 });
 
+// Fecha o modal
+closeModalButton.addEventListener('click', () => {
+    modalPost.classList.remove('active');
+    modalOverlay.classList.remove('active');
+});
 
+// Fecha ao clicar fora do conteúdo
+window.addEventListener('click', (e) => {
+    if (e.target === modalPost) {
+        modalPost.classList.remove('active');
+        modalOverlay.classList.remove('active');
+    }
+});
