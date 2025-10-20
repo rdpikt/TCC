@@ -136,14 +136,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['post_id'])) {
 
 // --- FEEDS ---
 if ($tipo_feed === 'foryou') {
-  $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo
+  $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo,
+               (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
+                FROM obras_tags TO_
+                JOIN tags T ON TO_.id_tag = T.tag_id
+                WHERE TO_.id_obra = O.id) AS tags
             FROM obras O
             JOIN users u ON O.portfolio_id = u.id
             ORDER BY RAND()
             LIMIT 20";
   $result = $conn->query($sql);
 } elseif ($tipo_feed === 'seguindo') {
-  $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo
+  $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo,
+               (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
+                FROM obras_tags TO_
+                JOIN tags T ON TO_.id_tag = T.tag_id
+                WHERE TO_.id_obra = O.id) AS tags
             FROM obras O
             JOIN users u ON O.portfolio_id = u.id
             JOIN seguidores s ON s.seguido_id = u.id
@@ -261,12 +269,14 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
           $stmt_repost->bind_param("ii", $userId, $post['id']);
           $stmt_repost->execute();
           $repostado = $stmt_repost->get_result()->num_rows > 0;
+
+          $post['tags'] = $post['tags'] ? array_map('trim', explode(',', $post['tags'])) : [];
           ?>
           <article class="posts" data-post-id="<?= $post['id'] ?>"
             data-user-name="<?= htmlspecialchars($post['nome_user']) ?>"
             data-titulo="<?= htmlspecialchars($post['titulo']) ?>"
             data-descricao="<?= htmlspecialchars($post['descricao']) ?>"
-            data-tags="<?php echo json_encode($post['tags'])?>"
+            data-tags='<?php echo json_encode($post['tags']); ?>'
             data-imagem-url="<?= htmlspecialchars($post['arquivo_url']) ?>"
             data-user-avatar="<?= htmlspecialchars($post['user_avatar']) ?>"
             data-user-name-completo="<?= htmlspecialchars($post['nome_completo']) ?>"

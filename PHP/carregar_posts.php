@@ -9,7 +9,11 @@ $limit = 10; // Quantos posts por carregamento
 
 // Seleciona posts
 if ($tipo_feed === 'foryou') {
-    $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo
+    $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo,
+                   (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
+                    FROM tags_obras TO_
+                    JOIN tags T ON TO_.tag_id = T.id
+                    WHERE TO_.obra_id = O.id) AS tags
             FROM obras O
             JOIN users u ON O.portfolio_id = u.id
             ORDER BY O.data_publicacao DESC
@@ -17,7 +21,11 @@ if ($tipo_feed === 'foryou') {
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $offset, $limit);
 } elseif ($tipo_feed === 'seguindo') {
-    $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo
+    $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo,
+                   (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
+                    FROM tags_obras TO_
+                    JOIN tags T ON TO_.tag_id = T.id
+                    WHERE TO_.obra_id = O.id) AS tags
             FROM obras O
             JOIN users u ON O.portfolio_id = u.id
             JOIN seguidores s ON s.seguido_id = u.id
@@ -47,6 +55,7 @@ while ($post = $result->fetch_assoc()) {
     
     $post['curtido'] = $curtido;
     $post['repostado'] = $repostado;
+    $post['tags'] = $post['tags'] ? array_map('trim', explode(',', $post['tags'])) : [];
     $posts[] = $post;
 }
 

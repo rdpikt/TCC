@@ -21,11 +21,12 @@ posts.forEach(post => {
             const userName = post.dataset.userName;
             const nome_completo = post.dataset.userNameCompleto;
             const titulo = post.dataset.titulo;
-            const tags = post.dataset.tags;
-            const descricao = post.dataset.descricao;
+            const tagsData = post.dataset.tags;
             const imagemUrl = post.dataset.imagemUrl;
             const userAvatar = post.dataset.userAvatar;
-            console.log(post.dataset)
+            const descricao = post.dataset.descricao;
+            const tags = (tagsData && tagsData.trim() !== '') ? JSON.parse(tagsData) : [];
+            const tagsHtml = tags.map(tag => `<li>${tag}</li>`).join('');
 
             const postHtml = `
                 ${imagemUrl ? `<img src="../images/uploads/${imagemUrl}" alt="Imagem do post" class="post-image">` : ''}
@@ -39,7 +40,7 @@ posts.forEach(post => {
                     <h2>${titulo}</h2>
                     <p>${descricao}</p>
                     <ul>
-                        <li>${tags}</li>
+                        ${tagsHtml}
                     </ul>
                 </div>
                  <div class="footer-post">
