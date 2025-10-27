@@ -4,7 +4,7 @@ const modalPostContent = document.querySelector('.modal-post-content');
 const closeModalButton = document.querySelector('.modal-post .close-button');
 const posts = document.querySelectorAll('.posts');
 const modalOverlay = document.querySelector('.modal-overlay');
-
+let commentsInterval; // Variável para guardar o ID do intervalo
 
 // Percorre todos os posts
 posts.forEach(post => {
@@ -28,52 +28,37 @@ posts.forEach(post => {
             const tags = (tagsData && tagsData.trim() !== '') ? JSON.parse(tagsData) : [];
             const tagsHtml = tags.map(tag => `<li>${tag}</li>`).join('');
 
-            const postHtml = `
-                ${imagemUrl ? `<img src="../images/uploads/${imagemUrl}" alt="Imagem do post" class="post-image">` : ''}
-                <div class="post-content">
-                <div class="post-header">
-                    <img src="../images/avatares/Users/${userAvatar}" alt="Avatar do usuário" class="user-avatar">
-                    <span class="user-name">${nome_completo}</span>
-                    <span class="user-name">@${userName}</span>
+            // Estrutura do modal em duas colunas
+            modalPostContent.innerHTML = `
+                <div class="modal-image-container">
+                    ${imagemUrl ? `<img src="../images/uploads/${imagemUrl}" alt="Imagem do post" class="post-image">` : ''}
                 </div>
-                <div class="post-text">
-                    <h2>${titulo}</h2>
-                    <p>${descricao}</p>
-                    <ul>
-                        ${tagsHtml}
-                    </ul>
-                </div>
-                 <div class="footer-post">
-              <form action="UsuarioLogado.php?feed=<?= $tipo_feed ?>" method="post">
-                <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
-                <ul>
-                  <li><button type="button"><i class="fi fi-rr-comment"></i></button></li>
-                  <li><button type="submit" name="repostar_post"
-                      class="repostar-btn <?= $repostado ? 'repostado' : '' ?>"><i class="fi fi-rr-refresh"></i></button>
-                  </li>
-                  <li><button type="submit" name="curtir_post" class="curtida <?= $curtido ? 'curtido' : '' ?>"><svg
-                        width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor"
-                        xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                      </svg>
-                    </button></li>
-                  <li><button class="btn-share" type="button"><i class="fi fi-rs-redo"></i></button></li>
-                </ul>
-
-              </form>
-              <button type="submit" name="salvar_post" class="salvar-btn ww"><svg xmlns="http://www.w3.org/2000/svg"
-                  height="1.5rem" width="1.5rem" viewBox="0 0 384 512">
-                  <path d="M0 48C0 21.5 21.5 0 48 0H336c26.5 0 48 21.5 48 48V464L192 352 0 464V48z" />
-                </svg></button>
-            </div>
+                <div class="modal-sidebar">
+                    <div class="modal-post-header">
+                        <img src="../images/avatares/Users/${userAvatar}" alt="Avatar do usuário" class="user-avatar">
+                        <span class="user-name">@${userName}</span>
+                    </div>
+                    <div class="modal-post-details">
+                        <p><strong>${nome_completo}</strong> ${descricao}</p>
+                        <ul>${tagsHtml}</ul>
+                    </div>
+                    <div id="comments-list" class="modal-comments-list"></div>
+                    <div class="comment-form-container">
+                        <textarea id="new-comment-content" placeholder="Escreva um comentário..."></textarea>
+                        <button id="submit-comment-btn" data-post-id="${postId}">Comentar</button>
+                    </div>
                 </div>
             `;
 
-            modalPostContent.innerHTML = postHtml;
+            // Carregar os comentários e iniciar a atualização automática
+            loadComments(postId);
+            if (commentsInterval) clearInterval(commentsInterval);
+            commentsInterval = setInterval(() => {
+                loadComments(postId);
+            }, 10000); // Atualiza a cada 10 segundos
+
             modalPost.classList.add('active');
             modalOverlay.classList.add('active');
-
         });
     }
 });
@@ -82,6 +67,7 @@ posts.forEach(post => {
 closeModalButton.addEventListener('click', () => {
     modalPost.classList.remove('active');
     modalOverlay.classList.remove('active');
+    if (commentsInterval) clearInterval(commentsInterval); // Para a atualização automática
 });
 
 // Fecha ao clicar fora do conteúdo
@@ -89,5 +75,6 @@ window.addEventListener('click', (e) => {
     if (e.target === modalPost) {
         modalPost.classList.remove('active');
         modalOverlay.classList.remove('active');
+        if (commentsInterval) clearInterval(commentsInterval); // Para a atualização automática
     }
 });

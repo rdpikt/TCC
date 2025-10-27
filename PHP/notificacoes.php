@@ -108,6 +108,14 @@ $notificacoes = $result->fetch_all(MYSQLI_ASSOC);
                                     $post_preview_html = "<img src='../images/uploads/" . htmlspecialchars($notificacao['post_arquivo']) . "' alt='Preview do post' class='post-preview-img'>";
                                 }
                                 break;
+                            case 'comentario':
+                                $titulo_post = htmlspecialchars($notificacao['post_titulo'] ?? 'uma publicação');
+                                $mensagem_resumo = "<strong>{$remetente_nome}</strong> comentou na sua publicação: <em>{$titulo_post}</em>";
+                                $conteudo_completo = $mensagem_resumo;
+                                if (!empty($notificacao['post_arquivo'])) {
+                                    $post_preview_html = "<img src='../images/uploads/" . htmlspecialchars($notificacao['post_arquivo']) . "' alt='Preview do post' class='post-preview-img'>";
+                                }
+                                break;
                             case 'seguimento':
                                 $mensagem_resumo = "<strong>{$remetente_nome}</strong> começou a seguir você.";
                                 $conteudo_completo = $mensagem_resumo;

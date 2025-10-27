@@ -228,6 +228,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
   <title>Navegação</title>
   <script>
     var showWelcomeModal = <?php echo json_encode($show_welcome_modal); ?>;
+    var loggedInUserId = <?php echo json_encode($_SESSION['user_id']); ?>;
   </script>
   <link rel="stylesheet" href="../Styles/telainicial.css">
   <link rel="stylesheet" href="../Styles/global.css">
@@ -242,6 +243,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
   <link rel="stylesheet" href="../Styles/welcomeModal.css">
+  <link rel="stylesheet" href="../Styles/comments.css">
 
 </head>
 
@@ -463,5 +465,6 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
 <script src="../Scripts/carregar_posts.js"></script>
 <script src="../Scripts/WebShare.js"></script>
 <script src="../Scripts/welcomeModal.js"></script>
+<script src="../Scripts/comments.js"></script>
 
 </html>
