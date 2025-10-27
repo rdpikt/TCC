@@ -57,7 +57,8 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
   <header>
     <div class="search-container">
       <div class="search-bar-wrapper">
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+        <i class="fi-rr-search"></i>
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
       </div>
       <div id="suggestions-box">
       </div>
@@ -73,7 +74,6 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
       <ul>
         <li><a href="perfil.php">Perfil</a></li>
         <li>Trocar de conta</li>
-
         <li>
           <form action="logout.php">
             <input type="submit" value="Sair da conta">
@@ -126,7 +126,15 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
               <div class="top">
                 <img src="../images/avatares/Comunidades/<?php echo htmlspecialchars($cat['imagem']) ?>"
                   alt="Avatar da comunidade">
-                <h2><?php echo htmlspecialchars($cat['nome']); ?></h2>
+                <h2>
+                  <?php if (isset($cat['privacidade']) && $cat['privacidade'] === 'publica'): ?>
+                    <a href="sobre-comunidade.php?id=<?= $cat['id'] ?>" class="Ver-Comunidade">
+                      <?php echo htmlspecialchars($cat['nome']); ?>
+                    </a>
+                  <?php else: ?>
+                    <?php echo htmlspecialchars($cat['nome']); ?>
+                  <?php endif; ?>
+                </h2>
                 <button class="<?= htmlspecialchars($button_class) ?>" data-comunidade-id="<?= $cat['id'] ?>"><?= htmlspecialchars($button_text) ?></button>
               </div>
               <div class="bottom">
@@ -158,7 +166,15 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
               <div class="top">
                 <img src="../images/avatares/Comunidades/<?php echo htmlspecialchars($cat['imagem']) ?>"
                   alt="Avatar da comunidade">
-                <h2><?php echo htmlspecialchars($cat['nome']); ?></h2>
+                <h2>
+                  <?php if (isset($cat['privacidade']) && $cat['privacidade'] === 'publica'): ?>
+                    <a href="sobre-comunidade.php?id=<?= $cat['id'] ?>" class="Ver-Comunidade">
+                      <?php echo htmlspecialchars($cat['nome']); ?>
+                    </a>
+                  <?php else: ?>
+                    <?php echo htmlspecialchars($cat['nome']); ?>
+                  <?php endif; ?>
+                </h2>
                 <button class="<?= htmlspecialchars($button_class) ?>" data-comunidade-id="<?= $cat['id'] ?>"><?= htmlspecialchars($button_text) ?></button>
               </div>
               <div class="bottom">
@@ -191,7 +207,15 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
               <div class="top">
                 <img src="../images/avatares/Comunidades/<?php echo htmlspecialchars($cat['imagem']) ?>"
                   alt="Avatar da comunidade">
-                <h2><?php echo htmlspecialchars($cat['nome']); ?></h2>
+                <h2>
+                  <?php if (isset($cat['privacidade']) && $cat['privacidade'] === 'publica'): ?>
+                    <a href="sobre-comunidade.php?id=<?= $cat['id'] ?>" class="Ver-Comunidade">
+                      <?php echo htmlspecialchars($cat['nome']); ?>
+                    </a>
+                  <?php else: ?>
+                    <?php echo htmlspecialchars($cat['nome']); ?>
+                  <?php endif; ?>
+                </h2>
                 <button class="<?= htmlspecialchars($button_class) ?>" data-comunidade-id="<?= $cat['id'] ?>"><?= htmlspecialchars($button_text) ?></button>
               </div>
               <div class="bottom">

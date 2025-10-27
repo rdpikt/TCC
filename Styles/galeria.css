@@ -8,6 +8,9 @@ top: 20%;
 left: 20%;
   flex-direction: column;
 }
+.tags span{
+  color: var(--roxo);
+}
 .galeria-categorias {
   display: flex; gap: 1rem; flex-wrap: wrap; margin-bottom: 2rem;
 }

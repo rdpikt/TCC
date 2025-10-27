@@ -1,12 +1,10 @@
 .conteudo{
   width: 70%;
   min-height: 100vh;  
-  height: auto;
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  padding: 0 12.5rem;
   flex-direction: column;
   padding-bottom: 2rem;
   gap: 2rem;

@@ -2,6 +2,41 @@
 require "protect.php";
 require "conexao.php";
 
+// Lógica para o modal de boas-vindas
+$show_welcome_modal = false;
+if (isset($_SESSION['show_welcome_modal']) && $_SESSION['show_welcome_modal']) {
+    $show_welcome_modal = true;
+    unset($_SESSION['show_welcome_modal']);
+}
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar_interesses'])) {
+    
+    // PASSO 2: Verificar se o usuário selecionou algum item
+    if (isset($_POST['CC']) && is_array($_POST['CC'])) {
+        $interesses = $_POST['CC'];
+
+        // PASSO 3: Converter o array de interesses em JSON para salvar no banco.
+        // É muito mais flexível do que salvar texto separado por vírgula.
+        $interesses_json = json_encode($interesses);
+
+        // PASSO 4: Atualizar a tabela de usuários com os interesses
+        // !! Atenção !! Estou assumindo que você tem uma coluna chamada 'interesses' 
+        // na sua tabela 'users'. Se o nome for outro, mude o 'interesses = ?' abaixo.
+        try {
+            $stmt = $conn->prepare("UPDATE users SET interesses = ? WHERE id = ?");
+            $stmt->bind_param("si", $interesses_json, $userId); // 's' para string (JSON) e 'i' para integer (userId)
+            $stmt->execute();
+        } catch (mysqli_sql_exception $e) {
+            // Lidar com um possível erro de banco de dados
+            error_log("Erro ao salvar interesses: " . $e->getMessage());
+        }
+    }
+
+    // PASSO 5: Redirecionar para a mesma página (Padrão Post-Redirect-Get)
+    // Isso evita que o formulário seja reenviado se o usuário atualizar a página.
+    header("Location: UsuarioLogado.php?feed=foryou");
+    exit;
+}
+
 $tipo_feed = $_GET['feed'] ?? 'foryou';
 $userId = $_SESSION['user_id'];
 $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png';
@@ -176,14 +211,24 @@ $no_seguindo = $segue_alguem ? "" : "Você ainda não está seguindo ninguém. <
 $count_sql = "SELECT COUNT(*) as total FROM obras";
 $count_row = $conn->query($count_sql)->fetch_assoc();
 $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
+
+
+//adiciona os tipos de conteudos relevantes
+
+
+
+
+
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Navegação</title>
+  <script>
+    var showWelcomeModal = <?php echo json_encode($show_welcome_modal); ?>;
+  </script>
   <link rel="stylesheet" href="../Styles/telainicial.css">
   <link rel="stylesheet" href="../Styles/global.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
@@ -196,38 +241,39 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css'>
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
+  <link rel="stylesheet" href="../Styles/welcomeModal.css">
 
 </head>
 
 <body <?= $shared_post_id ? 'data-shared-post-id="' . $shared_post_id . '"' : '' ?>>
-  <header>
-    <div class="search-container">
-      <div class="search-bar-wrapper">
-        <i class="fi-rr-search"></i>
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
+    <header>
+      <div class="search-container">
+        <div class="search-bar-wrapper">
+          <i class="fi-rr-search"></i>
+          <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
+        </div>
+        <div id="suggestions-box">
+        </div>
       </div>
-      <div id="suggestions-box">
+      <div class="nav-user">
+        <ul>
+          <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
+          <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>"
+                alt="Avatar do usuário"></span></li>
+        </ul>
       </div>
-    </div>
-    <div class="nav-user">
-      <ul>
-        <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
-        <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>"
-              alt="Avatar do usuário"></span></li>
-      </ul>
-    </div>
-    <div class="modal-perfil">
-      <ul>
-        <li><a href="perfil.php">Perfil</a></li>
-        <li>Trocar de conta</li>
-        <li>
-          <form action="logout.php">
-            <input type="submit" value="Sair da conta">
-          </form>
-        </li>
-      </ul>
-    </div>
-  </header>
+      <div class="modal-perfil">
+        <ul>
+          <li><a href="perfil.php">Perfil</a></li>
+          <li>Trocar de conta</li>
+          <li>
+            <form action="logout.php">
+              <input type="submit" value="Sair da conta">
+            </form>
+          </li>
+        </ul>
+      </div>
+    </header>
 
   <main>
     <nav class="nav-side" id="menu">
@@ -387,6 +433,23 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
     </section>
 
   </main>
+  <div id="welcome-modal" class="modal-welcome" style="display: none;">
+    <div class="modal-welcome-content">
+        <form action="UsuarioLogado.php?feed=foryou" method="post">
+            <h1>Escolha os Conteúdos</h1>
+            <p>Selecione os conteúdos que deseja priorizar na sua página, adaptando a experiência as suas inspirações artísticas</p>
+            <ul>
+                <li><input type="checkbox" name="CC[]" value="obras-literarias">Obras literárias</li>
+                <li><input type="checkbox" name="CC[]" value="poemas">Poemas</li>
+                <li><input type="checkbox" name="CC[]" value="fotografias">Fotografias</li>
+                <li><input type="checkbox" name="CC[]" value="design-grafico">Design Gráfico</li>
+                <li><input type="checkbox" name="CC[]" value="musicas">Músicas</li>
+                <li><input type="checkbox" name="CC[]" value="ilustracoes">Ilustrações</li>
+            </ul>
+            <input type="submit" value="Concluir" name="salvar_interesses" class="close-welcome-button-main">
+        </form>
+    </div>
+</div>
   <div class="modal-overlay"></div>
   <div class="modal-post">
     <span class="close-button">&times;</span>
@@ -399,5 +462,6 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
 <script src="../Scripts/ajaxInteractions.js"></script>
 <script src="../Scripts/carregar_posts.js"></script>
 <script src="../Scripts/WebShare.js"></script>
+<script src="../Scripts/welcomeModal.js"></script>
 
 </html>

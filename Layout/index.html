@@ -1,59 +1,264 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>HarpHub</title>
-    <link rel="stylesheet" href="../Styles/HomePage.css" />
-    <link rel="stylesheet" href="../Styles/animation.css" />
-    <link rel="stylesheet" href="../Styles/global.css">
-  </head>
+<html lang="pt-BR">
 
-  <body>
-    <nav class="navigation hidden">
-      <div class="left"><b>Harp</b>Hub</div>
-      <div class="mid">
-        <ul>
-          <li>Sobre Nós</li>
-          <li>Recursos</li>
-          <li>FAQs</li>
-        </ul>
-      </div>
-      <div class="right">
-        <button onclick="loginMV()">Entrar</button>
-      </div>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HarpHub</title>
+  <link rel="stylesheet" href="../Styles/mainpageGlobal.css" />
+  <link rel="stylesheet" href="../Styles/mainpage.css" />
+</head>
+
+<body id="inicio">
+  <header class="topo-int">
+    <h1 class="logo">
+      <a href="#inicio" class="logo-link">
+        <span class="marca">Harp</span><span class="nome">Hub</span>
+      </a>
+    </h1>
+
+    <nav class="nav" aria-label="Menu principal">
+      <a class="nav-item" href="#sobre-titulo">Sobre</a>
+      <a class="nav-item" href="#como-titulo">Como Funciona</a>
+      <a class="nav-item" href="#porque-titulo">Vantagens</a>
+      <a class="nav-item" href="#depoimentos-titulo">Depoimentos</a>
+      <a class="nav-item" href="#missao-titulo">Missão</a>
     </nav>
-    <main class="princ">
-      <h1 class="Tito">Registre sua Arte</h1>
-      <p class="subtito">
-        Garanta sua autoria com segurança em uma plataforma feita por criadores,
-        para criadores.
-      </p>
 
-      <div class="carrocel">
-        <div class="item1">Item 1</div>
-        <div class="item2">Item 2</div>
-        <div class="item3">Item 3</div>
-      </div>
-    </main>
+    <button class="btn-entrar" id="btn-entrar" type="button">
+      Entrar
+    </button>
+  </header>
 
-    <main2>
-      <div class="infopla">
-        <div class="tit titulo">
-          <h1>O que é nossa plataforma?</h1>
+  <main class="pagina">
+    <section class="hero">
+      <img class="fundo" src="https://c.animaapp.com/JVh4gRxq/img/blur.svg" alt="Background blur" />
+
+      <div class="hero-conteudo">
+        <section class="destaque" aria-labelledby="destaque-titulo">
+          <h2 id="destaque-titulo" class="destaque-titulo">Registre sua Arte</h2>
           <p>
-            Nossa plataforma é uma rede social dedicada a criadores de conteúdo,
-            como autores, artistas, músicos, poetas e ilustradores. Projetada
-            para ser um ambiente seguro, confiável e acolhedor, ela oferece um
-            espaço onde a criatividade é celebrada, permitindo que artistas\\\\\
-            publiquem, armazenem e compartilhem suas obras, como textos,
-            poesias, ensaios, ilustrações e músicas.
+            Publique, compartilhe e conecte-se com quem valoriza a arte. Uma comunidade dedicada a autores, artistas,
+            músicos e outros criativos.
+          </p>
+        </section>
+
+        <div class="container">
+          <input type="radio" name="slider" id="item-1" checked>
+          <input type="radio" name="slider" id="item-2">
+          <input type="radio" name="slider" id="item-3">
+
+          <div class="cards">
+            <label class="card" for="item-1" id="song-1">
+              <img src="../images/mainpage/img1.jpg" alt="Mulher com tinta neon">
+            </label>
+            <label class="card" for="item-2" id="song-2">
+              <img src="../images/mainpage/img2.jpg" alt="Flores roxas">
+            </label>
+            <label class="card" for="item-3" id="song-3">
+              <img src="../images/mainpage/img3.jpg" alt="Peixe palhaço">
+            </label>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="features-section">
+      <article class="sobre-bloco" aria-labelledby="sobre-titulo">
+
+        <div class="sobre-texto">
+          <h2 id="sobre-titulo" class="sobre-titulo">O que é nossa plataforma?</h2>
+          <p>
+            Nossa plataforma é uma rede social dedicada a criadores de conteúdo, como autores, artistas, músicos, poetas
+            e ilustradores. Projetada para ser um ambiente seguro, confiável e acolhedor, ela oferece um espaço onde a
+            criatividade é celebrada, permitindo que artistas publiquem, armazenem e compartilhem suas obras, como
+            textos, poesias, ensaios, ilustrações e músicas.
           </p>
         </div>
-        <div class="imgs"></div>
+
+        <img class="sobre-img" src="../images/mainpage/urias.jpg" />
+
+      </article>
+      <article class="como" aria-labelledby="como-titulo">
+        <h2 id="como-titulo" class="como-titulo">Como a HarpHub funciona?</h2>
+
+        <div class="cartoes">
+          <div class="cartao">
+            <img class="cartao-ico" src="https://c.animaapp.com/JVh4gRxq/img/fi-rr-portrait.svg" alt="Ícone perfil" />
+            <h3 class="cartao-titulo">Perfil do Criador</h3>
+            <p class="cartao-texto">
+              Apresente sua trajetória artística, publique suas obras e interaja com outros criativos em um ambiente acolhedor e seguro
+            </p>
+          </div>
+
+          <div class="cartao">
+            <img class="cartao-ico" src="https://c.animaapp.com/JVh4gRxq/img/fi-rr-shield-check.svg"
+              alt="Ícone segurança" />
+            <h3 class="cartao-titulo">Segurança e controle</h3>
+            <p class="cartao-texto">
+              Tenha total privacidade: sem algoritmos invasivos. Você decide quem acessa, comenta e compartilha suas criações.
+            </p>
+          </div>
+
+          <div class="cartao">
+            <img class="cartao-ico" src="https://c.animaapp.com/JVh4gRxq/img/fi-rr-edit-alt.svg" alt="Ícone edição" />
+            <h3 class="cartao-titulo">Publicação Organizada</h3>
+            <p class="cartao-texto">
+              Poste textos, poesias, artes ou músicas em formatos dedicados, com categorias específicas para cada tipo
+              de conteúdo.
+            </p>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="porque" aria-labelledby="porque-titulo">
+      <img class="porque-img" src="../images/mainpage/harpia.jpg" />
+      <div class="porque-conteudo">
+        <h2 id="porque-titulo" class="porque-titulo">Por que escolher a HarpHub?</h2>
+        <p class="porque-texto">
+          Diferente das redes sociais tradicionais, nossa plataforma é focada na valorização da originalidade e na
+          criação de conexões significativas entre criativos. Aqui, você encontra um espaço seguro para expressar sua
+          arte, receber feedback construtivo e colaborar com outros talentos. Nosso ambiente é livre de algoritmos
+          comerciais, priorizando a qualidade e a autenticidade do conteúdo, ajudando você a crescer artisticamente e
+          construir uma comunidade vibrante.
+        </p>
       </div>
-    </main2>
+    </section>
+
+    <section class="depoimentos" aria-labelledby="depoimentos-titulo">
+      <h2 id="depoimentos-titulo" class="depoimentos-titulo">O que nossos usuários estão dizendo</h2>
+
+      <article class="depoimento">
+        <div class="depoimento-conteudo">
+          <img class="depoimento-avatar" src="../images/mainpage/avatar/Sofia avatar.jpg" alt="Avatar de Sofia Alencar">
+          <p class="depoimento-texto">
+            Como poeta, sempre busquei um espaço seguro e inspirador. Na HarpHub, não só compartilho meus versos sem medo, como também me conectei com ilustradores para projetos incríveis. A atmosfera é única!
+          </p>
+          <p class="depoimento-nome">Sofia Alencar</p>
+          <p class="depoimento-email">@sofia.alencar</p>
+        </div>
+      </article>
+
+      <article class="depoimento">
+        <div class="depoimento-conteudo">
+           <img class="depoimento-avatar" src="../images/mainpage/avatar/Kai avatar.jpg" alt="Avatar de Kai Moreno">
+          <p class="depoimento-texto">
+            Finalmente um lugar onde a arte visual respira! Na HarpHub, minhas ilustrações não são só mais um post no feed. Sinto que meu trabalho é visto e valorizado pela comunidade, sem a pressão dos algoritmos.
+          </p>
+          <p class="depoimento-nome">Kai Moreno</p>
+          <p class="depoimento-email">@kai_moreno_art</p>
+        </div>
+      </article>
+
+      <article class="depoimento">
+        <div class="depoimento-conteudo">
+           <img class="depoimento-avatar" src="../images/mainpage/avatar/Lyra avatar.jpg" alt="Avatar de Lyra Chen">
+          <p class="depoimento-texto">
+            HarpHub me deu a visibilidade que eu precisava. Antes, minhas músicas se perdiam em outras redes. Aqui, encontrei um público que realmente ouve e o feedback da comunidade foi essencial para meu último EP!
+          </p>
+          <p class="depoimento-nome">Lyra Chen</p>
+          <p class="depoimento-email">@lyra.chen.sounds</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="missao" aria-labelledby="missao-titulo">
+      <h2 id="missao-titulo" class="missao-titulo">Nossa Missão</h2>
+      <p class="missao-texto">
+        Nossa missão é proporcionar um ambiente digital seguro e inspirador que empodere criadores de conteúdo,
+        promovendo a criatividade, a colaboração e o crescimento artístico. Queremos construir um ecossistema cultural
+        dinâmico e inovador, onde a originalidade é celebrada e conexões significativas transformam ideias em
+        realidades.
+      </p>
+
+      <button class="Btn" id="btn-comecar" type="button">
+        <span>Começar</span>
+      </button>
+
+    </section>
+
+    <footer class="rodape">
+      <nav class="rodape-nav" aria-label="Rodapé">
+        <section class="rodape-col">
+          <div class="rodape-col-inner">
+            <h3 class="rodape-col-titulo">Explore</h3>
+            <div class="rodape-links">Como Funciona<br />Comunidade<br />FAQ<br />Central de Ajuda</div>
+          </div>
+        </section>
+
+        <section class="rodape-col">
+          <h3 class="rodape-col-titulo">Políticas</h3>
+          <div class="rodape-links">
+            Termos de Uso<br />Política de Privacidade<br />Diretrizes<br />Direitos Autorais
+          </div>
+        </section>
+
+        <section class="rodape-col">
+          <h3 class="rodape-col-titulo">Redes Sociais</h3>
+          <div class="rodape-links">Twitter<br />Tiktok<br />Instagram<br />Facebook</div>
+        </section>
+      </nav>
+
+      <p class="rodape-copyright">© 2025 HarpHub. Todos os direitos reservados</p>
+    </footer>
+  </main>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const btnEntrar = document.getElementById("btn-entrar");
+      const btnComecar = document.querySelector('#btn-comecar');
+
+      btnEntrar.addEventListener('click', ()=>{
+        window.location.href = "../Layout/login.html?action=login";
+      })
+
+      btnComecar.addEventListener('click', ()=>{
+        window.location.href = "../Layout/login.html?action=cadastro";
+      })
+      const slides = document.querySelectorAll('input[name="slider"]');
+      const slideCount = slides.length;
+      const carouselContainer = document.querySelector('.container');
+      let slideInterval;
+
+      // Função que avança para o próximo slide
+      function nextSlide() {
+        // 1. Encontra o índice do slide que está marcado
+        let currentIndex = 0;
+        for (let i = 0; i < slideCount; i++) {
+          if (slides[i].checked) {
+            currentIndex = i;
+            break;
+          }
+        }
+        
+        // 2. Calcula o índice do próximo slide (voltando ao início se for o último)
+        const nextIndex = (currentIndex + 1) % slideCount;
+        
+        // 3. Marca o próximo slide
+        slides[nextIndex].checked = true;
+      }
+
+      // Inicia o intervalo
+      function startSlideShow() {
+        // Muda de slide a cada 4 segundos (4000ms). Ajuste esse valor se desejar.
+        slideInterval = setInterval(nextSlide, 4000);
+      }
+
+      // Para a apresentação quando o mouse está sobre o carrossel (melhor UX)
+      carouselContainer.addEventListener('mouseenter', () => {
+        clearInterval(slideInterval);
+      });
+
+      // Retoma a apresentação quando o mouse sai
+      carouselContainer.addEventListener('mouseleave', () => {
+        startSlideShow();
+      });
+
+      // Inicia o slideshow assim que a página carregar
+      startSlideShow();
+    });
+  </script>
   </body>
-  <script src="../Scripts/index.js"></script>
-  <script src="../Scripts/animation.js"></script>
+
 </html>

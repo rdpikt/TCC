@@ -119,6 +119,13 @@ input[type="search"] {
     color: white;
     border-color: var(--border-color-dark);
 }
+body table{
+    position: absolute;
+  width: 50%;
+  left: 20%;
+  height: 90%;
+  z-index: 1000000000000000000000000000000000000000000000000000000000000000000000000000;
+}
 
 #suggestions-box {
     display: none;

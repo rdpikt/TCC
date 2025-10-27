@@ -10,16 +10,16 @@ width: 7rem;
 height: 7rem;
 border-radius: 50rem;
 }
-.global-comunidade{
-  position: static;
-  top: 0%;
-  left: 50%;
-  transform: translate(50%, 0);
-  height: 100vh;
+.comunidade-container{
+  width: 70%;
+  min-height: 100vh;  
   display: flex;
   justify-content: center;
-  gap: 10rem;
   align-items: center;
+  text-align: center;
+  flex-direction: column;
+  padding-bottom: 2rem;
+  gap: 2rem;
 }
 .options ul{
   display: flex;

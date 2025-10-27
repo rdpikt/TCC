@@ -200,7 +200,6 @@ endif;
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Postar Imagem</title>
   <link rel="stylesheet" href="../Styles/EnviarPost.css">
-  <link rel="stylesheet" href="../Styles/telainicial.css">
   <link rel="stylesheet" href="../Styles/global.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -237,10 +236,11 @@ endif;
 </head>
 
 <body>
-  <header>
+   <header>
     <div class="search-container">
       <div class="search-bar-wrapper">
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+        <i class="fi-rr-search"></i>
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
       </div>
       <div id="suggestions-box">
       </div>
@@ -258,20 +258,22 @@ endif;
         <li>Trocar de conta</li>
         <li>
           <form action="logout.php">
-            <input type="submit" value="Sair da conta">
+          <input type="submit" value="Sair da conta">
           </form>
         </li>
       </ul>
     </div>
   </header>
-  <section class="main">
+
+  <main>
     <nav class="nav-side" id="menu">
       <div class="logotipo"><span>Harp</span>Hub</div>
-      <ul id="pages">
-        <li><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
+      <ul class="pages">
+        <li><a class="selecionado" href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a>
+        </li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
-        <li><a class="selecionado" href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
         <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
         <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
 
@@ -282,10 +284,8 @@ endif;
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
-
     </nav>
-  </section>
-  <section class="formulario">
+    <div class="formulario">
     <form action="EnviarArquivos.php" method="POST" enctype="multipart/form-data">
       <div class="content generos">
         <h1>Postar</h1>
@@ -319,8 +319,11 @@ endif;
 
       <input class="Post-btn" type="submit" value="Postar">
     </form>
-  </section>
+    </div>
+  </main>
 </body>
+<script src="../Scripts/modals.js"></script>
+
 <script>
   // --- SCRIPT DE TAGS ---
   const TagList = document.querySelector(".tags-list");

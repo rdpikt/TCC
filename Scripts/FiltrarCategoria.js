@@ -7,7 +7,7 @@
       btn.classList.add('active');
       const cat = btn.getAttribute('data-cat');
       gridItems.forEach(item => {
-        if(cat === 'all' || item.getAttribute('data-cat') === cat) {
+        if (cat === 'all' || item.getAttribute('data-cat').split(',').includes(cat)){
           item.style.display = 'flex';
           item.classList.add('fade-in');
         } else {

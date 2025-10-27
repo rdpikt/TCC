@@ -73,6 +73,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Se, depois de todas as checagens, o array de erros ainda estiver vazio, tenta cadastrar
     if (empty($erros)) {
+        
         try {
             $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
             $stmt = $conn->prepare("INSERT INTO users (nome_completo, nome_user, email, senha, data_nasc) VALUES (?, ?, ?, ?, ?)");
@@ -93,6 +94,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $_SESSION['user_email'] = $user['email'];
                 $_SESSION['avatar'] = $user['user_avatar'];
                 $_SESSION['user_bio'] = $user['bio'];
+                $_SESSION['show_welcome_modal'] = true;
 
                 $response['success'] = true;
                 $response['redirect_url'] = '../Layout/load.html?message=Cadastro realizado com sucesso!&action=login';

@@ -57,10 +57,11 @@ $user_avatar = $_SESSION['avatar'] ?? 'profile.png';
 </head>
 
 <body>
-  <header>
+ <header>
     <div class="search-container">
       <div class="search-bar-wrapper">
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+        <i class="fi-rr-search"></i>
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
       </div>
       <div id="suggestions-box">
       </div>

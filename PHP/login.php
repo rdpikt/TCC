@@ -34,6 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $_SESSION['avatar'] = $user['user_avatar'];
                     $_SESSION['user_bio'] = $user['bio'];
 
+
                     $response['success'] = true;
                     $response['redirect_url'] = '../Layout/load.html?message=Login realizado com sucesso!&action=login'; // Redireciona para a página principal do usuário
                 } else {

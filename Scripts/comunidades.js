@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    
     // Usa delegação de eventos no corpo do documento para capturar cliques
     document.body.addEventListener('click', async (e) => {
         // Verifica se o elemento clicado é um botão de entrar ou sair
@@ -7,7 +8,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const button = e.target;
             const comunidadeId = button.dataset.comunidadeId;
-            const action = button.classList.contains('Entrar-Comunidade') ? 'entrar' : 'sair';
+            const action = button.classList.contains('Entrar-Comunidade') ? 'entrar':'sair';
+            console.log(e)
+
+          
 
             // Desabilita o botão para prevenir cliques múltiplos
             button.disabled = true;
@@ -33,6 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     if (action === 'entrar') {
                         button.textContent = 'Sair';
                         button.classList.remove('Entrar-Comunidade');
+
+                          console.log(comunidadeId)
                         button.classList.add('Sair-Comunidade');
                         window.location = `sobre-comunidade.php?id=${comunidadeId}`;
                     } else {
@@ -52,10 +58,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     //redireciona caso o usaurio clique no card
-    const cards = document.querySelectorAll('.comunidade-card');
-     cards.forEach(card => {
-        card.addEventListener('click', () => {
-            window.location = `sobre-comunidade.php?id=${card.dataset.id}`;
-        })
-     })
+    
 });
