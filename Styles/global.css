@@ -34,8 +34,8 @@ body {
 }
 
 main{
-    display: flex;
-    height: 100%;
+    position: relative;
+    min-height: 100vh;
 }
 
 header {

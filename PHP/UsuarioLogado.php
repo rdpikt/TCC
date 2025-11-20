@@ -5,36 +5,36 @@ require "conexao.php";
 // Lógica para o modal de boas-vindas
 $show_welcome_modal = false;
 if (isset($_SESSION['show_welcome_modal']) && $_SESSION['show_welcome_modal']) {
-    $show_welcome_modal = true;
-    unset($_SESSION['show_welcome_modal']);
+  $show_welcome_modal = true;
+  unset($_SESSION['show_welcome_modal']);
 }
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['salvar_interesses'])) {
-    
-    // PASSO 2: Verificar se o usuário selecionou algum item
-    if (isset($_POST['CC']) && is_array($_POST['CC'])) {
-        $interesses = $_POST['CC'];
 
-        // PASSO 3: Converter o array de interesses em JSON para salvar no banco.
-        // É muito mais flexível do que salvar texto separado por vírgula.
-        $interesses_json = json_encode($interesses);
+  // PASSO 2: Verificar se o usuário selecionou algum item
+  if (isset($_POST['CC']) && is_array($_POST['CC'])) {
+    $interesses = $_POST['CC'];
 
-        // PASSO 4: Atualizar a tabela de usuários com os interesses
-        // !! Atenção !! Estou assumindo que você tem uma coluna chamada 'interesses' 
-        // na sua tabela 'users'. Se o nome for outro, mude o 'interesses = ?' abaixo.
-        try {
-            $stmt = $conn->prepare("UPDATE users SET interesses = ? WHERE id = ?");
-            $stmt->bind_param("si", $interesses_json, $userId); // 's' para string (JSON) e 'i' para integer (userId)
-            $stmt->execute();
-        } catch (mysqli_sql_exception $e) {
-            // Lidar com um possível erro de banco de dados
-            error_log("Erro ao salvar interesses: " . $e->getMessage());
-        }
+    // PASSO 3: Converter o array de interesses em JSON para salvar no banco.
+    // É muito mais flexível do que salvar texto separado por vírgula.
+    $interesses_json = json_encode($interesses);
+
+    // PASSO 4: Atualizar a tabela de usuários com os interesses
+    // !! Atenção !! Estou assumindo que você tem uma coluna chamada 'interesses' 
+    // na sua tabela 'users'. Se o nome for outro, mude o 'interesses = ?' abaixo.
+    try {
+      $stmt = $conn->prepare("UPDATE users SET interesses = ? WHERE id = ?");
+      $stmt->bind_param("si", $interesses_json, $userId); // 's' para string (JSON) e 'i' para integer (userId)
+      $stmt->execute();
+    } catch (mysqli_sql_exception $e) {
+      // Lidar com um possível erro de banco de dados
+      error_log("Erro ao salvar interesses: " . $e->getMessage());
     }
+  }
 
-    // PASSO 5: Redirecionar para a mesma página (Padrão Post-Redirect-Get)
-    // Isso evita que o formulário seja reenviado se o usuário atualizar a página.
-    header("Location: UsuarioLogado.php?feed=foryou");
-    exit;
+  // PASSO 5: Redirecionar para a mesma página (Padrão Post-Redirect-Get)
+  // Isso evita que o formulário seja reenviado se o usuário atualizar a página.
+  header("Location: UsuarioLogado.php?feed=foryou");
+  exit;
 }
 
 $tipo_feed = $_GET['feed'] ?? 'foryou';
@@ -171,18 +171,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['post_id'])) {
 
 // --- FEEDS ---
 if ($tipo_feed === 'foryou') {
-  $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo,
-               (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
-                FROM obras_tags TO_
-                JOIN tags T ON TO_.id_tag = T.tag_id
-                WHERE TO_.id_obra = O.id) AS tags
-            FROM obras O
-            JOIN users u ON O.portfolio_id = u.id
-            ORDER BY RAND()
-            LIMIT 20";
+  $sql = "SELECT O.*, 
+       u.nome_user, 
+       u.user_avatar, 
+       u.nome_completo,
+       u.user_tag,
+       (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
+        FROM obras_tags TO_
+        JOIN tags T ON TO_.id_tag = T.tag_id
+        WHERE TO_.id_obra = O.id) AS tags
+FROM obras O
+JOIN users u ON O.portfolio_id = u.id";
   $result = $conn->query($sql);
 } elseif ($tipo_feed === 'seguindo') {
-  $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo,
+  $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo, u.user_tag,
                (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
                 FROM obras_tags TO_
                 JOIN tags T ON TO_.id_tag = T.tag_id
@@ -222,6 +224,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -248,34 +251,34 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
 </head>
 
 <body <?= $shared_post_id ? 'data-shared-post-id="' . $shared_post_id . '"' : '' ?>>
-    <header>
-      <div class="search-container">
-        <div class="search-bar-wrapper">
-          <i class="fi-rr-search"></i>
-          <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
-        </div>
-        <div id="suggestions-box">
-        </div>
+  <header>
+    <div class="search-container">
+      <div class="search-bar-wrapper">
+        <i class="fi-rr-search"></i>
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
       </div>
-      <div class="nav-user">
-        <ul>
-          <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
-          <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>"
-                alt="Avatar do usuário"></span></li>
-        </ul>
+      <div id="suggestions-box">
       </div>
-      <div class="modal-perfil">
-        <ul>
-          <li><a href="perfil.php">Perfil</a></li>
-          <li>Trocar de conta</li>
-          <li>
-            <form action="logout.php">
-              <input type="submit" value="Sair da conta">
-            </form>
-          </li>
-        </ul>
-      </div>
-    </header>
+    </div>
+    <div class="nav-user">
+      <ul>
+        <li><a href="notificacoes.php"><i class="fi fi-rs-bell"></i></a></li>
+        <li><span><img src="../images/avatares/Users/<?php echo htmlspecialchars($user_avatar); ?>"
+              alt="Avatar do usuário"></span></li>
+      </ul>
+    </div>
+    <div class="modal-perfil">
+      <ul>
+        <li><a href="perfil.php">Perfil</a></li>
+        <li>Trocar de conta</li>
+        <li>
+          <form action="logout.php">
+            <input type="submit" value="Sair da conta">
+          </form>
+        </li>
+      </ul>
+    </div>
+  </header>
 
   <main>
     <nav class="nav-side" id="menu">
@@ -328,10 +331,12 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
             data-imagem-url="<?= htmlspecialchars($post['arquivo_url']) ?>"
             data-user-avatar="<?= htmlspecialchars($post['user_avatar']) ?>"
             data-user-name-completo="<?= htmlspecialchars($post['nome_completo']) ?>"
+            data-user-type="<?= htmlspecialchars($post['user_tag']) ?>"
+            data-user-id="<?= $post['portfolio_id'] ?>"
             data-data-publicacao="<?php echo date('d/m/Y H:i', strtotime($post['data_publicacao'])); ?>">
             <div class="descricao-post">
               <ul>
-                <li><span class="avatar-desc"><img
+                <li><span class="avatar-desc"><img id="avatar-desc"
                       src="../images/avatares/Users/<?php echo htmlspecialchars($post['user_avatar']); ?>" alt=""></span>
                 </li>
                 <li><span class="nomeUsr"><?= htmlspecialchars($post['nome_completo']) ?></span></li>
@@ -437,26 +442,37 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
   </main>
   <div id="welcome-modal" class="modal-welcome" style="display: none;">
     <div class="modal-welcome-content">
-        <form action="UsuarioLogado.php?feed=foryou" method="post">
-            <h1>Escolha os Conteúdos</h1>
-            <p>Selecione os conteúdos que deseja priorizar na sua página, adaptando a experiência as suas inspirações artísticas</p>
-            <ul>
-                <li><input type="checkbox" name="CC[]" value="obras-literarias">Obras literárias</li>
-                <li><input type="checkbox" name="CC[]" value="poemas">Poemas</li>
-                <li><input type="checkbox" name="CC[]" value="fotografias">Fotografias</li>
-                <li><input type="checkbox" name="CC[]" value="design-grafico">Design Gráfico</li>
-                <li><input type="checkbox" name="CC[]" value="musicas">Músicas</li>
-                <li><input type="checkbox" name="CC[]" value="ilustracoes">Ilustrações</li>
-            </ul>
-            <input type="submit" value="Concluir" name="salvar_interesses" class="close-welcome-button-main">
-        </form>
+      <form action="UsuarioLogado.php?feed=foryou" method="post">
+        <h1>Escolha os Conteúdos</h1>
+        <p>Selecione os conteúdos que deseja priorizar na sua página, adaptando a experiência as suas inspirações
+          artísticas</p>
+        <ul>
+          <li><input type="checkbox" name="CC[]" value="obras-literarias">Obras literárias</li>
+          <li><input type="checkbox" name="CC[]" value="poemas">Poemas</li>
+          <li><input type="checkbox" name="CC[]" value="fotografias">Fotografias</li>
+          <li><input type="checkbox" name="CC[]" value="design-grafico">Design Gráfico</li>
+          <li><input type="checkbox" name="CC[]" value="musicas">Músicas</li>
+          <li><input type="checkbox" name="CC[]" value="ilustracoes">Ilustrações</li>
+        </ul>
+        <input type="submit" value="Concluir" name="salvar_interesses" class="close-welcome-button-main">
+      </form>
     </div>
-</div>
+  </div>
   <div class="modal-overlay"></div>
   <div class="modal-post">
     <span class="close-button">&times;</span>
     <div class="modal-post-content">
     </div>
+  </div>
+  <div class="modal-overlay"></div>
+
+<div class="modal-other-perfil-container">
+    <div class="modal-other-perfil-content-wrapper">
+        <!-- O JS vai preencher aqui -->
+    </div>
+</div>
+    </div>
+  </div>
   </div>
 </body>
 <script src="../Scripts/TelaInicial.js"></script>
