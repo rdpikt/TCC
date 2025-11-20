@@ -204,7 +204,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <div class="modal-other-perfil">
                         
                         <div class="close-button modal-other-fechar">
-                            <i class="fas fa-arrow-left">q1</i>
+                            <i class="fas fa-arrow-left"></i>
                         </div>
 
                         <div class="modal-other-header">
@@ -349,13 +349,5 @@ document.addEventListener('DOMContentLoaded', () => {
         } catch (err) {
             console.error("Erro ao atualizar contadores:", err);
         }
-    }
-
-    // Placeholder para loadComments (se não estiver definido em outro arquivo, precisa estar aqui ou importado)
-    function loadComments(postId) {
-        // Lógica existente de comentários...
-        // Caso você tenha essa função em outro lugar, ignore. 
-        // Caso contrário, insira a lógica aqui.
-        console.log("Carregando comentários para post " + postId);
     }
 });
