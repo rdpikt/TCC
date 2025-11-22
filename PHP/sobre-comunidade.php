@@ -105,7 +105,7 @@ if ($comunidade) {
 
     </nav>
 
-    < class="navigation-user">
+    <section class="navigation-user">
       <i class="fi fi-rr-arrow-left"></i>
       <article class="comunidade-container">
         <div class="options">
@@ -142,62 +142,63 @@ if ($comunidade) {
       </article>
 
       <section class="suggest">
-      <article class="seguidores-suggestions">
-        <div class="titulo">
-          <h1>Sugestões de artistas</h1><a href="#">Ver mais</a>
-        </div>
-        <ul class="sugestoes">
-          <li class="sugestao">
-            <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
-            <div class="nome">
-              <h1 class="name-exibição">teste 1</h1>
-              <h2 class="name-user">@teste1</h2>
-            </div>
-            <button class="seguir-btn">Seguir</button>
-          </li>
-          <li class="sugestao">
-            <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
-            <div class="nome">
-              <h1 class="name-exibição">teste 1</h1>
-              <h2 class="name-user">@teste1</h2>
-            </div>
-            <button class="seguir-btn">Seguir</button>
-          </li>
-          <li class="sugestao">
-            <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
-            <div class="nome">
-              <h1 class="name-exibição">teste 1</h1>
-              <h2 class="name-user">@teste1</h2>
-            </div>
-            <button class="seguir-btn">Seguir</button>
-          </li>
-          <li class="sugestao">
-            <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
-            <div class="nome">
-              <h1 class="name-exibição">teste 1</h1>
-              <h2 class="name-user">@teste1</h2>
-            </div>
-            <button class="seguir-btn">Seguir</button>
-          </li>
-          <li class="sugestao">
-            <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
-            <div class="nome">
-              <h1 class="name-exibição">teste 1</h1>
-              <h2 class="name-user">@teste1</h2>
-            </div>
-            <button class="seguir-btn">Seguir</button>
-          </li>
-        </ul>
-      </article>
-      <footer>
-        <p>Regras do HarpHub</p>
-        <p>Política de Privacidade</p>
-        <p>Contrato do Usuário</p>
-        <p>Acessibilidade</p>
-        <p>&copysr; 2025 HarpHub</p>
-      </footer>
+        <article class="seguidores-suggestions">
+          <div class="titulo">
+            <h1>Sugestões de artistas</h1><a href="#">Ver mais</a>
+          </div>
+          <ul class="sugestoes">
+            <li class="sugestao">
+              <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
+              <div class="nome">
+                <h1 class="name-exibição">teste 1</h1>
+                <h2 class="name-user">@teste1</h2>
+              </div>
+              <button class="seguir-btn">Seguir</button>
+            </li>
+            <li class="sugestao">
+              <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
+              <div class="nome">
+                <h1 class="name-exibição">teste 1</h1>
+                <h2 class="name-user">@teste1</h2>
+              </div>
+              <button class="seguir-btn">Seguir</button>
+            </li>
+            <li class="sugestao">
+              <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
+              <div class="nome">
+                <h1 class="name-exibição">teste 1</h1>
+                <h2 class="name-user">@teste1</h2>
+              </div>
+              <button class="seguir-btn">Seguir</button>
+            </li>
+            <li class="sugestao">
+              <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
+              <div class="nome">
+                <h1 class="name-exibição">teste 1</h1>
+                <h2 class="name-user">@teste1</h2>
+              </div>
+              <button class="seguir-btn">Seguir</button>
+            </li>
+            <li class="sugestao">
+              <img src="../images/avatares/Users/profile.png" alt="Avatar do usuário">
+              <div class="nome">
+                <h1 class="name-exibição">teste 1</h1>
+                <h2 class="name-user">@teste1</h2>
+              </div>
+              <button class="seguir-btn">Seguir</button>
+            </li>
+          </ul>
+        </article>
+        <footer>
+          <p>Regras do HarpHub</p>
+          <p>Política de Privacidade</p>
+          <p>Contrato do Usuário</p>
+          <p>Acessibilidade</p>
+          <p>&copysr; 2025 HarpHub</p>
+        </footer>
+      </section>
     </section>
-</main>
+  </main>
 
 </body>
 <script src="../Scripts/modals.js"></script>

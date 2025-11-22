@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             `;
                             break;
                         case 'comunidades':
+                            console.log("selecionado comunidade")
                             link = `sobre-comunidade.php?id=${item.id}`;
                             content = `
                                 <img src="../images/avatares/Comunidades/${item.imagem || 'profile.png'}" alt="Ícone da comunidade">
