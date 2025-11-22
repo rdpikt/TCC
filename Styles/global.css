@@ -129,59 +129,92 @@ body table{
 
 #suggestions-box {
     display: none;
-    /* Começa escondido */
-    gap: 1.2rem;
     position: absolute;
-    padding: 1.5rem 0;
-    top: 29px;
+    top: 2.5rem; /* Ajustado para alinhar abaixo da barra de busca */
     left: 0;
     width: 37.8rem;
-    background-color: var(--background-main);
+    background-color: var(--background-card); /* Fundo do card */
     border: 1px solid var(--border-color-dark);
     border-top: none;
-    margin-top: -5px;
-    border-radius: 0 0 10px 10px;
-    height: 10rem;
-    max-height: 50rem;
+    border-radius: 0 0 1rem 1rem; /* Bordas arredondadas */
+    max-height: 450px; /* Altura máxima */
     overflow-y: auto;
     z-index: 0;
+    padding: 0.5rem; /* Espaçamento interno */
+    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
 }
 
-#suggestions-box::before {
-    z-index: 999999999999;
-    content: "";
-    position: absolute;
-    top: -8px;
-    left: 0;
+/* Lista de sugestões, agora com o estilo de .sugestoes */
+#suggestions-list.sugestoes {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    list-style: none;
     width: 100%;
-    height: 8px;
-    background-color: var(--background-card);
-    border-top-left-radius: 25px;
-    border-top-right-radius: 25px;
 }
 
-.suggestion-item {
-    padding: 10px;
-    cursor: pointer;
+/* Item individual da lista */
+#suggestions-list.sugestoes li {
     display: flex;
     align-items: center;
-    border-bottom: 1px solid #eee;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 0.5rem; /* 8px */
+    cursor: pointer;
+    transition: background-color 0.2s;
 }
 
-.suggestion-item:last-child {
-    border-bottom: none;
+#suggestions-list.sugestoes li:hover {
+    background-color: var(--border-color-dark);
 }
 
-.suggestion-item:hover {
-    border: 1px solid var(--roxo);
-}
-
-.suggestion-item img {
-    width: 40px;
-    height: 40px;
+/* Imagem do avatar/comunidade */
+#suggestions-list.sugestoes li img {
+    width: 3rem; /* 48px */
+    height: 3rem; /* 48px */
     border-radius: 50%;
-    margin-right: 10px;
+    object-fit: cover;
 }
+
+/* Container para nome/username */
+#suggestions-list.sugestoes li div {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    color: #fff;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+#suggestions-list.sugestoes li div strong {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #e7e9ea;
+}
+
+/* Botão 'Ver' */
+#suggestions-list.sugestoes li .view-button {
+    padding: 6px 16px;
+    background-color: #fff;
+    color: #000;
+    border: none;
+    border-radius: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin-left: auto;
+    white-space: nowrap;
+    transition: background-color 0.2s;
+}
+#suggestions-list.sugestoes li:hover .view-button{
+    background-color: #d7dbdc;
+}
+
+/* Remove o item antigo para não ter conflito */
+.suggestion-item {
+    display: none;
+}
+
 
 /*navegação*/
 .nav-user {

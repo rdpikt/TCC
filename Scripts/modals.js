@@ -47,9 +47,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- Função principal que busca e mostra as sugestões ---
     async function fetchSuggestions() {
         const query = searchBar.value.trim();
-        suggestionsBox.style.display = 'block'; // Sempre exibe a caixa quando a função é chamada
+        suggestionsBox.style.display = 'block';
 
-        // Se a busca estiver vazia, limpa apenas a lista de resultados
         if (query.length === 0) {
             suggestionsList.innerHTML = '';
             return;
@@ -59,58 +58,75 @@ document.addEventListener('DOMContentLoaded', () => {
             const response = await fetch(`../PHP/pesquisa.php?query=${encodeURIComponent(query)}&type=${currentSearchType}`);
             const suggestions = await response.json();
 
-            suggestionsList.innerHTML = ''; // Limpa apenas a lista
+            suggestionsList.innerHTML = '';
+            // Adiciona a classe para estilização e transforma em UL
+            suggestionsList.className = 'sugestoes'; 
 
             if (suggestions.error) {
-                suggestionsList.innerHTML = `<div class="suggestion-item">${suggestions.error}</div>`;
+                suggestionsList.innerHTML = `<li class="suggestion-item" style="justify-content: center;">${suggestions.error}</li>`;
             } else if (suggestions.length === 0) {
-                suggestionsList.innerHTML = '<div class="suggestion-item">Nenhum resultado encontrado.</div>';
+                suggestionsList.innerHTML = '<li class="suggestion-item" style="justify-content: center;">Nenhum resultado encontrado.</li>';
             } else {
                 suggestions.forEach(item => {
-                    const div = document.createElement('div');
-                    div.classList.add('suggestion-item');
+                    // Altera de <div> para <li>
+                    const li = document.createElement('li');
+                    // Mantém a classe para cliques, mas o estilo principal virá do <li> e da ul.sugestoes
+                    li.classList.add('suggestion-item'); 
                     
                     let content = '';
                     let link = '#';
 
                     switch(currentSearchType) {
                         case 'usuarios':
-                            link = `perfil.php?id=${item.id}`; 
+                            link = `api_get_profile.php?id=${item.id}`; 
                             content = `
                                 <img src="../images/avatares/Users/${item.user_avatar || 'profile.png'}" alt="Foto de perfil">
                                 <div>
                                     <strong>${item.nome_completo}</strong>
-                                    <small>@${item.nome_user}</small>
+                                    <span style="color:#71767b">@${item.nome_user}</span>
                                 </div>
+                                <button class="view-button">Ver</button>
                             `;
                             break;
                         case 'comunidades':
-                            console.log("selecionado comunidade")
                             link = `sobre-comunidade.php?id=${item.id}`;
                             content = `
                                 <img src="../images/avatares/Comunidades/${item.imagem || 'profile.png'}" alt="Ícone da comunidade">
                                 <div>
                                     <strong>${item.nome}</strong>
                                 </div>
+                                <button class="view-button">Ver</button>
                             `;
                             break;
                         case 'conteudo':
                              link = `pesquisa.php?categoria=${encodeURIComponent(item.nome_tag)}`;
-                             content = `<strong>#${item.nome_tag}</strong>`;
+                             content = `
+                                <div>
+                                    <strong>#${item.nome_tag}</strong>
+                                </div>
+                                <button class="view-button">Ver</button>
+                             `;
                              break;
                     }
 
-                    div.innerHTML = content;
-                    div.addEventListener('click', () => {
-                        window.location.href = link;
+                    li.innerHTML = content;
+                    li.addEventListener('click', () => {
+                        // Se o tipo for 'usuarios', abre o modal de perfil. Caso contrário, redireciona.
+                        if (currentSearchType === 'usuarios') {
+                            // Chama as funções globais expostas por TelaInicial.js
+                            abrirModalPerfil();
+                            carregarPerfilOutroUsuario(item.id);
+                        } else {
+                            window.location.href = link;
+                        }
                     });
                     
-                    suggestionsList.appendChild(div);
+                    suggestionsList.appendChild(li);
                 });
             }
         } catch (error) {
             console.error('Erro ao buscar sugestões:', error);
-            suggestionsList.innerHTML = '<div class="suggestion-item">Erro ao carregar resultados.</div>';
+            suggestionsList.innerHTML = '<li class="suggestion-item" style="justify-content: center;">Erro ao carregar resultados.</li>';
         }
     }
 });
