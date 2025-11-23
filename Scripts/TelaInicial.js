@@ -160,6 +160,80 @@ async function atualizarContadoresSeguidores(idUsuario, modalElement) {
 
 
 // =======================================================
+// FUNÇÕES DE CONTROLE DO MODAL DE OPÇÕES DE POST
+// =======================================================
+
+function fecharModalOpcoesPost() {
+    const modalOverlay = document.querySelector(".modal-opcoes-overlay");
+    if (modalOverlay) {
+        modalOverlay.remove();
+    }
+}
+
+function abrirModalOpcoesPost(postId, menuButton) {
+    // Fecha qualquer modal de opções que já esteja aberto
+    fecharModalOpcoesPost();
+
+    const postEl = document.querySelector(`.posts[data-post-id='${postId}']`);
+    if (!postEl) return;
+
+    const postOwnerId = postEl.dataset.userId;
+    // A variável global `loggedInUserId` é definida em UsuarioLogado.php
+    const isOwner = loggedInUserId && postOwnerId === String(loggedInUserId);
+
+    const modalOverlay = document.createElement("div");
+    modalOverlay.className = "modal-opcoes-overlay";
+
+    const modalContent = document.createElement("div");
+    modalContent.className = "modal-opcoes-post";
+
+    const optionsList = document.createElement("ul");
+
+    // Adiciona as opções padrão
+    optionsList.innerHTML = `
+        <li class="report-option" data-post-id="${postId}">Denunciar</li>
+        <li class="hide-option" data-post-id="${postId}">Ocultar Post</li>
+    `;
+
+    // Adiciona a opção de apagar se o usuário for o dono
+    if (isOwner) {
+        const deleteOption = document.createElement("li");
+        deleteOption.className = "delete-option";
+        deleteOption.dataset.postId = postId;
+        deleteOption.textContent = "Apagar post";
+        optionsList.appendChild(deleteOption);
+    }
+
+    modalContent.appendChild(optionsList);
+    modalOverlay.appendChild(modalContent);
+    document.body.appendChild(modalOverlay);
+
+    // Lógica para posicionar o modal
+    const rect = menuButton.getBoundingClientRect();
+    const modalWidth = modalContent.offsetWidth;
+    const modalHeight = modalContent.offsetHeight;
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+
+    let top = rect.bottom + window.scrollY;
+    let left = rect.left + window.scrollX;
+
+    // Ajusta a posição horizontal para não sair da tela
+    if (left + modalWidth > windowWidth) {
+        left = windowWidth - modalWidth - 10; // 10px de padding da borda
+    }
+
+    // Ajusta a posição vertical para não sair da tela
+    if (top + modalHeight > windowHeight + window.scrollY) {
+        top = rect.top + window.scrollY - modalHeight;
+    }
+
+    modalContent.style.top = `${top}px`;
+    modalContent.style.left = `${left}px`;
+}
+
+
+// =======================================================
 // EVENT LISTENERS DO DOM
 // =======================================================
 document.addEventListener('DOMContentLoaded', () => {
@@ -189,6 +263,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const imagemUrl = post.dataset.imagemUrl;
                 const userAvatar = post.dataset.userAvatar;
                 const descricao = post.dataset.descricao;
+                const countCurtidas = post.dataset.countCurtidas;
 
                 const tags = (tagsData && tagsData.trim() !== '') ? JSON.parse(tagsData) : [];
                 const tagsHtml = tags.map(tag => `<li>${tag}</li>`).join('');
@@ -241,7 +316,81 @@ document.addEventListener('DOMContentLoaded', () => {
             if (commentsInterval) clearInterval(commentsInterval);
         }
     });
+        // ---------------------------------------------------------
+    // LÓGICA DE EVENTOS PARA O MODAL DE OPÇÕES DE POST
+    // ---------------------------------------------------------
 
+    document.addEventListener("click", (e) => {
+        const menuButton = e.target.closest("#menu-dots");
+        if (menuButton) {
+            e.stopPropagation(); // Impede que o evento de fechar seja acionado imediatamente
+            const postEl = menuButton.closest(".posts");
+            if (postEl) {
+                const postId = postEl.dataset.postId;
+                abrirModalOpcoesPost(postId, menuButton);
+            }
+            return; 
+        }
+
+        // Lógica para fechar o modal
+        const modalOverlay = e.target.closest(".modal-opcoes-overlay");
+        const cancelOption = e.target.closest(".cancel-option");
+
+        // Fecha se clicar no overlay (fora do conteúdo) ou no botão "Cancelar"
+        if ((modalOverlay && e.target === modalOverlay) || cancelOption) {
+            fecharModalOpcoesPost();
+        }
+    });
+
+
+    // ---------------------------------------------------------
+    // LÓGICA PARA APAGAR O POST
+    // ---------------------------------------------------------
+    document.addEventListener("click", async (e) => {
+        const deleteButton = e.target.closest(".delete-option");
+        if (!deleteButton) return;
+
+        const postId = deleteButton.dataset.postId;
+        if (!postId) return;
+
+        // Confirmação do usuário
+        const userConfirmed = confirm("Tem certeza de que deseja apagar este post? Esta ação não pode ser desfeita.");
+
+        if (!userConfirmed) {
+            fecharModalOpcoesPost();
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("postId", postId);
+
+        try {
+            const response = await fetch("../PHP/apagar_post.php", {
+                method: "POST",
+                body: formData
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                // Remove o post do DOM
+                const postElement = document.querySelector(`.posts[data-post-id='${postId}']`);
+                if (postElement) {
+                    postElement.remove();
+                }
+                alert(result.message || "Post apagado com sucesso!");
+            } else {
+                alert(result.message || "Ocorreu um erro ao tentar apagar o post.");
+            }
+
+        } catch (error) {
+            console.error("Erro na requisição para apagar post:", error);
+            alert("Erro de comunicação com o servidor.");
+        } finally {
+            fecharModalOpcoesPost(); // Fecha o modal de qualquer maneira
+        }
+    });
+    
     // ---------------------------------------------------------
     // LÓGICA DE EVENTOS PARA O MODAL DE PERFIL
     // ---------------------------------------------------------

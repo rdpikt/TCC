@@ -6,7 +6,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // A variável showWelcomeModal é definida no PHP
     const showModal = typeof showWelcomeModal !== 'undefined' && showWelcomeModal;
 
-    console.log(showModal)
 
     if (showModal) {
         welcomeModal.style.display = 'block';

@@ -1,4 +1,6 @@
 <?php
+
+use BcMath\Number;
 require "protect.php";
 require "conexao.php";
 
@@ -176,6 +178,7 @@ if ($tipo_feed === 'foryou') {
        u.user_avatar, 
        u.nome_completo,
        u.user_tag,
+       (SELECT COUNT(*) FROM curtidas C WHERE C.obra_id = O.id) AS total_curtidas,
        (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
         FROM obras_tags TO_
         JOIN tags T ON TO_.id_tag = T.tag_id
@@ -185,6 +188,7 @@ JOIN users u ON O.portfolio_id = u.id";
   $result = $conn->query($sql);
 } elseif ($tipo_feed === 'seguindo') {
   $sql = "SELECT O.*, u.nome_user, u.user_avatar, u.nome_completo, u.user_tag,
+                (SELECT COUNT(*) FROM curtidas C WHERE C.obra_id = O.id) AS total_curtidas,
                (SELECT GROUP_CONCAT(T.nome_tag SEPARATOR ',')
                 FROM obras_tags TO_
                 JOIN tags T ON TO_.id_tag = T.tag_id
@@ -198,6 +202,17 @@ JOIN users u ON O.portfolio_id = u.id";
   $stmt->bind_param("i", $userId);
   $stmt->execute();
   $result = $stmt->get_result();
+}
+
+function formatarCurtidas($n)
+{
+  if ($n >= 1000000) {
+    return number_format($n / 1000000, 1) . 'M';
+  }
+  if ($n >= 1000) {
+    return number_format($n / 1000, 1) . 'K';
+  }
+  return $n;
 }
 
 // --- Verifica se segue alguém ---
@@ -247,6 +262,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
   <link rel="stylesheet" href="../Styles/welcomeModal.css">
   <link rel="stylesheet" href="../Styles/comments.css">
+  <link rel="stylesheet" href="../Styles/opcoesPostModal.css">
 
 </head>
 
@@ -332,6 +348,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
             data-user-avatar="<?= htmlspecialchars($post['user_avatar']) ?>"
             data-user-name-completo="<?= htmlspecialchars($post['nome_completo']) ?>"
             data-user-type="<?= htmlspecialchars($post['user_tag']) ?>"
+            data-count-curtidas="<?= $post['total_curtidas'] ?>"
             data-user-id="<?= $post['portfolio_id'] ?>"
             data-data-publicacao="<?php echo date('d/m/Y H:i', strtotime($post['data_publicacao'])); ?>">
             <div class="descricao-post">
@@ -343,7 +360,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
                 <li><span class="nomeEX-desc">@<?= htmlspecialchars($post['nome_user']) ?></span></li>
               </ul>
               <div class="options-post">
-                <i class="fi fi-br-menu-dots"></i>
+                <i class="fi fi-br-menu-dots" id="menu-dots"></i>
               </div>
             </div>
 
@@ -357,7 +374,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
             <div class="footer-post">
               <form action="UsuarioLogado.php?feed=<?= $tipo_feed ?>" method="post">
                 <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
-                <ul>
+                <ul class="interactions-post">
                   <li><button type="button"><i class="fi fi-rr-comment"></i></button></li>
                   <li><button type="submit" name="repostar_post"
                       class="repostar-btn <?= $repostado ? 'repostado' : '' ?>"><i class="fi fi-rr-refresh"></i></button>
@@ -368,8 +385,13 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
                         <path
                           d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                       </svg>
-                    </button></li>
-                  <li><button class="btn-share" type="button"><i class="fi fi-rs-redo"></i></button></li>
+                    </button>
+                  <p><?= formatarCurtidas($post['total_curtidas']) ?></p>
+
+                  </li>
+                  <li>
+                    <button class="btn-share" type="button"><i class="fi fi-rs-redo"></i></button>
+                </li>
                 </ul>
 
               </form>
