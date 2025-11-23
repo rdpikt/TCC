@@ -1,28 +1,30 @@
+/* ==========================================================================
+   CSS GLOBAL (Base)
+   ========================================================================== */
 @import url("https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Secular+One&display=swap");
+
 * {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
-    font-family: "Inter";
+    font-family: "Inter", sans-serif;
 }
 
-/* Variaveis do site*/
 :root {
-    --background-card: #1d1d1d;
-    --background-main: #0d0d0d;
+    --background-card: #1D1D1D;
+    --background-main: #0A0A0A;
     --fundo: #0f0f0f;
     --border-color-light: #535353;
     --border-color-dark: #2b2b2b;
-    --roxo: #8c19cd;
+    --roxo: #4c00ff;
     --fontsz: 18px;
     --fontTit: 32px;
-    --font-dark-suave: color: #838383;
+    --font-dark-suave: #838383;
     --botao: radial-gradient(closest-side,
             rgba(160, 131, 247, 1) 0%,
             rgba(33, 0, 133, 1) 100%);
-
-    
 }
 
 body {
@@ -33,25 +35,9 @@ body {
     background-color: var(--background-main);
 }
 
-main{
-    position: relative;
-    min-height: 100vh;
-}
-
-header {
-    width: 90%;
-    height: 4.2rem;
-    position: fixed;
-    top: 0;
-    left: 14.5%;
-    background-color: var(--fundo);
-    z-index: 3;
+main {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    justify-content: space-between;
-    padding: 0 3.5rem;
-    border: 2px solid var(--border-color-dark);
+    height: 100%;
 }
 
 a {
@@ -59,168 +45,77 @@ a {
     text-decoration: none;
 }
 
-/*Search-bar */
+/* ==========================================================================
+   Header Styles
+   ========================================================================== */
+header {
+    width: 90%;
+    height: 60px;
+    position: fixed;
+    top: 0;
+    left: 14.5%;
+    background-color: var(--fundo);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 5rem 0 3.5rem;
+    border-bottom: 1px solid #303030;
+}
+
 .search-container {
     width: 100%;
     position: relative;
     top: 0;
     left: 0;
-    transform: translate(15%, 0);
+    transform: translate(13.5%, 0);
     left: 2rem;
     z-index: 1;
-    /* Essencial para posicionar a caixa de sugestões */
 }
 
 .search-bar-wrapper {
     display: flex;
-    justify-content: start;
     align-items: center;
+    position: relative;
+    max-width: 605px;
+    /* RESPONSIVO */
     width: 100%;
+    /* RESPONSIVO */
     color: #6E6E6E;
 }
-.search-bar-wrapper i{
+
+.search-bar-wrapper i {
     color: #6E6E6E;
     position: absolute;
-    top: 30%;
-    left: 2%;
-    z-index: 5;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3;
+    pointer-events: none;
 }
 
 input[type="search"] {
-    width: 37.8rem;
-    height: 2.5rem;
-    border: 1px solid var(--border-color-dark);
-    padding:0 3rem;
-    font-size: 18pt;
-    border-radius: 25px;
+    width: 100%;
+    height: 40px;
+    border: 1px solid #3A3A3A;
+    padding: 0 1rem 0 3rem;
+    font-size: 16px;
+    border-radius: 20px;
     outline: none;
     z-index: 2;
-}
-
-.search-options {
-    display: flex;
-    position: relative;
-    align-items: center;
-    justify-content: center;
-    justify-content: space-evenly;
-}
-
-.btn-option {
-    width: 30%;
-    padding: 8px 16px;
-    border: 1px solid var(--border-color-light);
     background-color: var(--background-card);
-    cursor: pointer;
-    border-radius: 15px;
-}
-
-.btn-option.active {
-    background-color: var(--roxo);
     color: white;
-    border-color: var(--border-color-dark);
-}
-body table{
-    position: absolute;
-  width: 50%;
-  left: 20%;
-  height: 90%;
-  z-index: 1000000000000000000000000000000000000000000000000000000000000000000000000000;
 }
 
-#suggestions-box {
-    display: none;
-    position: absolute;
-    top: 2.5rem; /* Ajustado para alinhar abaixo da barra de busca */
-    left: 0;
-    width: 37.8rem;
-    background-color: var(--background-card); /* Fundo do card */
-    border: 1px solid var(--border-color-dark);
-    border-top: none;
-    border-radius: 0 0 1rem 1rem; /* Bordas arredondadas */
-    max-height: 450px; /* Altura máxima */
-    overflow-y: auto;
-    z-index: 0;
-    padding: 0.5rem; /* Espaçamento interno */
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+input[type="search"]::placeholder {
+    color: #6E6E6E;
+    font-size: 16px;
 }
 
-/* Lista de sugestões, agora com o estilo de .sugestoes */
-#suggestions-list.sugestoes {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-    list-style: none;
-    width: 100%;
-}
-
-/* Item individual da lista */
-#suggestions-list.sugestoes li {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-    padding: 0.75rem;
-    border-radius: 0.5rem; /* 8px */
-    cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-#suggestions-list.sugestoes li:hover {
-    background-color: var(--border-color-dark);
-}
-
-/* Imagem do avatar/comunidade */
-#suggestions-list.sugestoes li img {
-    width: 3rem; /* 48px */
-    height: 3rem; /* 48px */
-    border-radius: 50%;
-    object-fit: cover;
-}
-
-/* Container para nome/username */
-#suggestions-list.sugestoes li div {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-    color: #fff;
-    font-size: 0.9rem;
-    line-height: 1.4;
-}
-
-#suggestions-list.sugestoes li div strong {
-    font-size: 1rem;
-    font-weight: 600;
-    color: #e7e9ea;
-}
-
-/* Botão 'Ver' */
-#suggestions-list.sugestoes li .view-button {
-    padding: 6px 16px;
-    background-color: #fff;
-    color: #000;
-    border: none;
-    border-radius: 1rem;
-    font-weight: 600;
-    cursor: pointer;
-    margin-left: auto;
-    white-space: nowrap;
-    transition: background-color 0.2s;
-}
-#suggestions-list.sugestoes li:hover .view-button{
-    background-color: #d7dbdc;
-}
-
-/* Remove o item antigo para não ter conflito */
-.suggestion-item {
-    display: none;
-}
-
-
-/*navegação*/
+/* --- Header User Navigation --- */
 .nav-user {
-    width: 15%;
     display: flex;
-    justify-content: center;
+    justify-content: flex-end;
     align-items: center;
     text-align: center;
     color: white;
@@ -229,282 +124,951 @@ body table{
 
 .nav-user ul {
     display: flex;
-    gap: 1.2rem;
-    justify-content: center;
+    gap: 1.5rem;
     align-items: center;
     list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-user ul li span {
+    display: block;
 }
 
 .nav-user ul li span img {
-    width: 3.2rem;
-    height: 3.2rem;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--border-color-dark);
+    cursor: pointer;
+    display: block;
+    margin-left: 5px;
 }
 
+.nav-user ul li a i.fi-rs-bell {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    display: inline-block;
+    text-align: center;
+    color: white;
+    transition: color 0.2s ease;
+}
+
+.nav-user ul li a:hover i.fi-rs-bell {
+    color: #c6c6c6;
+}
+
+/* --- Header Profile Modal --- */
+.modal-perfil {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 3.5rem;
+    background-color: var(--background-main);
+    color: white;
+    border: 1px solid var(--border-color-light);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    z-index: 11;
+    width: 200px;
+}
+
+.modal-perfil ul {
+    list-style: none;
+    padding: 0.5rem 0;
+    margin: 0;
+}
+
+.modal-perfil ul li {
+    padding: 0.75rem 1.5rem;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.2s ease;
+}
+
+.modal-perfil ul li a {
+    color: inherit;
+    text-decoration: none;
+    display: block;
+}
+
+.modal-perfil ul li:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.modal-perfil ul li input[type="submit"] {
+    width: 100%;
+    padding: 0.75rem 1.5rem;
+    background-color: transparent;
+    color: #ff0037;
+    border: none;
+    border-radius: 0;
+    cursor: pointer;
+    text-align: left;
+    font-size: 14px;
+    font-family: inherit;
+    transition: background-color 0.2s ease;
+}
+
+.modal-perfil ul li input[type="submit"]:hover {
+    background-color: rgba(0, 255, 26, 0.1);
+}
+
+.modal-perfil.active {
+    display: block;
+}
+
+/* ==========================================================================
+   Side Navigation Menu
+   ========================================================================== */
 .nav-side {
     background-color: var(--fundo);
     color: #ffff;
     position: fixed;
     top: 0;
     left: 0;
-    border: 2px solid var(--border-color-dark);
-    height: 100vh;
-    width: 15%;
+    border: none;
+    border-right: 1px solid #303030;
+    height: 100%;
+    width: 264px;
+    z-index: 4;
+    padding: 1.2rem 1.5rem;
     display: flex;
     flex-direction: column;
-    justify-content: start;
     justify-content: space-between;
-    transition: all 0.5s ease-in;
-    z-index: 4;
-    align-items: center;
-    
 }
 
 .nav-side ul {
-    display: flex;
-    gap: 1.2rem;
-    flex-direction: column;
-    justify-content: center;
     list-style: none;
-    width: 100%;
+    width: auto;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
 }
+
+
+/* --- Side Menu List Items --- */
 .nav-side ul li {
-    font-size: 15pt;
     cursor: pointer;
-    padding-left: 1.5rem;
-    transition: transform 0.5s ease;
+    transition: transform 0.2s ease;
+    left: 38px;
 }
 
 .nav-side ul li:hover {
-    transform: translateX(5px) scale(1.2);
+    transform: translateY(-3px);
 }
-
 
 .nav-side ul li a {
     display: flex;
-    gap: 1.2rem;
+    gap: 10px;
+    align-items: center;
+    font-family: "SF Pro", "Inter", sans-serif;
+    font-weight: 500;
+    font-size: 21px;
+    color: #C6C6C6;
+}
 
+.nav-side ul li a i {
+    color: #C6C6C6;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    line-height: 24px;
+    text-align: center;
+    transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .nav-side ul li a.selecionado {
-    color: var(--roxo);
+    color: #6A00FF;
 }
 
-.nav-side .tools {
-    width: 100%;
-    height: 20%;
+.nav-side ul li a.selecionado i {
+    color: #6A00FF;
+}
+
+.nav-side ul li a:not(.selecionado):hover {
+    color: #FFFFFF;
+}
+
+.nav-side ul li a:not(.selecionado):hover i {
+    color: #FFFFFF;
+    transform: scale(1.1);
+}
+
+
+/* --- Side Menu Logo --- */
+.logo{
+    width: 75px;
+    height: 20px;
     display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-
-.logotipo {
-    width: 100%;
-    height: 10%;
-    padding: 1rem 1.5rem;
-    display: flex;
-    font-size: 15pt;
-}
-
-.logotipo span {
-    font-weight: 800;
-}
-
-.user-avatar {
-    font-size: 10pt;
-    display: flex;
-    gap: 1.5rem;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
+    font-weight: 400;
+    color: white;
+    font-size: 20px;
+    white-space: nowrap;
+    position: absolute;
+    top: 18px;
+    left: 42px;
+}
+
+.logo-link {
+    text-decoration: none;
+    color: inherit;
+    display: inherit;
+    align-items: inherit;
+    justify-content: inherit;
+}
+
+.marca {
+    font-family: 'Secular One', sans-serif;
+}
+
+.nome {
+    font-family: 'Ubuntu', sans-serif;
+}
+
+/* --- Side Menu Item Positioning --- */
+#nav-inicio {
+    top: 153px;
+}
+
+#nav-explorar {
+    top: 207px;
+}
+
+#nav-seguindo {
+    top: 261px;
+}
+
+#nav-galeria {
+    top: 315px;
+}
+
+#nav-criar {
+    top: 369px;
+}
+
+#nav-comunidades {
+    top: 423px;
+}
+
+#nav-perfil {
+    top: 477px;
+}
+
+#nav-config {
+    top: 617px;
+}
+
+#nav-ajuda {
+    top: 671px;
+}
+
+/* ==========================================================================
+   Main Content Area
+   ========================================================================== */
+.navigation-user {
+    position: relative;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -30%);
+    box-sizing: border-box;
+    width: auto;
+    min-height: 100vh;
+    display: flex;
     flex-direction: column;
-    text-align: center;
-    transition: transform 0.5s ease-in;
+    z-index: 1;
+    background-color: var(--background-main);
 }
 
-.user-avatar-img {
-    background-color: gray;
-    width: 7rem;
-    height: 7rem;
-    border-radius: 50rem;
-}
-
-.user-avatar-img img {
+/* ==========================================================================
+   Suggestions Sidebar
+   ========================================================================== */
+.suggest {
+    display: flex;
+    position: fixed;
+    top: 15%;
+    left: 75%;
+    gap: 1.2rem;
+    max-width: 336px;
+    /* RESPONSIVO */
     width: 100%;
-    height: 100%;
-    text-align: center;
+    /* RESPONSIVO */
+    justify-content: flex-start;
+    flex-direction: column;
+    z-index: 1;
+    height: calc(100vh - 50px - 2rem);
 }
 
-.user-avatar:hover {
-    transform: scale(1.2);
+/* --- Suggestions Modal Card --- */
+.seguidores-suggestions {
+    display: flex;
+    max-width: 336px;
+    /* RESPONSIVO */
+    width: 100%;
+    /* RESPONSIVO */
+    height: 60%;
+    flex-direction: column;
+    background-color: var(--background-card);
+    border: 1px solid var(--border-color-dark);
+    border-radius: 10px;
+    padding: 0;
+    z-index: 10;
+    overflow: hidden;
+    position: relative;
+}
+
+.seguidores-suggestions .titulo {
+    height: 60px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.seguidores-suggestions .titulo h1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 18px;
+    color: #FFFFFF;
+    position: absolute;
+    top: 20px;
+    left: 18px;
+    margin: 0;
+}
+
+.seguidores-suggestions .titulo a {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #858585;
+    text-decoration: none;
+    position: absolute;
+    top: 23px;
+    right: 18px;
+}
+
+.seguidores-suggestions .sugestoes {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    list-style: none;
+    padding: 0 1.2rem 1.2rem 1.2rem;
+    margin: 0;
+    height: calc(100% - 60px);
+    /* overflow-y: auto; REMOVIDO */
+}
+
+.seguidores-suggestions .sugestoes li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.seguidores-suggestions .sugestoes img {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+}
+
+.seguidores-suggestions .sugestoes .nome {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex-grow: 1;
+    overflow: hidden;
+    line-height: 1.3;
+}
+
+.seguidores-suggestions .sugestoes .nome .name-exibição {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #C6C6C6;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.seguidores-suggestions .sugestoes .nome .name-user {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 15px;
+    color: #7D7D7D;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.seguidores-suggestions .sugestoes button.seguir-btn {
+    margin-left: auto;
+    width: 68px;
+    height: 34px;
+    background-color: #343434;
+    border: none;
+    border-radius: 20px;
+    color: #D6D6D6;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background-color 0.2s ease;
+}
+
+.seguidores-suggestions .sugestoes button.seguir-btn.following {
+    background-color: #6C00FA;
+}
+
+/* --- Suggestions Footer --- */
+.suggest footer {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 0.5rem 1rem;
+    padding: 0 5px;
+    justify-content: start;
+}
+
+.suggest footer p {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+    color: #696969;
+    margin: 0;
+    cursor: pointer;
+    transition: color 0.2s ease;
+    white-space: nowrap;
+}
+
+.suggest footer p:hover {
+    color: #FFFFFF;
 }
 
 
-/*modal-perfil*/
-.modal-perfil {
+/* ==========================================================================
+   Search Suggestions Box (Dropdown)
+   ========================================================================== */
+#suggestions-box {
     display: none;
     position: absolute;
-    top: 60px;
-    right: 5%;
-    background-color: var(--background-main);
-    color: white;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 11
-    
-}
-
-.modal-perfil ul {
-    list-style: none;
-    padding: 1rem;
-}
-
-.modal-perfil ul li {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-}
-
-.modal-perfil ul li:hover {
-    background-color: #f0f0f030;
-}
-
-.modal-perfil ul li input {
+    top: 40px;
+    left: 0;
+    max-width: 605px;
+    /* RESPONSIVO */
     width: 100%;
-    padding: 0.5rem;
-    background-color: var(--roxo);
-    color: #fff;
-    border: none;
-    border-radius: 4px;
+    /* RESPONSIVO */
+    background-color: var(--background-main);
+    border: 1px solid var(--border-color-dark);
+    border-top: none;
+    border-radius: 0 0 10px 10px;
+    max-height: 300px;
+    overflow: hidden;
+    z-index: 2;
+    padding-bottom: 10px;
+}
+
+#suggestions-box .search-options {
+    display: flex;
+    justify-content: space-around;
+    padding: 10px;
+    border-bottom: 1px solid var(--border-color-dark);
+    flex-shrink: 0;
+}
+
+#suggestions-box .search-options .btn-option {
+    padding: 5px 15px;
+    border: 1px solid var(--border-color-light);
+    background-color: transparent;
+    color: var(--border-color-light);
     cursor: pointer;
+    border-radius: 15px;
+    font-size: 14px;
 }
 
-.modal-perfil ul li input:hover {
-    background-color: #7a0bb8;
+#suggestions-box .search-options .btn-option.active {
+    background-color: var(--roxo);
+    color: white;
+    border-color: var(--roxo);
 }
 
-.modal-perfil.active {
-    display: block;
-    
+#suggestions-box #suggestions-list {
+    max-height: calc(300px - 60px);
+    overflow-y: auto;
 }
 
-.modal-options {
-    display: none;
-    position: relative;
-    top: 0;
-    left: 15px;
-    background-color: #fff;
-    color: #000;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    z-index: 1000;
-    width: 13rem;
-    height: 7rem;
-    text-align: center;
-    padding: 1rem;
-    gap: 1rem;
+#suggestions-box .suggestion-item {
+    padding: 10px 15px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border-bottom: 1px solid var(--border-color-dark);
+    color: #FFFFFF;
 }
 
-.modal-options.active {
-    display: block;
+#suggestions-box .suggestion-item:last-child {
+    border-bottom: none;
 }
 
-.options-list {
-    list-style: none;
+#suggestions-box .suggestion-item:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+#suggestions-box .suggestion-item img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+#suggestions-box .suggestion-item div {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
-    text-align: left;
+    overflow: hidden;
 }
 
-.options-list li:nth-child(2) {
-    color: red;
+#suggestions-box .suggestion-item strong {
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
-.options-list li {
+#suggestions-box .suggestion-item small {
+    font-size: 12px;
+    color: var(--font-dark-suave);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+#suggestions-box .suggestion-item.error-message,
+#suggestions-box .suggestion-item.no-results {
+    color: var(--font-dark-suave);
+    justify-content: center;
+    font-style: italic;
+    cursor: default;
+}
+
+/* ==========================================================================
+   CSS DA PÁGINA (Home / Posts)
+   ========================================================================== */
+
+/* Container principal do conteúdo */
+.conteudo {
+    width: 100%;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    padding-top: 0;
+    padding-bottom: 0;
+    gap: 0;
+}
+
+/* Estilo base para botões (ex: dentro dos posts) */
+.conteudo button {
+    background: none;
+    border: none;
     cursor: pointer;
 }
-.search-bar{
-  border-radius: 2rem;
-  border: 1px solid var(--border-color-light);
-  background-color: var(--background-card);
-  color: white;
-}
-.suggest{
-  display: flex;
-   position: fixed;
-  top: 12.5%;
-  left: 73%;
-  gap: 1.2rem;
-  width: 21em;
-  justify-content: center;
-  flex-direction: column;
-  z-index: 1;
-}
-.seguidores-suggestions{
-  display: flex;
-  width: 100%;
-  height: auto;
-  gap: 1.2rem;
-  flex-direction: column;
-  background-color: var(--background-card);
-  border: 1px solid var(--border-color-dark);
-  border-radius: 1rem;
-  padding: 1.2rem;
-  z-index: 10;
-}
-.seguidores-suggestions .titulo{
-  display: flex;
-  font-size: 8pt;
-  justify-content: space-between;
-}
-.seguidores-suggestions .titulo a{
-  color: var(--border-color-light);
-  font-size: 14pt;
-  text-decoration: none;
 
+/* ==========================================================================
+   Estilos dos Posts (.posts)
+   ========================================================================== */
+.posts {
+    max-width: 605px;
+    /* RESPONSIVO */
+    width: 100%;
+    /* RESPONSIVO */
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    padding: 5px 10px;
+    border: 1px solid #3A3A3A;
+    border-radius: 10px;
+    background-color: #1E1E1E;
+    margin-bottom: 2rem;
 }
-.seguidores-suggestions .sugestoes{
-  display: flex;
-  flex-direction: column;
-  gap: 1.2rem;
-  list-style: none;
+
+/* Cabeçalho do Post */
+.descricao-post {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 5px 0;
 }
-.seguidores-suggestions ul li{
-  display: flex;
-  font-size: 8pt;
-  align-items: center;
-  gap: 1.2rem;
+
+.descricao-post ul {
+    list-style: none;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0;
+    margin: 0;
 }
-.seguidores-suggestions ul li img{
-  width: 3rem;
-  height: 3rem;
-  border-radius: 50%;
-  object-fit: cover;
+
+.avatar-desc img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: block;
 }
-.seguidores-suggestions ul li button{
-  margin-left: 25%;
-  width: 20%;
-  height: 30%;
-  text-align: center;
-  padding: 8px 10px;
-  background-color: var(--border-color-light);
-  border: 1px solid var(--roxo);
-  border-radius: 1rem;
-  color: #fff;
+
+.descricao-post ul li .nomeUsr {
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+    color: #FFFFFF;
+    line-height: 1.2;
 }
-.navigation-user{
-  position: static;
-  top: 0;
-  left: 0;
-  transform: translate(0, 4%);
-  width: 100%;
-  min-height: 100%;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-  z-index: 1;
-  background-color: var(--background-main);
+
+.nomeEX-desc {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    color: #838383;
+    line-height: 1.2;
+}
+
+.options-post i {
+    color: #8E8E8E;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+/* Imagem do Post */
+.img-post {
+    width: 100%;
+    max-height: 400px;
+    height: auto;
+    text-align: center;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.img-post img {
+    width: 100%;
+    height: 100%;
+    max-height: 400px;
+    object-fit: cover;
+    display: block;
+}
+
+
+
+
+/* ==========================================================================
+   Estilos de Notificação e Modais
+   ========================================================================== */
+.no-obra {
+    position: relative;
+    top: 20%;
+    left: 20%;
+    font-size: 30pt;
+    font-weight: 800;
+    text-align: center;
+    color: var(--font-dark-suave);
+}
+
+/* Notificações (Pop-up) */
+.notification {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 15px 25px;
+    border-radius: 8px;
+    color: white;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s, visibility 0.5s;
+    z-index: 1000;
+    font-weight: bold;
+}
+
+.notification.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.notification.success {
+    background-color: #ff00dd;
+}
+
+.notification.error {
+    background-color: #dc3545;
+}
+
+.notification.info {
+    background-color: #17a2b8;
+}
+
+/* Overlay para Modais */
+.modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(5px);
+    z-index: 999;
+}
+
+.modal-overlay.active {
+    display: block;
+}
+
+/* Modal de Visualização de Post */
+.modal-post {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 70%;
+    height: 95%;
+    background-color: var(--background-card);
+    border-radius: 10px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-post.active {
+    display: flex;
+}
+
+.modal-post .close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 24px;
+    color: white;
+    cursor: pointer;
+    z-index: 1001;
+}
+
+/* Conteúdo interno da Modal de Post (layout 2 colunas) */
+.modal-post-content {
+    display: flex;
+    width: 100%;
+    height: 100%;
+    gap: 0;
+}
+
+/* Coluna da Imagem */
+.modal-image-container {
+    flex: 1.3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #000;
+    overflow: hidden;
+}
+
+.modal-image-container .post-image {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    border-radius: 0;
+    display: block;
+}
+
+/* Coluna Lateral (Informações e Comentários) */
+.modal-sidebar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+    background-color: var(--background-card);
+    height: 100%;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+.modal-post-header {
+    padding-bottom: 15px;
+    border-bottom: 1px solid var(--border-color-light);
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-shrink: 0;
+}
+
+.modal-post-header .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+}
+
+.modal-post-header .user-name {
+    font-weight: bold;
+    color: white;
+}
+
+
+.modal-post-details {
+    padding: 15px 0;
+    border-bottom: 1px solid var(--border-color-light);
+    flex-shrink: 0;
+}
+
+.modal-comments-list {
+    flex-grow: 1;
+    overflow-y: auto;
+    padding-right: 10px;
+    margin-bottom: 15px;
+}
+
+.comment-form-container {
+    margin-top: auto;
+    padding-top: 15px;
+    border-top: 1px solid var(--border-color-light);
+    flex-shrink: 0;
+}
+
+
+/* ==========================================================================
+   ====== ADIÇÕES DE RESPONSIVIDADE (Media Queries) ======
+   ========================================================================== */
+
+/*
+ * Breakpoint 1: Telas grandes (ex: < 1450px)
+ */
+@media (max-width: 1450px) {
+    .suggest {
+        display: none;
+    }
+
+    .navigation-user {
+        margin-right: 2rem;
+    }
+}
+
+/*
+ * Breakpoint 2: Tablets (ex: < 1100px)
+ */
+@media (max-width: 1100px) {
+    header {
+        left: 264px;
+        width: calc(100% - 264px);
+        padding: 0 2rem;
+    }
+
+    .search-container {
+        transform: none;
+        left: 0;
+        position: static;
+    }
+
+    .search-bar-wrapper {
+        margin-left: 0;
+    }
+
+    .navigation-user {
+        padding-left: 2rem;
+    }
+
+    #suggestions-box {
+        left: 0;
+    }
+}
+
+/*
+ * Breakpoint 3: Celulares (ex: < 768px)
+ */
+@media (max-width: 768px) {
+    .nav-side {
+        display: none;
+    }
+
+    header {
+        left: 0;
+        width: 100%;
+        padding: 0 1rem;
+    }
+
+    .navigation-user {
+        margin-left: 0;
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    .search-container {
+        width: auto;
+        flex-grow: 1;
+    }
+
+    .nav-user {
+        flex-shrink: 0;
+    }
+
+    /* --- Responsividade do Modal de Post --- */
+    .modal-post {
+        width: 95vw;
+        height: 90vh;
+    }
+
+    .modal-post-content {
+        flex-direction: column;
+    }
+
+    .modal-image-container {
+        flex: 1;
+        max-height: 50vh;
+    }
+
+    .modal-sidebar {
+        flex: 1;
+        overflow-y: auto;
+        padding: 15px;
+    }
+}
+
+/*
+ * Breakpoint 4: Celulares Pequenos (ex: < 480px)
+ */
+@media (max-width: 480px) {
+
+    .descricao-post ul li .nomeUsr,
+    .nomeEX-desc {
+        font-size: 14px;
+    }
+
+    .nav-user ul {
+        gap: 1rem;
+    }
+
+    .modal-post {
+        width: 100vw;
+        height: 100vh;
+        border-radius: 0;
+    }
+
+    .modal-image-container {
+        max-height: 45vh;
+    }
+
+    .modal-sidebar {
+        padding: 10px;
+    }
+
+    .modal-post .close-button {
+        top: 15px;
+        right: 15px;
+    }
 }

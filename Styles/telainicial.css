@@ -45,6 +45,12 @@
     border-radius: 1rem;
     background-color: var(--background-card);
 }
+.interactions-form {
+    width: 100%;
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+}
 .interactions-post li{
     display: flex;
     gap: .5rem;
@@ -92,20 +98,83 @@
     color: var(--border-color-light);
 }
 
+/* Rodapé do Post */
 .footer-post {
     width: 100%;
-    height: 2.5rem;
-    padding: 0 2.5rem;
-    display: flex;
-    gap: 1.5rem;
-    align-items: center;
-    justify-content: space-between;
+    height: auto;
+    padding: 8px 20px;
 }
 
 .footer-post ul {
     display: flex;
-    gap: 3rem;
+    justify-content: center;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
     list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo base botões do rodapé */
+.footer-post button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+
+    justify-content: center;
+    color: #8E8E8E;
+}
+
+/* Ícones de Fonte (Comentar, Repost, Share) */
+.footer-post button i {
+    font-size: 16px;
+    width: 16px;
+    height: 16px;
+    color: inherit;
+}
+
+/* Ícones SVG (Curtir, Salvar) */
+.footer-post button svg {
+    width: 16px;
+    height: 16px;
+    display: block;
+}
+
+/* Cor SVG Curtida (Não curtido) */
+.curtida svg path {
+    fill: none;
+    stroke: #8E8E8E;
+    stroke-width: 2;
+}
+
+/* Cor SVG Curtida (Curtido) */
+.curtida.curtido svg path {
+    fill: red;
+    stroke: red;
+}
+.interactions-post p{
+    margin-left: 5px;
+    color: #8E8E8E;
+}
+
+/* Cor SVG Salvar (Não salvo) */
+.salvar-btn svg path {
+    fill: none;
+    stroke: #8E8E8E;
+}
+
+/* Cor SVG Salvar (Salvo) */
+.salvar-btn.salvo svg path {
+    fill: yellow;
+    stroke: yellow;
+}
+
+/* Cor Ícone Repost (Repostado) */
+.repostar-btn.repostado i {
+    color: red;
 }
 
 .no-obra {
@@ -132,24 +201,6 @@
    BARRA DE SUGESTÕES (CORRIGIDA)
    ========================================= */
 
-.suggest {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2rem;
-    width: 21em;
-    justify-content: center;
-    z-index: 1;
-    
-    /* Posição Fixa */
-    position: fixed;
-    top: 12.5%;
-    
-    /* CÁLCULO DE POSIÇÃO INTELIGENTE:
-       57.5% = Centro visual da área de conteúdo (15% menu + 42.5% metade do resto)
-       20em  = Metade da largura do post + espaçamento
-    */
-    left: calc(57.5% + 20em);
-}
 
 /* Esconde a barra lateral em telas muito pequenas para não quebrar */
 @media (max-width: 1300px) {

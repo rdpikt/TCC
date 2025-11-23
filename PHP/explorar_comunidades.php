@@ -83,7 +83,7 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
     </div>
   </header>
 
-  <section class="main">
+  <main>
   <nav class="nav-side" id="menu">
       <div class="logotipo"><span>Harp</span>Hub</div>
       <ul id="pages">
@@ -104,7 +104,7 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
 
     </nav>
 
-    <section class="content">
+    <inn class="content">
       <div class="titulo">
         <h1>Explorar Comunidades</h1>
         <a href="criar_comunidade_form.php" class="btn-criar-comunidade">Criar Comunidade</a>
@@ -230,7 +230,7 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
         }
         ?>
       </div>
-    </section>
+  </main>
 </body>
 <script src="../Scripts/modals.js"></script>
 <script src="../Scripts/comunidades.js"></script>

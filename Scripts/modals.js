@@ -42,6 +42,12 @@ document.addEventListener('DOMContentLoaded', () => {
             suggestionsBox.style.display = 'none';
         }
     });
+    // --- lógica para esconder sugestões ao escolher uma sugestão ---
+    suggestionsBox.addEventListener('click', (e) => {
+        if (e.target.classList.contains('suggestion-item') || e.target.closest('.suggestion-item')) {
+            suggestionsBox.style.display = 'none';
+        }
+    });
 
 
     // --- Função principal que busca e mostra as sugestões ---
@@ -118,6 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             carregarPerfilOutroUsuario(item.id);
                         } else {
                             window.location.href = link;
+                            
                         }
                     });
                     

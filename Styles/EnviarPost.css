@@ -1,110 +1,250 @@
-.content{
-    background-color: var(--background-card);
-    min-height: 3rem;
-    min-width: 50rem;
-    border-radius: 1rem;
-    border: 2px solid var(--border-color-dark);
-    
+/*
+ * =========================================
+ * Layout Principal do Formulário
+ * =========================================
+ */
+
+.formulario form {
+  position: absolute;
+  top: 90px;
+  left: 438px;
+  width: 660px;
+  
+  /* Layout em Flexbox para empilhar os campos */
+  display: flex;
+  flex-direction: column;
+  
+  /* Espaçamento padrão entre os campos */
+  gap: 16px; 
 }
 
+/*
+ * =========================================
+ * Estilo Base dos Blocos de Conteúdo
+ * =========================================
+ */
 
-.formulario form{
+.content {
+  background-color: var(--background-card);
+  border-radius: 1rem;
+  border: 1px solid #2B2B2B;
+  width: 100%; 
+  box-sizing: border-box; 
+  /* Posição absoluta foi removida */
+}
+
+/*
+ * =========================================
+ * Campos Específicos
+ * =========================================
+ */
+
+/* 1. Bloco de Gêneros (Postar/Botões) */
+.content.generos {
+  padding: 1.5rem; 
+}
+.generos h1 {
+  font-size: 1.7rem;
+  padding: 0; 
+  margin: 0 0 1rem 0; 
+  width: 100%;
+}
+.btns {
+  display: flex;
+  gap: .5rem;
+  padding-left: 0; 
+}
+
+/* 2. Bloco do Título (O contêiner .content) */
+.content:nth-of-type(2) {
+  /* Contêiner fica transparente */
+  background-color: transparent;
+  border: none;
+  padding: 0;
+}
+
+/* O <input> do Título (e Tags) */
+.Titulo {
+  height: 56px; 
+  width: 100%;
+  background-color: var(--background-card);
+  padding: 0 1rem; 
+  border-radius: 1rem;
+  color: white;
+  border: 1px solid #2B2B2B; 
+  box-sizing: border-box;
+}
+
+/* 3. Textarea (Descrição) */
+.areatxt {
+  height: 120px; 
+  box-sizing: border-box;
+  resize: none;
+  padding: 1rem; 
+  color: white;
+}
+
+/* 4. Lista de Tags (UL) */
+.tags-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  list-style: none;
+  padding: 0;
+  margin: 0; 
+}
+.tags-list li {
+    background: var(--roxo);
+    color: white;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 5. Input de Tags (que também usa .Titulo) */
+#tag-entry {
+  /* Estilos já aplicados pela classe .Titulo */
+}
+
+/* Botão de adicionar tag (continua escondido) */
+#add-to-list {
+  display: none;
+}
+.botoes{display: flex; justify-content: flex-end; gap: 1.5rem;}
+
+/* 6. Bloco de Upload de Arquivo (Dropzone) */
+.file-upload-box {
+    height: 197px; 
+    padding: 0;
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    flex-direction: column; 
+    cursor: pointer; 
+    position: relative; 
+}
+
+/* Esconde o input de arquivo real */
+.file-upload-box input[type="file"] {
     position: absolute;
-    top: 10rem;
-    left: 20rem;
+    width: 0.1px; 
+    height: 0.1px;
+    opacity: 0; 
+    overflow: hidden;
+    z-index: -1; 
+}
+
+/* Estilo do 'label' (o dropzone visual) */
+.file-upload-label {
     display: flex;
-    flex-direction: column;
-    margin: auto;
-    width: 60%;
-    gap: .8rem;
+    flex-direction: column; 
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: #757575; /* --muted */
+    font-size: 16px;
+    cursor: pointer;
+    gap: 10px; 
 }
 
-.generos h1{
-    font-size: 1.7rem;
-    height: auto;
-    padding: 1rem ;
+/* 7. Botão Postar */
+.Post-btn {
+    /* Layout e Posicionamento */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    align-self: flex-end; /* Mantém o alinhamento à direita original */
+    
+    /* Tamanho e Espaçamento */
+    border-radius: 2rem;
+    padding: 0.5rem 1.5rem; /* Substitui width/height fixos para ficar igual ao outro */
+    
+    /* Tipografia */
+    font-family: var(--fontfm); /* Mantém a fonte do seu projeto */
+    font-size: 1rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: #fff;
+    
+    /* Estilo Visual (Cores iguais ao botão Comunidade) */
+    background-color: #6A00FF;
+    border: 1px solid #8859ff;
+    cursor: pointer;
+    transition: 0.3s;
+}
+.Post-btn.cancelar {
+    background-color: #323232;
+    border: 1px solid #474747;
+}
+.Post-btn.cancelar:hover {
+    border: none;
+    background-color: #820000;
+    color: #fff;
 }
 
-.Titulo{
-    height: 5rem;
-    width: 100%;
-    background-color: var(--background-card);
-    padding: .5rem;
-    border-radius: 1rem;
-    color: white;
-    border: 0;
+/* Efeito Hover idêntico */
+.Post-btn:hover {
+    border: 1px solid #5400c9;
+    background-color: #28005c;
+    color: #fff;
 }
 
-.areatxt{
-    resize: none;
-    padding: .5rem;
-    color: white;
-}
-.btns{
-    display: flex;
-    gap: .5rem;
-    padding-left: 1rem;
-}
-
-.generos {
-    min-height: 4rem;
-}
-.generos h1{
-    width: 100%;
-}
+/*
+ * =========================================
+ * Estilos dos Botões (Tipo de Post)
+ * =Cores atualizadas conforme o prompt
+ * =========================================
+ */
 
 input[type="radio"] {
   display: none;
 }
 
 .generos .button {
-  height: 2.5rem;
-  width: 7rem;
+  /* --- Estilo Base (Copiado da Galeria) --- */
+  background: #323232;
+  color: #fff;
+  border: 1px solid #474747;
+  border-radius: 2rem;
+  padding: 0.5rem 1.5rem;
+  font-size: 1rem;
+  
+  /* --- Propriedades Funcionais --- */
   text-align: center;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 5rem;
-  background-color: var(--border-color-dark);
   cursor: pointer;
   transition: 0.3s;
 }
 
+/* Estado :hover (Copiado da Galeria) */
+.generos .button:hover {
+  border: 1px solid #5400c9;
+  background-color: #28005c;
+  color: #fff;
+}
+
+/* Estado :checked (Copiado da Galeria "active") */
 input[type="radio"]:checked + .button {
-  background-color: var(--roxo);
-  color: white;
+  border: 1px solid #8859ff;
+  background-color: #6A00FF;
+  color: #fff;
 }
 
-.Post-btn{
-    font-family: var(--fontfm);
-    width: 6rem;
-    height: 2.5rem;
-    border-radius: 5rem;
-    position: relative;
-    left: 90%;
-    color: white;
-    background-color: var(--roxo);
-    border:1px solid black;
-}
+/*
+ * =========================================
+ * Estilização de Foco (Remove outline)
+ * =========================================
+ */
 
-.post-img{
-    display: flex;
-    flex-direction: column;
-    height: 3rem;
-    padding: 4rem;
-    text-align: center;
+input:focus {
+  outline: none;
 }
-input[type="file"]::file-selector-button{
-    width: 100%;
-    height: 200px;
-    background-color: var(--background-card);
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin: 0;
-    padding: 0;
-}
-input:focus{
-    outline: none;
+textarea:focus {
+  outline: none;
 }

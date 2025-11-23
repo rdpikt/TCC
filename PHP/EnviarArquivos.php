@@ -2,6 +2,9 @@
 require "conexao.php";
 require "protect.php";
 
+// ... (toda a sua lógica PHP de 1 a 179) ...
+// ... (toda a sua lógica PHP de 1 a 179) ...
+// ... (toda a sua lógica PHP de 1 a 179) ...
 $tipo_feed = $_GET['feed'] ?? 'foryou';
 $userId = $_SESSION['user_id'];
 $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png';
@@ -212,35 +215,16 @@ endif;
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
   <style>
-    /* Estilos para a lista de tags visual */
-    .tags-list li {
-      display: inline-block;
-      background-color: #eee;
-      color: #333;
-      padding: 5px 10px;
-      border-radius: 20px;
-      margin: 5px 5px 5px 0;
-      font-size: 14px;
-    }
-
-    .tags-list li span {
-      margin-left: 8px;
-      color: #999;
-      cursor: pointer;
-    }
-
-    .tags-list li span:hover {
-      color: #000;
-    }
+    /* ... (seu style local intacto) ... */
   </style>
 </head>
 
 <body>
-   <header>
+  <header>
     <div class="search-container">
       <div class="search-bar-wrapper">
         <i class="fi-rr-search"></i>
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Buscar">
       </div>
       <div id="suggestions-box">
       </div>
@@ -258,7 +242,7 @@ endif;
         <li>Trocar de conta</li>
         <li>
           <form action="logout.php">
-          <input type="submit" value="Sair da conta">
+            <input type="submit" value="Sair da conta">
           </form>
         </li>
       </ul>
@@ -266,64 +250,56 @@ endif;
   </header>
 
   <main>
-    <nav class="nav-side" id="menu">
-      <div class="logotipo"><span>Harp</span>Hub</div>
-      <ul class="pages">
-        <li><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a>
-        </li>
-        <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
-        <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
-        <li><a class="selecionado" href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
-        <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
-        <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
+    
+    <?php require 'menu.php'; ?>
 
-      </ul>
-      <div class="tools">
-        <ul>
-          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
-          <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
-        </ul>
-      </div>
-    </nav>
     <div class="formulario">
-    <form action="EnviarArquivos.php" method="POST" enctype="multipart/form-data">
-      <div class="content generos">
-        <h1>Postar</h1>
-        <div class="btns generos">
-          <input type="radio" name="tipo_obra" id="Imagem" value="Imagem" checked>
-          <label class="button" for="Imagem">Imagem</label>
+      <form action="EnviarArquivos.php" method="POST" enctype="multipart/form-data">
+        <div class="content generos">
+          <h1>Postar</h1>
+          <div class="btns generos">
+            <input type="radio" name="tipo_obra" id="Imagem" value="Imagem" checked>
+            <label class="button" for="Imagem">Imagem</label>
 
-          <input type="radio" name="tipo_obra" id="Texto" value="Texto">
-          <label class="button" for="Texto">Texto</label>
+            <input type="radio" name="tipo_obra" id="Texto" value="Texto">
+            <label class="button" for="Texto">Texto</label>
 
-          <input type="radio" name="tipo_obra" id="Video" value="Video">
-          <label class="button" for="Video">Vídeo</label>
+            <input type="radio" name="tipo_obra" id="Video" value="Video">
+            <label class="button" for="Video">Vídeo</label>
+          </div>
         </div>
+
+        <div class="content">
+          <input class="Titulo" type="text" name="titulo" placeholder="Digite o titulo do Post">
+        </div>
+        <textarea class="content areatxt" rows="4" name="descricao"
+          placeholder="Coloque uma descrição ao seu post"></textarea>
+
+        <ul class="tags-list">
+        </ul>
+        <input class="Titulo content tags" type="text" id="tag-entry"
+          placeholder="Digite as tags (separadas por espaço ou vírgula)">
+        <input type="hidden" name="tags" id="tags-data">
+
+        <button id="add-to-list" type="button">adicionar</button>
+
+        <div class="content file-upload-box">
+          <input type="file" name="arquivo" id="file-input">
+          
+          <label for="file-input" class="file-upload-label">
+            <span id="file-upload-text">Envie uma imagem</span>
+          </label>
+        </div>
+        <div class="botoes"> 
+        <button class="Post-btn cancelar" type="button" onclick="limparCampos()">Cancelar</button>
+        <input class="Post-btn" type="submit" value="Postar">  
       </div>
 
-      <div class="content">
-        <input class="Titulo" type="text" name="titulo" placeholder="Digite o titulo do Post">
-      </div>
-      <textarea class="content areatxt" rows="4" name="descricao"
-        placeholder="Coloque uma descrição ao seu post"></textarea>
-
-      <ul class="tags-list">
-      </ul>
-      <input class="Titulo content tags" type="text" id="tag-entry"
-        placeholder="Digite as tags (separadas por espaço ou vírgula)">
-      <input type="hidden" name="tags" id="tags-data">
-
-      <button id="add-to-list" type="button">adicionar</button>
-
-      <input class="content" type="file" name="arquivo" id="file-input">
-
-      <input class="Post-btn" type="submit" value="Postar">
-    </form>
+      </form>
     </div>
   </main>
 </body>
 <script src="../Scripts/modals.js"></script>
-
 <script>
   // --- SCRIPT DE TAGS ---
   const TagList = document.querySelector(".tags-list");
@@ -333,6 +309,13 @@ endif;
 
   let currentTags = []; // Array para guardar as tags
 
+  function limparCampos() {
+    document.querySelector("form").reset(); // Reseta o formulário
+    const conteudos = document.querySelectorAll('content').values = '';
+    location.reload(); // Recarrega a página para garantir que tudo seja limpo
+    currentTags = []; // Limpa as tags atuais
+    updateTagsDisplay(); // Atualiza a exibição das tags
+  }
   // Atualiza a lista visual (UL) e o input hidden
   function updateTagsDisplay() {
     TagList.innerHTML = ''; // Limpa a lista visual
@@ -358,33 +341,19 @@ endif;
     tagsData.value = currentTags.join(',');
   }
 
-  // =================================================================
-  // MELHORIA PRINCIPAL ESTÁ AQUI
-  // Esta função agora é mais inteligente e aceita tags separadas
-  // por espaço ou vírgula, corrigindo o bug de "apenas 1 tag".
-  // =================================================================
+  // Função para adicionar tags
   function addTag() {
-    // 1. Pega o valor, limpa espaços e converte para minúsculo
     const input = tagEntry.value.trim().toLowerCase();
+    if (!input) return; 
 
-    if (!input) return; // Não faz nada se estiver vazio
-
-    // 2. Substitui todos os espaços (mesmo vários) por uma vírgula
-    //    e depois divide o resultado por vírgula.
-    //    Ex: "arte, digital desenho" -> "arte,,digital,desenho" -> ["arte", "", "digital", "desenho"]
     const tagsArray = input.replace(/\s+/g, ',').split(',');
 
-    // 3. Loop sobre as tags encontradas
     for (const tagValue of tagsArray) {
       const cleanTag = tagValue.trim();
-
-      // 4. Adiciona se não for vazia E não estiver já na lista
       if (cleanTag && !currentTags.includes(cleanTag)) {
         currentTags.push(cleanTag);
       }
     }
-
-    // 5. Limpa o campo de digitação e atualiza a tela
     tagEntry.value = '';
     updateTagsDisplay();
   }
@@ -392,7 +361,7 @@ endif;
   // Adiciona tag ao pressionar 'Enter'
   tagEntry.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); // Impede o 'Enter' de submeter o formulário
+      e.preventDefault(); 
       addTag();
     }
   });
@@ -402,32 +371,56 @@ endif;
     addTag();
   });
 
-  // --- SCRIPT PARA UPLOAD DE ARQUIVO ---
+  // ===========================================
+  //  SCRIPT DE UPLOAD DE ARQUIVO (ATUALIZADO)
+  // ===========================================
   const fileInput = document.getElementById('file-input');
   const radioImagem = document.getElementById('Imagem');
   const radioVideo = document.getElementById('Video');
   const radioTexto = document.getElementById('Texto');
+  const fileUploadBox = document.querySelector('.file-upload-box'); // O novo contêiner
+  const fileUploadText = document.getElementById('file-upload-text'); // O span do texto
+  const uploadIcon = document.getElementById('upload-icon'); // O ícone
 
-  function updateFileInput() {
+  function updateFileInputDisplay() {
     if (radioImagem.checked) {
       fileInput.accept = "image/png, image/jpg, image/jpeg";
-      fileInput.style.display = 'block'; // Mostra o input
+      fileUploadBox.style.display = 'flex'; // Mostra o contêiner do "dropzone"
+      fileUploadText.textContent = "Envie uma imagem";
+      uploadIcon.style.display = 'inline-block'; // Mostra o ícone
     } else if (radioVideo.checked) {
       fileInput.accept = "video/mp4, video/x-ms-wmv, video/quicktime"; // .mov, .mp4, .wmv
-      fileInput.style.display = 'block'; // Mostra o input
+      fileUploadBox.style.display = 'flex'; // Mostra o contêiner do "dropzone"
+      fileUploadText.textContent = "Envie um vídeo";
+      uploadIcon.style.display = 'inline-block'; // Mostra o ícone
     } else if (radioTexto.checked) {
-      fileInput.style.display = 'none'; // Esconde o input para posts de texto
+      fileUploadBox.style.display = 'none'; // Esconde o contêiner para posts de texto
+      fileInput.value = ''; // Limpa qualquer arquivo selecionado
+    }
+    // Garante que o texto volte ao padrão se um arquivo for removido
+    if (!fileInput.files || fileInput.files.length === 0) {
+        if(radioImagem.checked) fileUploadText.textContent = "Envie uma imagem";
+        if(radioVideo.checked) fileUploadText.textContent = "Envie um vídeo";
     }
   }
 
+  // Mostra o nome do arquivo selecionado ou o texto padrão
+  fileInput.addEventListener('change', function() {
+    if (this.files && this.files.length > 0) {
+      fileUploadText.textContent = this.files[0].name;
+      uploadIcon.style.display = 'none'; // Esconde o ícone quando há um arquivo
+    } else {
+      updateFileInputDisplay(); // Volta ao texto padrão
+    }
+  });
+
   // Adiciona os 'ouvintes' de evento
-  radioImagem.addEventListener('change', updateFileInput);
-  radioVideo.addEventListener('change', updateFileInput);
-  radioTexto.addEventListener('change', updateFileInput);
+  radioImagem.addEventListener('change', updateFileInputDisplay);
+  radioVideo.addEventListener('change', updateFileInputDisplay);
+  radioTexto.addEventListener('change', updateFileInputDisplay);
 
   // Executa a função uma vez no carregamento da página
-  document.addEventListener('DOMContentLoaded', updateFileInput);
+  document.addEventListener('DOMContentLoaded', updateFileInputDisplay);
 
 </script>
-
 </html>

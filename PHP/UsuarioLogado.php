@@ -372,14 +372,14 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
               <p>Sem imagem para este post.</p>
             <?php endif; ?>
             <div class="footer-post">
-              <form action="UsuarioLogado.php?feed=<?= $tipo_feed ?>" method="post">
+              <form action="UsuarioLogado.php?feed=<?= $tipo_feed ?>" method="post" id="interactions-form-<?= $post['id'] ?> class="interactions-form">
                 <input type="hidden" name="post_id" value="<?= $post['id'] ?>">
                 <ul class="interactions-post">
                   <li><button type="button"><i class="fi fi-rr-comment"></i></button></li>
-                  <li><button type="submit" name="repostar_post"
+                  <li><button  name="repostar_post"
                       class="repostar-btn <?= $repostado ? 'repostado' : '' ?>"><i class="fi fi-rr-refresh"></i></button>
                   </li>
-                  <li><button type="submit" name="curtir_post" class="curtida <?= $curtido ? 'curtido' : '' ?>"><svg
+                  <li><button name="curtir_post" class="curtida <?= $curtido ? 'curtido' : '' ?>"><svg
                         width="1.5rem" height="1.5rem" viewBox="0 0 24 24" fill="currentColor"
                         xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -392,13 +392,16 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
                   <li>
                     <button class="btn-share" type="button"><i class="fi fi-rs-redo"></i></button>
                 </li>
-                </ul>
-
-              </form>
-              <button type="submit" name="salvar_post" class="salvar-btn ww"><svg xmlns="http://www.w3.org/2000/svg"
+                <li>
+                    <button  name="salvar_post" class="salvar-btn"><svg xmlns="http://www.w3.org/2000/svg"
                   height="1.5rem" width="1.5rem" viewBox="0 0 384 512">
                   <path d="M0 48C0 21.5 21.5 0 48 0H336c26.5 0 48 21.5 48 48V464L192 352 0 464V48z" />
                 </svg></button>
+                </li>
+                </ul>
+              
+              </form>
+              
             </div>
           </article>
         <?php endwhile; ?>
