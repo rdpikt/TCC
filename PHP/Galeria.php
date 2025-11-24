@@ -159,7 +159,16 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
 <?php endforeach; ?>
     </div>
   </main>
+  <div class="modal-overlay"></div>
 
+<div class="modal-overlay"></div>
+
+<div class="modal-other-perfil-container">
+    <div class="modal-other-perfil-content-wrapper">
+        <!-- O JS vai preencher aqui -->
+    </div>
+</div>
+<script src="../Scripts/TelaInicial.js"></script>
   <script src="../Scripts/modals.js"></script>
   <script src="../Scripts/FiltrarCategoria.js" defer></script>
 </body>

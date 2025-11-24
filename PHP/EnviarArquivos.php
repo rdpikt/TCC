@@ -202,7 +202,7 @@ endif;
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Postar Imagem</title>
-  <link rel="stylesheet" href="../Styles/EnviarPost.css">
+  <link rel="stylesheet" href="../Styles/enviarPost.css">
   <link rel="stylesheet" href="../Styles/global.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
@@ -214,9 +214,7 @@ endif;
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-regular-straight/css/uicons-regular-straight.css'>
   <link rel='stylesheet'
     href='https://cdn-uicons.flaticon.com/3.0.0/uicons-solid-straight/css/uicons-solid-straight.css'>
-  <style>
-    /* ... (seu style local intacto) ... */
-  </style>
+
 </head>
 
 <body>
@@ -224,7 +222,7 @@ endif;
     <div class="search-container">
       <div class="search-bar-wrapper">
         <i class="fi-rr-search"></i>
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Buscar">
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
       </div>
       <div id="suggestions-box">
       </div>
@@ -251,7 +249,27 @@ endif;
 
   <main>
     
-    <?php require 'menu.php'; ?>
+    <nav class="nav-side" id="menu">
+      <div class="logotipo"><span>Harp</span>Hub</div>
+      <ul class="pages">
+        <li><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a>
+        </li>
+        <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
+        <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
+        <li><a class="selecionado"  href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
+
+      </ul>
+      <div class="tools">
+        <ul>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
+          <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
+        </ul>
+      </div>
+
+    </nav>
+
 
     <div class="formulario">
       <form action="EnviarArquivos.php" method="POST" enctype="multipart/form-data">
@@ -298,8 +316,17 @@ endif;
       </form>
     </div>
   </main>
-</body>
+  <div class="modal-overlay"></div>
+
+<div class="modal-other-perfil-container">
+    <div class="modal-other-perfil-content-wrapper">
+        <!-- O JS vai preencher aqui -->
+    </div>
+</div>
+<script src="../Scripts/TelaInicial.js"></script>
 <script src="../Scripts/modals.js"></script>
+</body>
+
 <script>
   // --- SCRIPT DE TAGS ---
   const TagList = document.querySelector(".tags-list");

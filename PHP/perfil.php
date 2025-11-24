@@ -102,7 +102,7 @@ $ja_segue = false;
           </div>
 
           <div class="profile-bio">
-            <p><?php echo $_SESSION['user_bio'] ?? 'Esta pessoa não adicionou uma bio ainda.'; ?></p>
+            <p><?= $_SESSION['user_bio'] ?></p>
           </div>
 
           <div class="profile-stats">
@@ -297,9 +297,15 @@ $ja_segue = false;
     </section>
 
   </main>
+  <div class="modal-overlay"></div>
 
-
-  <script src="../Scripts/modals.js"></script>
+<div class="modal-other-perfil-container">
+    <div class="modal-other-perfil-content-wrapper">
+        <!-- O JS vai preencher aqui -->
+    </div>
+</div>
+<script src="../Scripts/TelaInicial.js"></script>
+<script src="../Scripts/modals.js"></script>
   <script>
     const btnsCategoria = document.querySelectorAll('.perfil-categorias ul li');
     const sections = {
@@ -325,5 +331,6 @@ $ja_segue = false;
       });
     });
   </script>
+  
 </body>
 </html>

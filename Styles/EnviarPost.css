@@ -106,9 +106,7 @@
 }
 
 /* 5. Input de Tags (que também usa .Titulo) */
-#tag-entry {
-  /* Estilos já aplicados pela classe .Titulo */
-}
+
 
 /* Botão de adicionar tag (continua escondido) */
 #add-to-list {

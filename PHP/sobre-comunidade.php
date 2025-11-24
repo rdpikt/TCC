@@ -199,8 +199,15 @@ if ($comunidade) {
       </section>
     </section>
   </main>
+<div class="modal-overlay"></div>
 
+<div class="modal-other-perfil-container">
+    <div class="modal-other-perfil-content-wrapper">
+        <!-- O JS vai preencher aqui -->
+    </div>
+</div>
 </body>
+<script src="../Scripts/TelaInicial.js"></script>
 <script src="../Scripts/modals.js"></script>
 
 </html>

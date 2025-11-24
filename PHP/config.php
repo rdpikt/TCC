@@ -99,6 +99,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (!empty($novoNome)) {
                     $_SESSION['user_name'] = $novoNome; // Atualiza o nome na sessão também
                 }
+                if (!empty($bio)) {
+                    $_SESSION['user_bio'] = $bio; // Atualiza a bio na sessão também
+                }
                 echo "<div class='alert alert-success' role='alert'>Perfil atualizado com sucesso!</div>";
             } else {
                 echo "<div class='alert alert-danger' role='letras'>Erro ao atualizar o perfil.</div>";
@@ -201,8 +204,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         <input type="submit" value="Salvar alterações">
       </form>
     </section>
-</body>
+    <div class="modal-overlay"></div>
+
+<div class="modal-other-perfil-container">
+    <div class="modal-other-perfil-content-wrapper">
+        <!-- O JS vai preencher aqui -->
+    </div>
+</div>
+    <script src="../Scripts/TelaInicial.js"></script>
 <script src="../Scripts/modals.js"></script>
+</body>
+
 <script>
   document.getElementById('MudarAvatar').addEventListener('change', function(event) {
     const preview = document.getElementById('avatar-preview');

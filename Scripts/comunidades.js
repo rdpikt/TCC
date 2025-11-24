@@ -3,12 +3,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Usa delegação de eventos no corpo do documento para capturar cliques
     document.body.addEventListener('click', async (e) => {
         // Verifica se o elemento clicado é um botão de entrar ou sair
-        if (e.target.matches('.Entrar-Comunidade, .Sair-Comunidade')) {
+                if (e.target.matches('.btn-entrar, .btn-sair')) {
             e.preventDefault(); // Previne qualquer comportamento padrão do botão
 
             const button = e.target;
             const comunidadeId = button.dataset.comunidadeId;
-            const action = button.classList.contains('Entrar-Comunidade') ? 'entrar':'sair';
+            const action = button.classList.contains('btn-entrar') ? 'entrar':'sair';
             console.log(e)
 
           
@@ -36,15 +36,15 @@ document.addEventListener('DOMContentLoaded', () => {
                     // Atualiza a aparência e o estado do botão
                     if (action === 'entrar') {
                         button.textContent = 'Sair';
-                        button.classList.remove('Entrar-Comunidade');
+                        button.classList.remove('btn-entrar');
 
                           console.log(comunidadeId)
-                        button.classList.add('Sair-Comunidade');
+                        button.classList.add('btn-sair');
                         window.location = `sobre-comunidade.php?id=${comunidadeId}`;
                     } else {
                         button.textContent = 'Entrar';
-                        button.classList.remove('Sair-Comunidade');
-                        button.classList.add('Entrar-Comunidade');
+                        button.classList.remove('btn-sair');
+                        button.classList.add('btn-entrar');
                     }
                 } else {
                     alert(data.message || 'Ocorreu um erro inesperado.');
