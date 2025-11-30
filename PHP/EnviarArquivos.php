@@ -252,7 +252,10 @@ endif; // Fim do if ($_SERVER['REQUEST_METHOD'] === 'POST'):
 
 <body>
   <header>
-    <div class="search-container">
+    <div class=d in C:\wamp64\www\TCC-main11\TCC-main\PHP\ajuda.php on line 28
+Call Stack
+#	Time	Memory	Function	Location
+1	0.0002	449552	{main}( )	...\ajuda.php:0"search-container">
       <div class="search-bar-wrapper">
         <i class="fi-rr-search"></i>
         <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Buscar">

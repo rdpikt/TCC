@@ -99,24 +99,27 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
 
   <main>
     <nav class="nav-side" id="menu">
-      <div class="logotipo"><span>Harp</span>Hub</div>
+      <h1 class="logo">
+        <a href="#inicio" class="logo-link">
+          <span class="marca">Harp</span><span class="nome">Hub</span>
+        </a>
+      </h1>
       <ul class="pages">
-        <li><a  href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a>
-        </li>
+        <li><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
-        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a>
+        </li>
         <li><a class="selecionado" href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
         <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
 
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
-
     </nav>
 
     <section class="comunidade-main">
