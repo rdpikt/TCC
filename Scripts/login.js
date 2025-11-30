@@ -1,25 +1,14 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.querySelector('.cadastro-form');
+    const loginForm = document.querySelector('.login-form');
     const errorContainer = document.getElementById('error-container');
 
-    const aceitar = document.querySelector("#btnAceitar");
-    const checkboxterms = document.querySelector('#terms');
-
-    if (aceitar) aceitar.disabled = true;
-
-    if (checkboxterms) {
-        checkboxterms.addEventListener("change", () => {
-            if(aceitar) aceitar.disabled = !checkboxterms.checked;
-        });
-    }
-
-    if (form) {
-        form.addEventListener('submit', (event) => {
+    if (loginForm) {
+        loginForm.addEventListener('submit', (event) => {
             event.preventDefault(); // Previne o envio padrão
 
-            const formData = new FormData(form);
+            const formData = new FormData(loginForm);
 
-            fetch('../PHP/cadastro.php', {
+            fetch('../PHP/login.php', {
                 method: 'POST',
                 body: formData
             })

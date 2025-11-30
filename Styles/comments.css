@@ -1,0 +1,101 @@
+/* Container principal de comentários */
+#comments-container {
+    padding: 15px;
+    margin-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+#comments-container h3 {
+    margin-top: 0;
+    color: #ffffff;
+}
+
+/* Lista de comentários */
+#comments-list {
+    margin-top: 15px;
+    max-height: 300px; /* Altura máxima para a lista */
+    overflow-y: auto;   /* Adiciona scroll se a lista for longa */
+}
+
+.comment-item {
+    display: flex;
+    margin-bottom: 15px;
+}
+
+.comment-item .user-avatar {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.comment-content {
+    flex-grow: 1;
+}
+
+.comment-header {
+    font-size: 0.9em;
+    margin-bottom: 5px;
+}
+
+.comment-header .user-name {
+    font-weight: bold;
+    color: #ffffff;
+}
+
+.comment-header .comment-date {
+    color: #888;
+    margin-left: 10px;
+}
+
+.comment-body p {
+    margin: 0;
+    color: #ffffff;
+    word-wrap: break-word;
+}
+
+.comment-actions button {
+    background: none;
+    border: none;
+    color: #888;
+    cursor: pointer;
+    font-size: 0.8em;
+    margin-right: 10px;
+}
+
+.comment-actions button:hover {
+    color: #ffffff;
+}
+
+/* Formulário de novo comentário */
+.comment-form-container {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+.comment-form-container textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #535252;
+    border-radius: 10px;
+    resize: vertical;
+    min-height: 60px;
+    margin-bottom: 10px;
+    background-color: #2e2e2e;
+}
+
+.comment-form-container button {
+    align-self: flex-end;
+    padding: 8px 15px;
+    background-color: #5600A1; /* Cor de exemplo */
+    border: 2px solid #7B00FF;
+    color: white;
+    border-radius: 20px;
+    cursor: pointer;
+}
+
+.comment-form-container button:hover {
+    background-color: #6A00C5;
+    border-color: #9D3AFF;
+}

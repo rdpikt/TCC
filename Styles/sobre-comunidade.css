@@ -1,0 +1,130 @@
+body{
+  height: 100%;
+}
+body ul li{
+  list-style: none;
+}
+.comunidade-info img{
+background-color: gray;
+width: 7rem;
+height: 7rem;
+border-radius: 50rem;
+}
+.comunidade-container{
+  width: 70%;
+  min-height: 100vh;  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex-direction: column;
+  padding-bottom: 2rem;
+  gap: 2rem;
+}
+.options ul{
+  display: flex;
+  gap: 1.2rem;
+  justify-content: end;
+}
+.global-comunidade i{
+position: relative;
+top: -20%;
+}
+.comunidade-options ul{
+  display:  flex;
+  gap: 1.2rem;
+}
+.comunidade-options ul li.active{
+  background-color: var(--roxo);
+  color: #fff;
+  border: none;
+  color: black
+}
+.comunidade-options ul li {
+  cursor: pointer;
+}
+.comunidade-options ul button{
+  background: none;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+
+}
+
+.ret button{
+  background: inherit;
+  border: none;
+  color: white;
+}
+.ret button:hover{
+    color: red;
+    cursor: pointer;
+}
+
+/* Estilo Base da Modal de Reticências */
+.modal-reticencias {
+    /* Esconder por padrão. Você usará JavaScript para mostrar/esconder. */
+    display: none; 
+    
+    position: absolute;
+    /* Posicionamento em relação ao botão de reticências. Ajuste conforme necessário. */
+    top: 50px; /* Distância do topo do botão .ret */
+    right: 15px; /* Distância da lateral direita */
+    
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    z-index: 1000; /* Certifica-se de que está acima de outros elementos */
+    min-width: 200px;
+    padding: 8px 0;
+}
+
+/* Lista de Opções */
+.modal-reticencias .options-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+/* Itens da Lista */
+.modal-reticencias .options-list li {
+    padding: 0;
+}
+
+/* Botões de Ação (Denunciar e Editar) */
+.modal-reticencias .options-list button {
+    background: none;
+    border: none;
+    color: #333;
+    width: 100%;
+    padding: 10px 15px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
+}
+
+/* Efeito Hover */
+.modal-reticencias .options-list button:hover {
+    background-color: #f0f0f0;
+}
+
+/* Estilo para o botão de Denunciar para dar um destaque */
+.modal-reticencias .denunciar-comunidade {
+    color: #d9534f; /* Cor vermelha para indicar atenção/ação negativa */
+}
+
+/* Opcional: Estilo para o ícone */
+.modal-reticencias .options-list i {
+    font-size: 1.1em;
+}
+
+/* Opcional: Para corrigir o posicionamento se .ret for o pai imediato e relativo */
+.ret {
+    position: relative; /* Isso é crucial para o posicionamento absoluto da modal */
+    display: inline-block; /* Se não estiver já como um elemento de bloco/flexível */
+}
