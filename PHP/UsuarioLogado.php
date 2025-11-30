@@ -250,6 +250,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
   </script>
   <link rel="stylesheet" href="../Styles/telainicial.css">
   <link rel="stylesheet" href="../Styles/global.css">
+  <link rel="stylesheet" href="../Styles/welcomeModal.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
     integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -451,7 +452,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
           </li>
         </ul>
       </article>
-      
+
       <footer>
         <p>Regras do HarpHub</p>
         <p>Política de Privacidade</p>
@@ -469,14 +470,67 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
         <p>Selecione os conteúdos que deseja priorizar na sua página, adaptando a experiência as suas inspirações
           artísticas</p>
         <ul>
-          <li><input type="checkbox" name="CC[]" value="obras-literarias">Obras literárias</li>
-          <li><input type="checkbox" name="CC[]" value="poemas">Poemas</li>
-          <li><input type="checkbox" name="CC[]" value="fotografias">Fotografias</li>
-          <li><input type="checkbox" name="CC[]" value="design-grafico">Design Gráfico</li>
-          <li><input type="checkbox" name="CC[]" value="musicas">Músicas</li>
-          <li><input type="checkbox" name="CC[]" value="ilustracoes">Ilustrações</li>
-        </ul>
-        <input type="submit" value="Concluir" name="salvar_interesses" class="close-welcome-button-main">
+  <li>
+    <label class="welcome-pill-circle">
+      <input type="checkbox" name="CC[]" value="obras-literarias">
+      <div class="welcome-pill-inner">
+       <span class="welcome-pill-icon"><i class="fi fi-rr-book"></i></span>
+      <span class="welcome-pill-text">Obras literárias</span>
+      </div>
+    </label>
+  </li>
+
+  <li>
+    <label class="welcome-pill-circle">
+      <input type="checkbox" name="CC[]" value="poemas">
+      <div class="welcome-pill-inner">
+       <span class="welcome-pill-icon"><i class="fi fi-rr-leaf"></i></span>
+      <span class="welcome-pill-text">poemas</span>
+      </div>
+    </label>
+  </li>
+
+  <li>
+    <label class="welcome-pill-circle">
+      <input type="checkbox" name="CC[]" value="fotografias">
+      <div class="welcome-pill-inner">
+       <span class="welcome-pill-icon"><i class="fi fi-rr-camera"></i></span>
+      <span class="welcome-pill-text">Fotografia</span>
+      </div>
+    </label>
+  </li>
+
+  <li>
+    <label class="welcome-pill-circle">
+      <input type="checkbox" name="CC[]" value="design-grafico">
+      <div class="welcome-pill-inner">
+       <span class="welcome-pill-icon"><i class="fi fi-rr-magic-wand"></i></span>
+      <span class="welcome-pill-text">Design Grafico</span>
+      </div>
+    </label>
+  </li>
+
+  <li>
+    <label class="welcome-pill-circle">
+      <input type="checkbox" name="CC[]" value="musicas">
+      <div class="welcome-pill-inner">
+       <span class="welcome-pill-icon"><i class="fi fi-rs-microphone-alt"></i></span>
+      <span class="welcome-pill-text">Musicas</span>
+      </div>
+    </label>
+  </li>
+
+  <li>
+    <label class="welcome-pill-circle">
+      <input type="checkbox" name="CC[]" value="ilustracoes">
+      <div class="welcome-pill-inner">
+       <span class="welcome-pill-icon"><i class="fi fi-br-palette"></i></span>
+      <span class="welcome-pill-text">Ilustrações</span>
+      </div>
+    </label>
+  </li>
+</ul>
+        <input type="submit" value="Concluir" name="salvar_interesses" class="close-welcome-button-main" disabled>
       </form>
     </div>
   </div>
@@ -488,12 +542,12 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
   </div>
   <div class="modal-overlay"></div>
 
-  <div class="modal-other-perfil-container">
+<div class="modal-other-perfil-container">
     <div class="modal-other-perfil-content-wrapper">
-      <!-- O JS vai preencher aqui -->
+        <!-- O JS vai preencher aqui -->
     </div>
-  </div>
-  </div>
+</div>
+    </div>
   </div>
   </div>
 </body>
