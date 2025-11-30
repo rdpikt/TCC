@@ -504,6 +504,7 @@ $no_obras = $count_row['total'] < 1 ? "Não há obras disponíveis" : "";
 <script src="../Scripts/modals.js"></script>
 <script src="../Scripts/ajaxInteractions.js"></script>
 <script src="../Scripts/carregar_posts.js"></script>
+<script src="../Scripts/seguir.js"></script>
 <script src="../Scripts/WebShare.js"></script>
 <script src="../Scripts/welcomeModal.js"></script>
 <script src="../Scripts/comments.js"></script>
