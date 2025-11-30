@@ -131,13 +131,17 @@ $session_avatar = isset($_SESSION['avatar']) && $_SESSION['avatar'] !== '' ? $_S
         <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
         <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
         <li><a class="selecionado" href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
+        <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
+        <li><a class="selecionado" href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
       </ul>
       <div class="tools">
         <ul>
           <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
+
     </nav>
 
     <section class="navigation-user">
@@ -188,11 +192,14 @@ $session_avatar = isset($_SESSION['avatar']) && $_SESSION['avatar'] !== '' ? $_S
         <ul>
           <li class="active" data-cat="posts">Posts</li>
           <li data-cat="reposts">Repost</li>
+          <li class="active" data-cat="posts">Posts</li>
+          <li data-cat="reposts">Repost</li>
           <li data-cat="salvos">Salvos</li>
           <li data-cat="curtidas">Curtidas</li>
         </ul>
       </div>
 
+      <div class="profile-section-content" id="posts-section">
       <div class="profile-section-content" id="posts-section">
         <div class="profile-posts-grid">
           <?php

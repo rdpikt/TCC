@@ -24,6 +24,7 @@ left: 25%;
 .galeria-grid{
   column-count: 4;
   column-gap: 1.2rem;
+  column-gap: 1.2rem;
 }
 .cat-btn.active{
   background: var(--roxo); color: #fff; border: none;

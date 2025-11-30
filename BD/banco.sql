@@ -4,6 +4,7 @@
 --
 -- Host: 127.0.0.1:3306
 -- Tempo de geração: 23/10/2025 às 22:54
+-- Tempo de geração: 23/10/2025 às 22:54
 -- Versão do servidor: 9.1.0
 -- Versão do PHP: 8.3.14
 
@@ -40,7 +41,7 @@ CREATE TABLE IF NOT EXISTS `comentarios` (
   KEY `post_id` (`post_id`),
   KEY `user_id` (`user_id`),
   KEY `parent_comment_id` (`parent_comment_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -60,13 +61,14 @@ CREATE TABLE IF NOT EXISTS `comunidades` (
   `tipo_comunidade` enum('Design','Crafts','literatura','escrita') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `dono_id` (`dono_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 --
 -- Despejando dados para a tabela `comunidades`
 --
 
 INSERT INTO `comunidades` (`id`, `nome`, `descricao`, `imagem`, `dono_id`, `privacidade`, `data_criacao`, `tipo_comunidade`) VALUES
+(1, 'HarpHub', 'Comunidade oficial do HarpHub', '2009202515_spidey_.jpg', 4, 'publica', '2025-09-20 22:40:23', 'Design');
 (1, 'HarpHub', 'Comunidade oficial do HarpHub', '2009202515_spidey_.jpg', 4, 'publica', '2025-09-20 22:40:23', 'Design');
 
 -- --------------------------------------------------------
@@ -120,7 +122,7 @@ CREATE TABLE IF NOT EXISTS `galerias` (
   `data_criacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -134,7 +136,7 @@ CREATE TABLE IF NOT EXISTS `galeria_obras` (
   `obra_id` int NOT NULL,
   PRIMARY KEY (`galeria_id`,`obra_id`),
   KEY `obra_id` (`obra_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -152,7 +154,7 @@ CREATE TABLE IF NOT EXISTS `log_atividades` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `id` (`id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -165,7 +167,7 @@ CREATE TABLE IF NOT EXISTS `notificacoes` (
   `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `user_id` int NOT NULL COMMENT 'ID do usuário que recebe a notificação',
   `remetente_id` int DEFAULT NULL COMMENT 'ID do usuário que originou a ação (pode ser nulo para sistema)',
-  `tipo` enum('curtida','seguimento','comentario','repost','sistema') CHARACTER SET utf8mb4 NOT NULL,
+  `tipo` enum('curtida','seguimento','comentario','repost','sistema') CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   `link_id` int DEFAULT NULL COMMENT 'ID do objeto relacionado (ex: post_id, user_id)',
   `lida` tinyint(1) DEFAULT '0',
   `data_envio` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
@@ -261,7 +263,7 @@ CREATE TABLE IF NOT EXISTS `portfolios` (
   `visibilidade` enum('publico','privado','restrio') DEFAULT 'publico',
   PRIMARY KEY (`id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -391,6 +393,9 @@ CREATE TABLE IF NOT EXISTS `users` (
 --
 
 INSERT INTO `users` (`id`, `nome_completo`, `nome_user`, `user_tag`, `data_nasc`, `bio`, `data_criacao`, `status_conta`, `email`, `senha`, `user_avatar`) VALUES
+(4, 'admin', 'Admin', '', '2222-02-22', 'admin aqui', NULL, NULL, 'admin@gmail.com', '$2y$10$Z/9S/uCcumV4vIR.OJbkuuZOqohqfA5JvJ7ebWZ0EPfqRyGz./HsK', '2109202557_spiderman fpf.jpeg'),
+(5, 'Teste', 'testezin', 'cantor', '2000-02-13', NULL, NULL, NULL, 'teste@gmail.com', '$2y$10$n.3V3gntjAw.6O3sDjk3BejvqA7sSxKf/nwwwuF9dl/ictAzC8Sia', 'testezin_1910202546_jpeg'),
+(6, 'HarpHub', 'harphub_Oficial', 'cantor', '2000-02-01', NULL, NULL, NULL, 'HarpHubOficial@gmail.com', '$2y$10$K4u0HV6KeL95c9OIsadqyup6pBg5viFn2wzNevPe39tHLNzq/ncR2', 'harphub_Oficial_2010202520_jpg');
 (4, 'admin', 'Admin', '', '2222-02-22', 'admin aqui', NULL, NULL, 'admin@gmail.com', '$2y$10$Z/9S/uCcumV4vIR.OJbkuuZOqohqfA5JvJ7ebWZ0EPfqRyGz./HsK', '2109202557_spiderman fpf.jpeg'),
 (5, 'Teste', 'testezin', 'cantor', '2000-02-13', NULL, NULL, NULL, 'teste@gmail.com', '$2y$10$n.3V3gntjAw.6O3sDjk3BejvqA7sSxKf/nwwwuF9dl/ictAzC8Sia', 'testezin_1910202546_jpeg'),
 (6, 'HarpHub', 'harphub_Oficial', 'cantor', '2000-02-01', NULL, NULL, NULL, 'HarpHubOficial@gmail.com', '$2y$10$K4u0HV6KeL95c9OIsadqyup6pBg5viFn2wzNevPe39tHLNzq/ncR2', 'harphub_Oficial_2010202520_jpg');
