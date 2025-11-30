@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $conn->commit();
 
-        header("Location: comunidades.php");
+        header("Location: explorar_comunidades.php");
         exit();
 
     } catch (mysqli_sql_exception $e) {

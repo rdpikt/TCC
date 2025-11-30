@@ -1,155 +1,121 @@
 <?php
 require_once 'conexao.php';
 
-session_start(); // Inicia a sessão
+session_start();
+// Define o cabeçalho da resposta como JSON
+header('Content-Type: application/json');
 
 $erros = [];
-// Exibe os erros, se houver
-if (!empty($erros)) {
-    foreach ($erros as $erro) {
-        echo "<script>alert('Erro: " . $erro . "');</script>";
+$response = [];
+
+// Validações
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $nome_completo = $_POST['nome_completo'] ?? '';
+    $nome_user = $_POST['nome_user'] ?? '';
+    $email = $_POST['email'] ?? '';
+    $senha = $_POST['senha'] ?? '';
+    $confirmar_senha = $_POST['confirmar_senha'] ?? '';
+    $data_nascimento = $_POST['data_nasc'] ?? '';
+    $terms = isset($_POST['terms']);
+
+    if (empty($nome_completo) || empty($nome_user) || empty($email) || empty($senha) || empty($data_nascimento)) {
+        $erros[] = 'Preencha todos os campos obrigatórios!';
     }
-}
-
-$nome_completo = $_POST['nome_completo'];
-$nome_user = $_POST['nome_user'];
-$email = $_POST['email'];
-$senha = $_POST['senha'];
-$data_nascimento = $_POST['data_nasc'];
-$senha_hash = password_hash($senha, PASSWORD_DEFAULT); // Cria um hash seguro para a senha
-$tags_user = $_POST['tag'] ?? []; // Corrigido para capturar as tags selecionadas
-
-var_dump($tags_user);
-// Verifica se a data de nascimento é válida antes de continuar
-$data_nascimento_formatada = date('Y-m-d', strtotime($data_nascimento));
-if (!$data_nascimento_formatada || $data_nascimento_formatada === '1970-01-01') {
-    echo '<script>
-        alert("Data de nascimento inválida!");
-        window.location.href = "../Layout/cadastro.html";
-    </script>';
-    exit;
-}
-
-$idade = date_diff(date_create($data_nascimento_formatada), date_create('now'))->y;
-$erros = [];
-
-// Verificações
-try {
-    if (empty($nome_user) || empty($email) || empty($senha) || empty($data_nascimento)) {
-        echo '<script>
-            alert("Preencha todos os campos!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
-    }
-
-    // Verifica se pelo menos 3 tags foram selecionadas
-    if (isset($tags_user) && count($tags_user) < 3) {
-        echo '<script>
-            alert("Selecione pelo menos 3 tags!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
-    }
-
     if (strlen($nome_user) < 3 || strlen($nome_user) > 20) {
-        echo '<script>
-            alert("Nome de usuário inválido! Deve ter entre 3 e 20 caracteres.");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
+        $erros[] = 'Nome de usuário deve ter entre 3 e 20 caracteres.';
     }
-
     if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        echo '<script>
-            alert("Email inválido!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
+        $erros[] = 'Email inválido!';
+    }
+    if (strlen($senha) < 8) {
+        $erros[] = 'Senha deve ter pelo menos 8 caracteres.';
+    }
+    if ($senha !== $confirmar_senha) {
+        $erros[] = 'As senhas não coincidem!';
+    }
+    if (!$terms) {
+        $erros[] = 'Você deve aceitar os termos de uso.';
     }
 
-    if (strlen($senha) < 8 /*|| !preg_match('/[A-Z]/', $senha) || !preg_match('/[a-z]/', $senha) || !preg_match('/[0-9]/', $senha)*/) {
-        echo '<script>
-            alert("Senha inválida! A senha deve ter pelo menos 8 caracteres, incluindo letras maiúsculas, minúsculas e números e alfanuméricos.");
-            window.location.href = "../Layout/cadastro.html";
-            </script>';
-        exit;
-    }
-
-    if ($senha !== $_POST['confirmar_senha']) {
-        echo '<script>
-            alert("As senhas não coincidem!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
-    }
-
-    if ($idade < 18) {
-        echo '<script>
-            alert("Você deve ter pelo menos 18 anos para se cadastrar!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
-    }
-
-    if (!isset($_POST['terms'])) {
-        echo '<script>
-            alert("Você deve aceitar os termos de uso!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
-    }
-
-    // Verifica se o email já está cadastrado
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
-    $stmt->bind_param("s", $email);
-    $stmt->execute();
-    $result = $stmt->get_result();
-
-    if ($result->num_rows > 0) {
-        echo '<script>
-            alert("Email já cadastrado!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
-    }
-
-    // Verifica se o nome de usuário já está cadastrado
-    $stmt = $conn->prepare('SELECT * FROM users WHERE nome_user = ?');
-    $stmt->bind_param("s", $nome_user);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    if ($result->num_rows > 0) {
-        echo '<script>
-            alert("Nome de usuário já cadastrado!");
-            window.location.href = "../Layout/cadastro.html";
-        </script>';
-        exit;
-    }
-    if (!empty($erros)) {
-        foreach ($erros as $erro) {
-            echo "<script>alert('Erro: " . $erro . "');</script>";
+    // Validação de idade
+    if (!empty($data_nascimento)) {
+        $data_nascimento_formatada = date('Y-m-d', strtotime($data_nascimento));
+        if (!$data_nascimento_formatada || $data_nascimento_formatada === '1970-01-01') {
+            $erros[] = 'Data de nascimento inválida!';
+        } else {
+            $idade = date_diff(date_create($data_nascimento_formatada), date_create('now'))->y;
+            if ($idade < 16) {
+                $erros[] = 'Você deve ter mais de 16 anos para se cadastrar!';
+            }
         }
     }
 
-    $stmt->close();
+    // Se não houver erros de validação inicial, verifica o banco de dados
+    if (empty($erros)) {
+        // Verifica se o email já está cadastrado
+        $stmt = $conn->prepare("SELECT id FROM users WHERE email = ?");
+        $stmt->bind_param("s", $email);
+        $stmt->execute();
+        if ($stmt->get_result()->num_rows > 0) {
+            $erros[] = "Este email já está em uso!";
+        }
+        $stmt->close();
 
-    // Insere os dados no banco de dados
-    $stmt = $conn->prepare("INSERT INTO users (nome_completo, nome_user, email, senha, data_nasc, user_tag) VALUES (?, ?, ?, ?, ?, ?)");
-    $tags_serializadas = implode(',', $tags_user); // Serializa as tags para salvar no banco
-    $stmt->bind_param("ssssss", $nome_completo, $nome_user, $email, $senha_hash, $data_nascimento, $tags_serializadas);
-
-    if ($stmt->execute()) {
-        header("Location: ../Layout/load.html?message=Cadastro realizado com sucesso!&action=cadastro");
-    } else {
-        throw new Exception("Erro ao cadastrar: " . $stmt->error);
+        // Verifica se o nome de usuário já está cadastrado
+        $stmt = $conn->prepare('SELECT id FROM users WHERE nome_user = ?');
+        $stmt->bind_param("s", $nome_user);
+        $stmt->execute();
+        if ($stmt->get_result()->num_rows > 0) {
+            $erros[] = "Este nome de usuário já está em uso!";
+        }
+        $stmt->close();
     }
 
-    $stmt->close();
-} catch (Exception $e) {
-    echo '<script>
-        alert("Erro ao cadastrar: ' . $e->getMessage() . '");
-        window.location.href = "../Layout/cadastro.html";
-    </script>';
+    // Se, depois de todas as checagens, o array de erros ainda estiver vazio, tenta cadastrar
+    if (empty($erros)) {
+        
+        try {
+            $senha_hash = password_hash($senha, PASSWORD_DEFAULT);
+            $stmt = $conn->prepare("INSERT INTO users (nome_completo, nome_user, email, senha, data_nasc) VALUES (?, ?, ?, ?, ?)");
+            $stmt->bind_param("sssss", $nome_completo, $nome_user, $email, $senha_hash, $data_nascimento_formatada);
+            if ($stmt->execute()) {
+                $last_id = $conn->insert_id;
+
+                $stmt_new = $conn->prepare("SELECT * FROM users WHERE id = ?");
+                $stmt_new->bind_param("i", $last_id);
+                $stmt_new->execute();
+                $result = $stmt_new->get_result();
+                $user = $result->fetch_assoc();
+
+                $_SESSION['user_id'] = $user['id'];
+                $_SESSION['user_name'] = $user['nome_user'];
+                $_SESSION['user_name_completo'] = $user['nome_completo'];
+                $_SESSION['tipo_criador'] = $user['user_tag'];
+                $_SESSION['user_email'] = $user['email'];
+                $_SESSION['avatar'] = $user['user_avatar'];
+                $_SESSION['user_bio'] = $user['bio'];
+                $_SESSION['show_welcome_modal'] = true;
+
+                $response['success'] = true;
+                $response['redirect_url'] = '../Layout/load.html?message=Cadastro realizado com sucesso!&action=login';
+            } else {
+                $erros[] = "Erro ao registrar no banco de dados.";
+            }
+            $stmt->close();
+        } catch (Exception $e) {
+            $erros[] = "Erro no servidor: " . $e->getMessage();
+        }
+    }
+} else {
+    $erros[] = "Método de requisição inválido.";
 }
-?>
+
+// Se houver erros em qualquer ponto, prepara a resposta de erro
+if (!empty($erros)) {
+    $response['success'] = false;
+    $response['errors'] = $erros;
+}
+
+// Envia a resposta final em JSON e termina o script
+echo json_encode($response);
+exit();
