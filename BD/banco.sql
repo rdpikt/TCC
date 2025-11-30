@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Tempo de geração: 21/09/2025 às 21:34
+-- Tempo de geração: 23/10/2025 às 22:54
 -- Versão do servidor: 9.1.0
 -- Versão do PHP: 8.3.14
 
@@ -67,9 +67,7 @@ CREATE TABLE IF NOT EXISTS `comunidades` (
 --
 
 INSERT INTO `comunidades` (`id`, `nome`, `descricao`, `imagem`, `dono_id`, `privacidade`, `data_criacao`, `tipo_comunidade`) VALUES
-(1, 'HarpHub', 'Comunidade oficial do HarpHub', '2009202515_spidey_.jpg', 4, 'publica', '2025-09-20 22:40:23', 'Design'),
-(2, 'Comunidade Teste', 'Essa é uma comunidade criada apenas para testes.', 'comunidade_teste.png', 1, 'publica', '2025-09-21 00:09:43', 'Design'),
-(3, 'Comunidade Design', 'Comunidade voltada para designers compartilharem ideias e projetos.', 'comunidade_design.png', 1, 'publica', '2025-09-21 00:11:01', 'Design');
+(1, 'HarpHub', 'Comunidade oficial do HarpHub', '2009202515_spidey_.jpg', 4, 'publica', '2025-09-20 22:40:23', 'Design');
 
 -- --------------------------------------------------------
 
@@ -87,7 +85,7 @@ CREATE TABLE IF NOT EXISTS `comunidade_membros` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `unique_membro` (`comunidade_id`,`usuario_id`),
   KEY `usuario_id` (`usuario_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -105,7 +103,7 @@ CREATE TABLE IF NOT EXISTS `curtidas` (
   UNIQUE KEY `id` (`id`),
   UNIQUE KEY `unica_curtida` (`usuario_id`,`obra_id`),
   KEY `obra_id` (`obra_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 ;
 
 -- --------------------------------------------------------
 
@@ -175,7 +173,17 @@ CREATE TABLE IF NOT EXISTS `notificacoes` (
   UNIQUE KEY `id` (`id`),
   KEY `user_id` (`user_id`),
   KEY `remetente_id` (`remetente_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `notificacoes`
+--
+
+INSERT INTO `notificacoes` (`id`, `user_id`, `remetente_id`, `tipo`, `link_id`, `lida`, `data_envio`) VALUES
+(1, 4, 5, 'curtida', 7, 0, '2025-10-20 02:41:10'),
+(2, 4, 5, 'repost', 7, 0, '2025-10-20 02:41:12'),
+(3, 4, 6, 'curtida', 8, 0, '2025-10-20 20:28:09'),
+(4, 4, 6, 'repost', 8, 0, '2025-10-20 20:28:10');
 
 -- --------------------------------------------------------
 
@@ -196,16 +204,46 @@ CREATE TABLE IF NOT EXISTS `obras` (
   `tipo_imagem` enum('png','jpg','jpeg','mp4','mp3','wav') DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `portfolio_id` (`portfolio_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `obras`
 --
 
 INSERT INTO `obras` (`id`, `portfolio_id`, `tipo_obra`, `titulo`, `descricao`, `arquivo_url`, `data_publicacao`, `status`, `tipo_imagem`) VALUES
-(6, 4, 'Visual', 'teste de outros tipos de post', 'teste de outros tipos de post', '2109202525_miranha1.jpg', '2025-09-21 21:31:25', 'ativo', 'jpg'),
-(7, 4, 'Áudio', 'teste 3 ', 'teste 3 ', '2109202539_spiderman fpf.jpeg', '2025-09-21 21:31:39', 'ativo', 'jpeg'),
-(8, 4, 'ÁudioVisual', 'teste do user admin', 'teste do user admin', '2109202559_a-noite-estrelada.png', '2025-09-21 21:31:59', 'ativo', 'png');
+(20, 6, '', 'teste1', 'testes teste', '2010202507_68f6b59768cbe.png', '2025-10-20 22:20:07', 'ativo', 'png'),
+(21, 4, '', 'testeasdaweawd', 'adawdafaefwadawd', '2010202502_68f6bf6a7786a.jpg', '2025-10-20 23:02:02', 'ativo', 'jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `obras_tags`
+--
+
+DROP TABLE IF EXISTS `obras_tags`;
+CREATE TABLE IF NOT EXISTS `obras_tags` (
+  `id_obra` int NOT NULL,
+  `id_tag` int NOT NULL,
+  PRIMARY KEY (`id_obra`,`id_tag`),
+  KEY `id_tag` (`id_tag`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `obras_tags`
+--
+
+INSERT INTO `obras_tags` (`id_obra`, `id_tag`) VALUES
+(19, 1),
+(19, 2),
+(19, 3),
+(20, 1),
+(20, 4),
+(20, 5),
+(20, 6),
+(21, 3),
+(21, 7),
+(21, 8),
+(21, 9);
 
 -- --------------------------------------------------------
 
@@ -241,7 +279,7 @@ CREATE TABLE IF NOT EXISTS `reposts` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `original_post_id` (`original_post_id`,`user_id`),
   KEY `user_id` (`user_id`)
-) ENGINE=MyISAM AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4;
+) ENGINE=MyISAM AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `reposts`
@@ -275,6 +313,59 @@ CREATE TABLE IF NOT EXISTS `seguidores` (
 -- --------------------------------------------------------
 
 --
+-- Estrutura para tabela `solicitacoes_comunidade`
+--
+
+DROP TABLE IF EXISTS `solicitacoes_comunidade`;
+CREATE TABLE IF NOT EXISTS `solicitacoes_comunidade` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `comunidade_id` int NOT NULL,
+  `usuario_id` int NOT NULL,
+  `data_solicitacao` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `comunidade_id` (`comunidade_id`),
+  KEY `usuario_id` (`usuario_id`)
+) ENGINE=MyISAM AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `solicitacoes_comunidade`
+--
+
+INSERT INTO `solicitacoes_comunidade` (`id`, `comunidade_id`, `usuario_id`, `data_solicitacao`) VALUES
+(6, 4, 5, '2025-10-14 20:03:39');
+
+-- --------------------------------------------------------
+
+--
+-- Estrutura para tabela `tags`
+--
+
+DROP TABLE IF EXISTS `tags`;
+CREATE TABLE IF NOT EXISTS `tags` (
+  `tag_id` int NOT NULL AUTO_INCREMENT,
+  `nome_tag` varchar(25) CHARACTER SET utf8mb4 NOT NULL,
+  PRIMARY KEY (`tag_id`),
+  UNIQUE KEY `nome_tag` (`nome_tag`)
+) ENGINE=MyISAM AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+
+--
+-- Despejando dados para a tabela `tags`
+--
+
+INSERT INTO `tags` (`tag_id`, `nome_tag`) VALUES
+(1, 'teste'),
+(2, 'bobao'),
+(3, 'sla'),
+(4, 'apenas'),
+(5, 'um'),
+(6, 'aaaa'),
+(7, 'ajuda'),
+(8, 'n'),
+(9, 'sei');
+
+-- --------------------------------------------------------
+
+--
 -- Estrutura para tabela `users`
 --
 
@@ -293,14 +384,16 @@ CREATE TABLE IF NOT EXISTS `users` (
   `user_avatar` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT 'profile.png',
   PRIMARY KEY (`id`),
   UNIQUE KEY `email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
 
 --
 -- Despejando dados para a tabela `users`
 --
 
 INSERT INTO `users` (`id`, `nome_completo`, `nome_user`, `user_tag`, `data_nasc`, `bio`, `data_criacao`, `status_conta`, `email`, `senha`, `user_avatar`) VALUES
-(4, 'admin', 'Admin', '', '2222-02-22', 'admin aqui', NULL, NULL, 'admin@gmail.com', '$2y$10$Z/9S/uCcumV4vIR.OJbkuuZOqohqfA5JvJ7ebWZ0EPfqRyGz./HsK', '2109202557_spiderman fpf.jpeg');
+(4, 'admin', 'Admin', '', '2222-02-22', 'admin aqui', NULL, NULL, 'admin@gmail.com', '$2y$10$Z/9S/uCcumV4vIR.OJbkuuZOqohqfA5JvJ7ebWZ0EPfqRyGz./HsK', '2109202557_spiderman fpf.jpeg'),
+(5, 'Teste', 'testezin', 'cantor', '2000-02-13', NULL, NULL, NULL, 'teste@gmail.com', '$2y$10$n.3V3gntjAw.6O3sDjk3BejvqA7sSxKf/nwwwuF9dl/ictAzC8Sia', 'testezin_1910202546_jpeg'),
+(6, 'HarpHub', 'harphub_Oficial', 'cantor', '2000-02-01', NULL, NULL, NULL, 'HarpHubOficial@gmail.com', '$2y$10$K4u0HV6KeL95c9OIsadqyup6pBg5viFn2wzNevPe39tHLNzq/ncR2', 'harphub_Oficial_2010202520_jpg');
 
 --
 -- Restrições para tabelas despejadas
