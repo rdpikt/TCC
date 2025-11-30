@@ -163,7 +163,7 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
         <?php
         $itemDesign = 0;
         foreach ($comunidades as $cat):
-          if (!empty($cat['imagem']) && $cat['tipo_comunidade'] === 'Design'):
+          if (!empty($cat['imagem']) && $cat['tipo_comunidade'] === 'Design' || $cat['tipo_comunidade'] === 'Crafts'):
             $itemDesign++;
             $is_member = $cat['is_member'] ?? false;
             $button_text = $is_member ? 'Sair' : 'Entrar';
