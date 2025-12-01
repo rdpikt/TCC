@@ -28,7 +28,8 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
   <header>
     <div class="search-container">
       <div class="search-bar-wrapper">
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="🔍 Barra de pesquisa">
+        <i class="fi-rr-search"></i>
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Buscar">
       </div>
       <div id="suggestions-box">
       </div>
@@ -40,13 +41,28 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
               alt="Avatar do usuário"></span></li>
       </ul>
     </div>
-  </header>
-  <main>
-    <nav class="nav-side" id="menu">
-      <div class="logotipo"><span>Harp</span>Hub</div>
-      <ul class="pages">
-        <li><a  href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a>
+    <div class="modal-perfil">
+      <ul>
+        <li><a href="perfil.php">Perfil</a></li>
+        <li>Trocar de conta</li>
+        <li>
+          <form action="logout.php">
+            <input type="submit" value="Sair da conta">
+          </form>
         </li>
+      </ul>
+    </div>
+  </header>
+  
+  <main class="main">
+    <nav class="nav-side" id="menu">
+      <h1 class="logo">
+        <a href="#inicio" class="logo-link">
+          <span class="marca">Harp</span><span class="nome">Hub</span>
+        </a>
+      </h1>
+      <ul class="pages">
+        <li><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
         <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
@@ -56,23 +72,21 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
-
     </nav>
+
     <section class="content">
       <div class="form-container">
         <h1>Criar Nova Comunidade</h1>
         <form action="criar_comunidade.php" method="POST" enctype="multipart/form-data">
           <div class="form-group">
-            <label for="nome">Nome da Comunidade</label>
-            <input type="text" id="nome" name="nome" required>
+            <input type="text" name="nome" placeholder="Digite o nome da comunidade">
           </div>
           <div class="form-group">
-            <label for="descricao">Descrição</label>
-            <textarea id="descricao" name="descricao" rows="4" required></textarea>
+            <textarea id="descricao" name="descricao" placeholder="Digite o nome da comunidade" rows="4" required></textarea>
           </div>
           <div class="form-group">
             <label for="tipo_comunidade">Tipo de Comunidade</label>
@@ -84,7 +98,6 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
             </select>
           </div>
           <div class="form-group">
-            <label for="imagem">Imagem da Comunidade (Avatar)</label>
             <input type="file" id="imagem" name="imagem" accept="image/png, image/jpeg, image/jpg">
           </div>
           <button type="submit" class="btn-submit">Criar Comunidade</button>
@@ -92,17 +105,16 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : 'profile.png'
       </div>
     </section>
   </main>
+  
   <script src="../Scripts/modals.js"></script>
   <div class="modal-overlay"></div>
 
-<div class="modal-other-perfil-container">
+  <div class="modal-other-perfil-container">
     <div class="modal-other-perfil-content-wrapper">
-        <!-- O JS vai preencher aqui -->
-    </div>
-</div>
-<script src="../Scripts/TelaInicial.js"></script>
-<script src="../Scripts/modals.js"></script>
+      </div>
+  </div>
+  <script src="../Scripts/TelaInicial.js"></script>
+  <script src="../Scripts/modals.js"></script>
 
 </body>
-
 </html>

@@ -1,95 +1,235 @@
+/* CONTAINER DO MODAL DE BOAS-VINDAS */
 .modal-welcome {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 500px;
-    background-color: #000;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    padding: 20px;
+  position: fixed;
+  inset: 0;
+  display: flex;              /* quando seu JS mostrar o modal */
+  align-items: center;
+  justify-content: center;    /* centro da tela */
+  z-index: 1001;
+  font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
 }
 
-.modal-welcome-content h2 {
-    margin-top: 0;
+/* FUNDO ESCURECIDO COM LEVE GLOW ROXO */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 1000;
 }
 
-.close-welcome-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+/* CARD CENTRAL (O QUADRADO DO MODAL) */
+.modal-welcome-content {
+  position: relative;
+  background: radial-gradient(circle at top, #191919 0, #181820 60%, #111118 100%);
+  border-radius: 20px;
+  padding: 40px 48px 32px;
+  max-width: 490px;
+  max-height: 96vh;
+  min-height: 440px;
+  overflow: hidden;
+  width: 95%;
+  text-align: center;
+  color: #f5f5f7;
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.9),
+    0 0 0 1px rgba(255, 255, 255, 0.04);
 }
 
-.close-welcome-button:hover,
-.close-welcome-button:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+/* MOLDURA BRILHANTE ATRÁS DO CARD */
+.modal-welcome-content::before {
+  content: "";
+  position: absolute;
+  inset: -18px;
+  z-index: -1;
+  border-radius: 28px;
+  background: transparent;   /* sem cor */
+  opacity: 0;
+  filter: none;              /* sem blur/glow */
 }
 
-.close-welcome-button-main {
-    background-color: #8c19cd;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
+/* TÍTULO E SUBTÍTULO */
+.modal-welcome-content h1 {
+  font-size: 26px;
+  font-weight: 600;
+  margin: 0 0 10px;
 }
 
-.close-welcome-button-main:hover {
-    background-color: #45a049;
+.modal-welcome-content p {
+  font-size: 15px;
+  line-height: 1.5;
+  color: #c3c3d0;
+  margin: 0 0 26px;
 }
 
-.modal-welcome {
-    display: none;
-    position: fixed;
-    z-index: 1001;
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 80%;
-    max-width: 500px;
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    padding: 20px;
+/* GRID 3x2 PARA OS ITENS */
+.modal-welcome-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px 16px;
 }
 
-.modal-welcome-content h2 {
-    margin-top: 0;
+/* li agora é só container, sem visual próprio */
+.modal-welcome-content li {
+  list-style: none;
 }
 
-.close-welcome-button {
-    color: #aaa;
-    float: right;
-    font-size: 28px;
-    font-weight: bold;
-    cursor: pointer;
+/* GRID 3x2 mais espaçado */
+.modal-welcome-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 28px 0 24px 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 32px 40px;
+  justify-items:    enter;
 }
 
-.close-welcome-button:hover,
-.close-welcome-button:focus {
-    color: black;
-    text-decoration: none;
-    cursor: pointer;
+/* cada li só centraliza o item */
+.modal-welcome-content li {
+  display: flex;
+  justify-content: center;
 }
 
-.close-welcome-button-main {
-    background-color: #8c19cd;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    margin-top: 15px;
+/* container clicável circular */
+.welcome-pill-circle {
+  cursor: pointer;
+  border-radius: 999px;
+  background: transparent;
+  border: none;
 }
 
-.close-welcome-button-main:hover {
-    background-color: #45a049;
+/* esconde o checkbox */
+.welcome-pill-circle input[type="checkbox"] {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* conteúdo interno: círculo + texto em coluna */
+.welcome-pill-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* CÍRCULO com ícone */
+.welcome-pill-icon {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+    background:
+    linear-gradient(
+      to bottom,
+      #272727 0%,
+      #434343 50%,
+      #272727 100%
+    ) border-box,                        /* camada da borda */
+    linear-gradient(
+      to bottom,
+      #3C3C3C 0%,
+      #6F6F6F 50%,
+      #3C3C3C 100%
+    ) padding-box;                       /* camada de dentro (fundo) */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 30px;            /* se usar emoji, ícone ou SVG inline */
+  color: #f5f5f7;
+  box-shadow: none;
+  transition:
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.12s ease;
+}
+.welcome-pill-icon i {
+  font-size: 32px;   /* ajusta pro tamanho do Figma */
+  line-height: 1;
+  color: #E5E5F2;
+  margin-top: 7px;
+}
+
+/* texto embaixo do ícone */
+.welcome-pill-text {
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400;
+    font-size: 13px;
+  color: #e5e5f2;
+  text-align: center;
+}
+
+/* HOVER: eleva o círculo */
+.welcome-pill-circle:hover .welcome-pill-icon {
+  transform: translateY(-3px);
+  background: radial-gradient(circle at top, #3d3a58 0, #1f1f27 70%);
+  box-shadow:
+    0 16px 30px rgba(0, 0, 0, 0.9),
+    
+}
+
+/* CHECKED: círculo roxo igual ao ref */
+.welcome-pill-circle:has(input[type="checkbox"]:checked) .welcome-pill-icon {
+    border-radius: 50%;
+    border: 2px solid transparent;
+    box-shadow: none;
+    filter: none;
+ background:
+    /* borda */
+    linear-gradient(
+      to bottom,
+      #5900D5 0%,
+      #8E0EFF 50%,
+      #5900D5 100%
+    ) border-box,
+    /* fundo interno */
+    linear-gradient(
+      to bottom,
+      #8630FF 0%,
+      #D7BAFF  50%,
+      #8630FF  100%
+    ) padding-box;
+    transform: translateY(-2px);
+}
+/* Botão do modal de interesses */
+.modal-welcome-content .close-welcome-button-main {
+  background: linear-gradient(90deg, #3F0098 0%, #410086 100%);
+  color: white;
+  cursor: pointer;
+  font-weight: 600;                 /* Inter Semi Bold */
+  font-size: 16px;
+  border-radius: 50px;
+  border: 2px solid #7B00FF;        
+  width: 90%;
+  max-width: 375px;
+  height: 45px;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.3s ease;
+  font-family: 'Inter', system-ui, sans-serif;
+  margin: 24px auto 0;
+}
+
+
+/* Hover igual ao da outra tela */
+.modal-welcome-content .close-welcome-button-main:hover {
+  transform: translateY(-2px);
+  background-color: #6A00C5;
+  border-color: #9D3AFF;
+}
+.modal-welcome-content ul:has(input[type="checkbox"]:checked)
+  ~ .close-welcome-button-main {
+  background: linear-gradient(90deg, #6A00FF 0%, #7B00FF 100%);
+}
+.close-welcome-button-main[disabled] {
+  cursor: not-allowed;
+  opacity: 0.5;
+  pointer-events: none;
 }

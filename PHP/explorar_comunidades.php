@@ -2,37 +2,49 @@
 require "protect.php";
 require "conexao.php";
 
-// ... (toda a sua lógica PHP de 1 a 40) ...
+// ... (Toda a sua lógica PHP de 1 a 40) ...
 $userId = $_SESSION['user_id'];
 
-// Buscar a user_tag do usuário logado para as recomendações
 $stmt_user_tag = $conn->prepare("SELECT user_tag FROM users WHERE id = ?");
 $stmt_user_tag->bind_param("i", $userId);
 $stmt_user_tag->execute();
 $result_user_tag = $stmt_user_tag->get_result();
 $user_tag = $result_user_tag->fetch_assoc()['user_tag'] ?? null;
 
-//busca tipos de comunidades
+$stmt_count_member = $conn->prepare("SELECT COUNT(*) AS total_membro FROM comunidade_membros WHERE usuario_id = ?");
+$stmt_count_member->bind_param("i", $userId);
+$stmt_count_member->execute();
+$result_count_member = $stmt_count_member->get_result();
+$is_member_of_any = $result_count_member->fetch_assoc()['total_membro'] > 0;
+
+
+if (!$is_member_of_any) {
+    header('Location: criar_comunidade.php');
+    exit(); 
+}
+
 $tipos_comunidades = [];
 $cat_result = $conn->query("SELECT DISTINCT tipo_comunidade FROM comunidades");
 while ($cat = $cat_result->fetch_assoc()) {
-  $tipos_comunidades[] = $cat["tipo_comunidade"];
+    $tipos_comunidades[] = $cat["tipo_comunidade"];
 }
-//buscar as comunidades e verificar se o usuário é membro
+
 $sql = "SELECT 
-            C.*, 
-            (SELECT COUNT(1) FROM comunidade_membros WHERE comunidade_id = C.id AND usuario_id = ?) > 0 AS is_member
-        FROM comunidades C";
+    C.*, 
+    (SELECT COUNT(1) FROM comunidade_membros WHERE comunidade_id = C.id AND usuario_id = ?) > 0 AS is_member 
+    FROM comunidades C";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $userId);
 $stmt->execute();
 $result = $stmt->get_result();
+
 $comunidades = [];
 if ($result->num_rows > 0) {
-  while ($cat = $result->fetch_assoc()) {
-    $comunidades[] = $cat;
-  }
+    while ($cat = $result->fetch_assoc()) {
+        $comunidades[] = $cat;
+    }
 }
+
 $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/profile.png';
 ?>
 
@@ -87,24 +99,27 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
 
   <main>
     <nav class="nav-side" id="menu">
-      <div class="logotipo"><span>Harp</span>Hub</div>
+      <h1 class="logo">
+        <a href="#inicio" class="logo-link">
+          <span class="marca">Harp</span><span class="nome">Hub</span>
+        </a>
+      </h1>
       <ul class="pages">
-        <li><a  href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a>
-        </li>
+        <li><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
-        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a>
+        </li>
         <li><a class="selecionado" href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
         <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
 
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
-
     </nav>
 
     <section class="comunidade-main">
@@ -163,7 +178,7 @@ $user_avatar = !empty($_SESSION['avatar']) ? $_SESSION['avatar'] : '../images/pr
         <?php
         $itemDesign = 0;
         foreach ($comunidades as $cat):
-          if (!empty($cat['imagem']) && $cat['tipo_comunidade'] === 'Design' || $cat['tipo_comunidade'] === 'Crafts'):
+          if (!empty($cat['imagem']) && $cat['tipo_comunidade'] === 'Design'):
             $itemDesign++;
             $is_member = $cat['is_member'] ?? false;
             $button_text = $is_member ? 'Sair' : 'Entrar';

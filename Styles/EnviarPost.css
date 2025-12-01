@@ -3,13 +3,18 @@
  * Layout Principal do Formulário
  * =========================================
  */
+ 
+body{
+  width: 100vw
+}
 
 .formulario form {
   position: absolute;
   top: 90px;
   left: 438px;
   width: 660px;
-  
+  height: 40rem;
+
   /* Layout em Flexbox para empilhar os campos */
   display: flex;
   flex-direction: column;
@@ -246,3 +251,4 @@ input:focus {
 textarea:focus {
   outline: none;
 }
+

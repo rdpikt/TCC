@@ -222,7 +222,7 @@ endif;
     <div class="search-container">
       <div class="search-bar-wrapper">
         <i class="fi-rr-search"></i>
-        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Barra de pesquisa">
+        <input type="search" id="search-bar" class="search-bar" name="query" placeholder="Buscar">
       </div>
       <div id="suggestions-box">
       </div>
@@ -248,26 +248,28 @@ endif;
   </header>
 
   <main>
-    
     <nav class="nav-side" id="menu">
-      <div class="logotipo"><span>Harp</span>Hub</div>
+      <h1 class="logo">
+        <a href="#inicio" class="logo-link">
+          <span class="marca">Harp</span><span class="nome">Hub</span>
+        </a>
+      </h1>
       <ul class="pages">
-        <li><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a>
-        </li>
+        <li><a href="UsuarioLogado.php?feed=foryou"><i class="fi fi-br-home"></i>Página Inicial</a></li>
         <li><a href="UsuarioLogado.php?feed=seguindo"><i class="fi fi-br-user-add"></i>Seguindo</a></li>
         <li><a href="Galeria.php"><i class="fi fi-br-picture"></i>Galeria</a></li>
-        <li><a class="selecionado"  href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a></li>
+        <li><a class="selecionado" href="EnviarArquivos.php"><i class="fi fi-br-pencil"></i>Criar Post</a>
+        </li>
         <li><a href="explorar_comunidades.php"><i class="fi fi-br-users"></i>Comunidades</a></li>
         <li><a href="perfil.php"><i class="fi fi-br-portrait"></i>Perfil</a></li>
 
       </ul>
       <div class="tools">
         <ul>
-          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Config</a></li>
+          <li><a href="config.php"><i class="fi fi-rr-settings"></i>Configurações</a></li>
           <li><a href="ajuda.php"><i class="fi fi-rr-info"></i>Ajuda</a></li>
         </ul>
       </div>
-
     </nav>
 
 
@@ -303,28 +305,28 @@ endif;
 
         <div class="content file-upload-box">
           <input type="file" name="arquivo" id="file-input">
-          
+
           <label for="file-input" class="file-upload-label">
             <span id="file-upload-text">Envie uma imagem</span>
           </label>
         </div>
-        <div class="botoes"> 
-        <button class="Post-btn cancelar" type="button" onclick="limparCampos()">Cancelar</button>
-        <input class="Post-btn" type="submit" value="Postar">  
-      </div>
+        <div class="botoes">
+          <button class="Post-btn cancelar" type="button" onclick="limparCampos()">Cancelar</button>
+          <input class="Post-btn" type="submit" value="Postar">
+        </div>
 
       </form>
     </div>
   </main>
   <div class="modal-overlay"></div>
 
-<div class="modal-other-perfil-container">
+  <div class="modal-other-perfil-container">
     <div class="modal-other-perfil-content-wrapper">
-        <!-- O JS vai preencher aqui -->
+      <!-- O JS vai preencher aqui -->
     </div>
-</div>
-<script src="../Scripts/TelaInicial.js"></script>
-<script src="../Scripts/modals.js"></script>
+  </div>
+  <script src="../Scripts/TelaInicial.js"></script>
+  <script src="../Scripts/modals.js"></script>
 </body>
 
 <script>
@@ -371,7 +373,7 @@ endif;
   // Função para adicionar tags
   function addTag() {
     const input = tagEntry.value.trim().toLowerCase();
-    if (!input) return; 
+    if (!input) return;
 
     const tagsArray = input.replace(/\s+/g, ',').split(',');
 
@@ -388,7 +390,7 @@ endif;
   // Adiciona tag ao pressionar 'Enter'
   tagEntry.addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
-      e.preventDefault(); 
+      e.preventDefault();
       addTag();
     }
   });
@@ -426,13 +428,13 @@ endif;
     }
     // Garante que o texto volte ao padrão se um arquivo for removido
     if (!fileInput.files || fileInput.files.length === 0) {
-        if(radioImagem.checked) fileUploadText.textContent = "Envie uma imagem";
-        if(radioVideo.checked) fileUploadText.textContent = "Envie um vídeo";
+      if (radioImagem.checked) fileUploadText.textContent = "Envie uma imagem";
+      if (radioVideo.checked) fileUploadText.textContent = "Envie um vídeo";
     }
   }
 
   // Mostra o nome do arquivo selecionado ou o texto padrão
-  fileInput.addEventListener('change', function() {
+  fileInput.addEventListener('change', function () {
     if (this.files && this.files.length > 0) {
       fileUploadText.textContent = this.files[0].name;
       uploadIcon.style.display = 'none'; // Esconde o ícone quando há um arquivo
@@ -450,4 +452,5 @@ endif;
   document.addEventListener('DOMContentLoaded', updateFileInputDisplay);
 
 </script>
+
 </html>

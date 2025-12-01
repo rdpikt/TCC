@@ -31,6 +31,8 @@ body {
     background-color: var(--background-card);
     border-radius: 1rem;
     border: 1px solid #2B2B2B;
+    margin-top: 2rem;
+    margin-left: -5px; 
 }
 
 .profile-avatar-container {

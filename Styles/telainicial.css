@@ -9,13 +9,13 @@
     flex-direction: column;
     padding-bottom: 2rem;
     gap: 2rem;
-    
-    /* --- CORREÇÃO DE CENTRALIZAÇÃO --- */
-    /* A largura é o que sobra da tela (100% - 15%) */
     width: 85%; 
-    
     position: relative; 
     z-index: 1;
+    
+    /* CORREÇÃO: Removemos margin-top negativo e margin-left fixo */
+    margin-top: 2rem; 
+    margin-left: 0; 
 }
 
 .conteudo i {
@@ -30,19 +30,7 @@
     border: none;
 }
 
-.posts {
-    width: 37.8em;
-    height: auto;
-    display: flex;
-    gap: 12px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    padding: 9px 11px;
-    border: 1px solid var(--border-color-light);
-    border-radius: 1rem;
-    background-color: var(--background-card);
-}
+
 .interactions-form {
     width: 100%;
     display: flex;
@@ -100,7 +88,8 @@
 .footer-post {
     width: 100%;
     height: auto;
-    padding: 8px 20px;
+    padding: 8px 2px;
+    gap: 1rem;
 }
 
 .footer-post ul {
@@ -329,126 +318,259 @@
 
 /* =========================================
    MODAL DE VISUALIZAÇÃO DO POST (LIGHTBOX)
+   Design inspirado na imagem de referência
    ========================================= */
 
+/* Fundo Escuro (Overlay) */
 .modal-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(8px);      
     z-index: 999;
 }
 
-.modal-overlay.active {
-    display: block;
-}
+.modal-overlay.active { display: block; }
 
+/* Container Principal do Modal */
 .modal-post {
     display: none;
-    backdrop-filter: blur(5px);
-    background-color: rgba(0, 0, 0, 0.5);
     position: fixed;
     z-index: 1000;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 70%;
-    height: 95%;
-    background-color: var(--background-card);
-    border-radius: 10px;
-    padding: 0;
+    width: 90%;
+    max-width: 1200px;
+    height: 85vh; 
+    background-color: #c8ff00; 
+    border: 1px solid #353535;    
+    border-radius: 16px;       
     overflow: hidden;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
 }
 
-.modal-post.active {
-    display: flex;
-    justify-content: center;
-}
+.modal-post.active { display: flex; }
 
+/* Botão de Fechar (X) */
 .modal-post .close-button {
     position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 24px;
-    color: white;
+    top: 15px;
+    right: 20px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.2rem;
     cursor: pointer;
-    z-index: 10;
+    z-index: 1010; 
+    transition: background 0.2s;
 }
 
+.modal-post .close-button:hover {
+    background-color: rgba(241, 0, 0, 0.2);
+}
+
+/* Layout Interno (Duas Colunas) */
 .modal-post-content {
     display: flex;
     width: 100%;
     height: 100%;
-    gap: 0;
 }
 
+/* --- COLUNA ESQUERDA (IMAGEM) --- */
 .modal-image-container {
-    flex: 1.3;
+    flex: 1.4; /* Imagem ocupa um pouco mais da metade */
     display: flex;
-    justify-content: center;
     align-items: center;
-    background-color: #000;
-    overflow: hidden;
+    justify-content: center;
+    position: relative;
+    padding: 10px;
 }
 
 .modal-image-container .post-image {
-    width: 100%;
-    height: auto;
-    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain; 
 }
 
+/* --- COLUNA DIREITA (DETALHES) --- */
 .modal-sidebar {
     flex: 1;
     display: flex;
     flex-direction: column;
-    padding: 20px;
-    background-color: var(--background-card);
-    height: 100%;
-    max-height: 100%;
-    overflow: hidden;
+    padding: 30px;
+    overflow-y: auto; /* Permite rolar se o texto for longo */
 }
 
+/* Cabeçalho do Autor */
 .modal-post-header {
-    padding-bottom: 15px;
-    border-bottom: 1px solid var(--border-color-light);
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding-bottom: 0;
 }
 
 .modal-post-header .user-avatar {
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     border-radius: 50%;
+    object-fit: cover;
+    /* Adiciona o gradiente de status (opcional, como na imagem) */
+    padding: 2px;
 }
 
+.modal-post-header .user-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-post-header .user-name {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #fff;
+}
+
+.modal-post-header .user-tag {
+    font-size: 0.9rem;
+    color: #888;
+}
+
+/* Título e Texto do Post */
 .modal-post-details {
-    padding: 15px 0;
-    border-bottom: 1px solid var(--border-color-light);
+    padding: 0;
+    margin-bottom: 20px;
+    color: #e0e0e0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px; /* Espaço entre Título, Texto e Tags */
 }
 
+.modal-post-details h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #fff;
+    margin: 0;
+    line-height: 1.3;
+}
+
+.modal-post-details p {
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: #ccc;
+    margin: 0;
+}
+
+/* Tags (Hashtags) */
+.modal-post-details .tags {
+    display: flex; /* Alinha tags lado a lado */
+    flex-wrap: wrap; /* Quebra linha se não couber */
+    gap: 8px; /* Espaço entre cada tag */
+    list-style: none; /* Remove os pontinhos */
+    padding: 0;
+    margin: 0;
+}
+
+/* Estilo de cada Tag (#hashtag) */
+.modal-post-details .tags span {
+    font-size: 0.9rem;
+    color: #6A00FF; /* Cor roxa */
+    font-weight: 500;
+    cursor: pointer;
+    background: transparent;
+}
+
+.modal-post-details .tags span:hover {
+    text-decoration: underline;
+}
+
+
+
+/* Área de Comentários (Lista) */
 .modal-comments-list {
     flex-grow: 1;
-    overflow-y: auto;
-    padding-right: 10px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    background-color: #232323;
+    border-radius: 10px;
+    border : 1px solid var(--border-color-dark);
+    padding: 20px;
+    color: white;
+    font-size: 0.9rem;
 }
 
+/* Área de Escrever Comentário (Input + Botão) */
 .comment-form-container {
     margin-top: auto;
-    padding-top: 15px;
-    border-top: 1px solid var(--border-color-light);
+    padding-top: 0;
+    border-top: none;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
 }
 
-footer {
-    display: grid;
-    font-size: 9pt;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
-    gap: 1.2rem;
-    color: var(--border-color-light);
-    padding: 0 5px;
+.comment-form-container textarea {
+    width: 100%;
+    background-color: #1E1E1E;
+    border: 1px solid #333;
+    border-radius: 8px;
+    padding: 12px;
+    color: #fff;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    resize: none;
+    height: 50px; /* Altura inicial */
+    transition: 0.2s;
+}
+
+.comment-form-container textarea:focus {
+    background-color: #252525;
+    outline: none;
+    height: 80px; 
+}
+
+/* Botão "Comentar" */
+.comment-form-container button {
+    align-self: flex-end; /* Joga para a direita */
+    background-color: #6200ea; /* Roxo vibrante */
+    color: #fff;
+    border: none;
+    border-radius: 20px;
+    padding: 8px 24px;
+    font-weight: 600;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.comment-form-container button:hover {
+    background-color: #7c4dff;
+}
+
+/* RESPONSIVIDADE (Mobile) */
+@media (max-width: 900px) {
+    .modal-post {
+        flex-direction: column;
+        height: 95vh;
+        width: 100vw;
+        border-radius: 0;
+    }
+    
+    .modal-post-content {
+        flex-direction: column;
+    }
+
+    .modal-image-container {
+        flex: 1;
+        max-height: 40vh;
+    }
+
+    .modal-sidebar {
+        flex: 1;
+        padding: 20px;
+    }
 }
 

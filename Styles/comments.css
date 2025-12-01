@@ -7,7 +7,7 @@
 
 #comments-container h3 {
     margin-top: 0;
-    color: #333;
+    color: #ffffff;
 }
 
 /* Lista de comentários */
@@ -40,7 +40,7 @@
 
 .comment-header .user-name {
     font-weight: bold;
-    color: #333;
+    color: #ffffff;
 }
 
 .comment-header .comment-date {
@@ -50,7 +50,7 @@
 
 .comment-body p {
     margin: 0;
-    color: #555;
+    color: #ffffff;
     word-wrap: break-word;
 }
 
@@ -64,7 +64,7 @@
 }
 
 .comment-actions button:hover {
-    color: #333;
+    color: #ffffff;
 }
 
 /* Formulário de novo comentário */
@@ -77,23 +77,25 @@
 .comment-form-container textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    border: 1px solid #535252;
+    border-radius: 10px;
     resize: vertical;
     min-height: 60px;
     margin-bottom: 10px;
+    background-color: #2e2e2e;
 }
 
 .comment-form-container button {
     align-self: flex-end;
     padding: 8px 15px;
-    background-color: #5c67f2; /* Cor de exemplo */
+    background-color: #5600A1; /* Cor de exemplo */
+    border: 2px solid #7B00FF;
     color: white;
-    border: none;
-    border-radius: 5px;
+    border-radius: 20px;
     cursor: pointer;
 }
 
 .comment-form-container button:hover {
-    background-color: #4a54e1;
+    background-color: #6A00C5;
+    border-color: #9D3AFF;
 }

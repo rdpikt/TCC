@@ -1,59 +1,56 @@
 <?php
-require "protect.php";
-require "conexao.php";
+require "protect.php"; // Garante que o usuário está logado e inicia a sessão
+require "conexao.php"; // Conexão com o banco de dados
 
+// Define o cabeçalho para retornar JSON
 header('Content-Type: application/json');
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_POST['comunidade_id']) || !isset($_POST['action'])) {
-    http_response_code(400);
-    echo json_encode(['success' => false, 'message' => 'Requisição inválida.']);
-    exit;
-}
+$userId = $_SESSION['user_id']; // <-- Confirme se é 'user_id' e não apenas 'id'
+$sql_membro = "SELECT id FROM comunidade_membros WHERE comunidade_id = ? AND usuario_id = ? AND cargo = 'membros'";
 
-$comunidade_id = intval($_POST['comunidade_id']);
-$action = $_POST['action'];
-$user_id = $_SESSION['user_id'];
-$response = ['success' => false];
+$response = ['success' => false, 'message' => ''];
 
-mysqli_report(MYSQLI_REPORT_ERROR | MYSQLI_REPORT_STRICT);
+// Verifica se os dados necessários foram enviados via POST
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['comunidade_id']) && isset($_POST['action'])) {
+    
+    // Obter dados
+    $userId = $_SESSION['user_id']; // ID do usuário logado
+    $comunidadeId = (int)$_POST['comunidade_id'];
+    $action = $_POST['action']; // 'entrar' ou 'sair'
 
-try {
     if ($action === 'entrar') {
-        $stmt_check = $conn->prepare("SELECT id FROM comunidade_membros WHERE comunidade_id = ? AND usuario_id = ?");
-        $stmt_check->bind_param("ii", $comunidade_id, $user_id);
-        $stmt_check->execute();
-        if ($stmt_check->get_result()->num_rows > 0) {
-            $response['message'] = 'Você já é membro desta comunidade.';
+        // Ação: Adicionar membro (garante que não haja duplicidade usando INSERT IGNORE)
+        $sql = "INSERT IGNORE INTO comunidade_membros (comunidade_id, usuario_id, cargo) VALUES (?, ?, 'membro')";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $comunidadeId, $userId);
+        
+        if ($stmt->execute()) {
+            $response['success'] = true;
+            $response['message'] = 'Você entrou na comunidade!';
         } else {
-            $stmt = $conn->prepare("INSERT INTO comunidade_membros (comunidade_id, usuario_id, cargo) VALUES (?, ?, 'membro')");
-            $stmt->bind_param("ii", $comunidade_id, $user_id);
-            if ($stmt->execute()) {
-                $response['success'] = true;
-            }
+            $response['message'] = 'Erro ao entrar na comunidade.';
         }
+        
     } elseif ($action === 'sair') {
-        $stmt_check = $conn->prepare("SELECT cargo FROM comunidade_membros WHERE comunidade_id = ? AND usuario_id = ?");
-        $stmt_check->bind_param("ii", $comunidade_id, $user_id);
-        $stmt_check->execute();
-        $result = $stmt_check->get_result();
-        if ($row = $result->fetch_assoc()) {
-            if ($row['cargo'] === 'dono') {
-                $response['message'] = 'O dono não pode sair da comunidade que criou.';
-            } else {
-                $stmt = $conn->prepare("DELETE FROM comunidade_membros WHERE comunidade_id = ? AND usuario_id = ?");
-                $stmt->bind_param("ii", $comunidade_id, $user_id);
-                if ($stmt->execute() && $stmt->affected_rows > 0) {
-                    $response['success'] = true;
-                }
-            }
+        // Ação: Remover membro
+        $sql = "DELETE FROM comunidade_membros WHERE comunidade_id = ? AND usuario_id = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("ii", $comunidadeId, $userId);
+        
+        if ($stmt->execute()) {
+             $response['success'] = true;
+             $response['message'] = 'Você saiu da comunidade.';
         } else {
-             $response['message'] = 'Você não é membro desta comunidade.';
+            $response['message'] = 'Erro ao sair da comunidade.';
         }
+
+    } else {
+        $response['message'] = 'Ação inválida.';
     }
-} catch (mysqli_sql_exception $e) {
-    http_response_code(500);
-    $response['message'] = 'Erro de banco de dados: ' . $e->getMessage();
+} else {
+    $response['message'] = 'Dados da requisição ausentes ou método incorreto.';
 }
 
 echo json_encode($response);
-exit;
+$conn->close();
+?>
